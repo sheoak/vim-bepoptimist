@@ -8,7 +8,7 @@ A vim plugin that remaps and adds vim keymaps for Bépo keyboard
 # Installation
 
 vim-bim must be before [vim-surround](https://github.com/tpope/vim-surround) by
-Tim Pope because it disable surround default mapping due to confict with "c"
+Tim Pope because it disables surround default mappings due to confict with "c"
 key remapped to "l" in this plugin.
 
 To install using pathogen.vim:
