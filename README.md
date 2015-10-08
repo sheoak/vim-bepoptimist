@@ -2,6 +2,18 @@
 A vim plugin that remaps and adds vim keymaps for Bépo keyboard
 *Bim* is for *Bépo IMproved*.
 
+It does more than just remapping *jklm* and suggest a lot of keymaps that
+have been designed to be easy to access in bépo layout. It also take advantage
+of keys not available in qwerty or azerty layouts, like œ, æ, …
+
+# Features
+
+- Detecting keyboard layout
+- Remapping *jklm* to *ctsr*
+- Improving access to some keys like \$, ", w…
+- Adding new easy keymaps
+- Fixing shortcuts for some famous plugins (surround, unite…)
+
 **Under development.**
 
 

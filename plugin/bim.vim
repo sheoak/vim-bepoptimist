@@ -5,20 +5,31 @@
 " Based on http://bepo.fr/wiki/Vim suggestion, unknow author
 "
 " TODO: fix window shortcuts
-" TODO: easy completion (insert mode)
 " TODO: best way to remap surround plugin?
 " TODO: check bepo enabled in console?
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " bepo configuration, only if it’s current layout {{{
 " ----------------------------------------------------------------------------
-if executable('setxkbmap') && empty(system("setxkbmap -print|grep bepo"))
-    finish
-endif
 
 " disabled
 if exists("g:bepo_disable") && g:bepo_disable
     finish
+endif
+
+" layout detection, experimental
+" ----------------------------------------------------------------------------
+if !exists("g:bepo_enable")
+    " in tty (no X server), need testing on some other distributions
+    if $TERM == "linux"
+        if executable('localectl') && empty(system("localectl|grep bepo"))
+            finish
+        endif
+    else
+        if executable('setxkbmap') && empty(system("setxkbmap -print|grep bepo"))
+            finish
+        endif
+    endif
 endif
 
 " }}}
@@ -178,5 +189,33 @@ endfunction"}}}
 " Access registers more easily on bepo keyboard
 nnoremap à "
 nnoremap àà :registers<CR>
+
+" Toggle options, $ has been remap to é
+" Remember: vars start by $
+nnoremap <silent> $n :set number!<CR>
+nnoremap <silent> $r :set relativenumber!<CR>
+nnoremap <silent> $f :set foldenable!<CR>
+nnoremap <silent> $p :set invpaste<CR>
+nnoremap <silent> $b :let &background = ( &background == "dark"? "light" : "dark" )<CR>
+nnoremap <silent> $w :set wrap!<CR>
+
+" Window and buffer managment {{{
+" ----------------------------------------------------------------------------
+" Quick buffer/window access
+nnoremap dq :q<CR>
+nnoremap dQ :q!<CR>
+" delete ([K]ill) buffer/force/a[l]l
+nnoremap dk :bd<CR>
+nnoremap dK :bd!<CR>
+nnoremap dl :bufdo bd<CR>
+
+" Replace space by non breakable space where it should (French rules)
+nnoremap d<Backspace> :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
+nnoremap d<Space> :CleanWhiteSpace<CR>
+
+" retab
+nnoremap d<return> ggdG
+nnoremap y<return> ggyG``
+nnoremap l<return> ggdG``
 
 " vim:foldmethod=marker:foldlevel=0
