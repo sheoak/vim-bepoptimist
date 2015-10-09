@@ -34,49 +34,47 @@ endif
 
 " }}}
 
-" switch è/$
-nnoremap è $
-nnoremap $ è
-" switch à/"
-nnoremap à "
-nnoremap " à
-
-" BEPO
-" quick window access
-nnoremap € :bn<CR>
-nnoremap œ :bp<CR>
-
-" w -> é, easier for motions like daw viw -> daè diè {{{
+" Word: w -> é, easier for motions like daw viw -> daè diè {{{
 " ----------------------------------------------------------------------------
-noremap é w
-noremap É W
-onoremap aé aw
-onoremap aÉ aW
-onoremap ié iw
-onoremap iÉ iW
-vnoremap aé aw
-vnoremap aÉ aW
-vnoremap ié iw
-vnoremap iÉ iW
+if !exists("g:bim_no_remap_word")
+    noremap é w
+    noremap É W
+    onoremap aé aw
+    onoremap aÉ aW
+    onoremap ié iw
+    onoremap iÉ iW
+    vnoremap aé aw
+    vnoremap aÉ aW
+    vnoremap ié iw
+    vnoremap iÉ iW
+endif
 " }}}
 
-" Easier window manipulation with à instead of C-w {{{
+" Windows: Easier window manipulation with à instead of C-w {{{
 " ----------------------------------------------------------------------------
-noremap æ <C-w>
-noremap ææ <C-w><C-w>
+if !exists("g:bim_no_remap_window")
 
-" direct acces to <C-w> with w
-noremap æt <C-w>j
-noremap æs <C-w>k
-noremap æc <C-w>h
-noremap ær <C-w>l
-" move to the left/right/top/bottom
-noremap æC <C-w>H
-noremap æR <C-w>L
-noremap æT <C-w>J
-noremap æS <C-w>K
-noremap æ<SPACE> :split<CR>
-noremap æ<CR> :vsplit<CR>
+    " BEPO
+    " quick window access
+    nnoremap € :bn<CR>
+    nnoremap œ :bp<CR>
+
+    noremap æ <C-w>
+    noremap ææ <C-w><C-w>
+
+    " direct acces to <C-w> with w
+    noremap æt <C-w>j
+    noremap æs <C-w>k
+    noremap æc <C-w>h
+    noremap ær <C-w>l
+    " move to the left/right/top/bottom
+    noremap æC <C-w>H
+    noremap æR <C-w>L
+    noremap æT <C-w>J
+    noremap æS <C-w>K
+    noremap æ<SPACE> :split<CR>
+    noremap æ<CR> :vsplit<CR>
+endif
 " }}}
 
 " Home row HJKL -> CTSR {{{
@@ -157,48 +155,78 @@ endif
 " }}}
 
 " Plugin Surround {{{
-let g:surround_no_mappings = 1
-" bépo mapping
-nmap ls  <Plug>Csurround
-" same
-nmap ds  <Plug>Dsurround
-nmap ys  <Plug>Ysurround
-nmap yS  <Plug>YSurround
-nmap yss <Plug>Yssurround
-nmap ySs <Plug>YSsurround
-nmap ySS <Plug>YSsurround
-xmap S   <Plug>VSurround
-xmap gS  <Plug>VgSurround
+" TODO: remap insert mappings?
+if !exists("g:surround_no_mappings") || g:surround_no_mappings == 0
+    let g:surround_no_mappings = 1
+    echo "First"
+    " bépo mapping
+    nmap ls  <Plug>Csurround
+    nmap lS  <Plug>CSurround
+    " same
+    nmap ds  <Plug>Dsurround
+    nmap ys  <Plug>Ysurround
+    nmap yS  <Plug>YSurround
+    nmap yss <Plug>Yssurround
+    nmap ySs <Plug>YSsurround
+    nmap ySS <Plug>YSsurround
+    xmap S   <Plug>VSurround
+    xmap gS  <Plug>VgSurround
+endif
 " }}}
+
+" vim-commentary fix (cgc)
+" TODO: test if installed
+xmap gc  <Plug>Commentary
+nmap gc  <Plug>Commentary
+omap gc  <Plug>Commentary
+nmap gcc <Plug>CommentaryLine
+nmap lgc <Plug>ChangeCommentary
+nmap gcu <Plug>Commentary<Plug>Commentary
 
 " Plugin Unite {{{
 " FIXME: "t" map is broken (open tab)
-autocmd! FileType unite call s:unite_my_settings()
-function! s:unite_my_settings()
+if !exists("g:unite_no_mappings") || g:unite_no_mapping == 0
+    autocmd! FileType unite call s:unite_my_settings()
+    function! s:unite_my_settings()
 
-  " Overwrite settings.
-  nmap <buffer> s         <Plug>(unite_loop_cursor_up)
-  nmap <buffer> t         <Plug>(unite_loop_cursor_down)
-  nmap <buffer> S         <Plug>(unite_skip_cursor_up)
-  nmap <buffer> T         <Plug>(unite_skip_cursor_down)
+      " Overwrite settings.
+      nmap <buffer> s         <Plug>(unite_loop_cursor_up)
+      nmap <buffer> t         <Plug>(unite_loop_cursor_down)
+      nmap <buffer> S         <Plug>(unite_skip_cursor_up)
+      nmap <buffer> T         <Plug>(unite_skip_cursor_down)
 
-endfunction"}}}
+    endfunction
+endif
+
+" }}}
 
 " Others easier mappings {{{
 
 " Access registers more easily on bepo keyboard
-nnoremap à "
-nnoremap àà :registers<CR>
+" Registers: switch à and "
+if !exists("g:bim_no_remap_registers")
+    nnoremap à "
+    nnoremap " à
+    nnoremap àà :registers<CR>
+endif
 
-" Toggle options, $ has been remap to é
+" Toggle options
+"  we remap $ to é and take advantage of $ free key
 " Remember: vars start by $
-nnoremap <silent> $n :set number!<CR>
-nnoremap <silent> $r :set relativenumber!<CR>
-nnoremap <silent> $f :set foldenable!<CR>
-nnoremap <silent> $p :set invpaste<CR>
-nnoremap <silent> $b :let &background = ( &background == "dark"? "light" : "dark" )<CR>
-nnoremap <silent> $w :set wrap!<CR>
+" TODO: use è instead in g:bin_no_remap_dollar == 1
+if !exists("g:bim_no_remap_dollar")
 
+    nnoremap è $
+    nnoremap $ è
+
+    nnoremap <silent> $n :set number!<CR>
+    nnoremap <silent> $r :set relativenumber!<CR>
+    nnoremap <silent> $f :set foldenable!<CR>
+    nnoremap <silent> $p :set invpaste<CR>
+    nnoremap <silent> $b :let &background = ( &background == "dark"? "light" : "dark" )<CR>
+    nnoremap <silent> $w :set wrap!<CR>
+
+endif
 " Window and buffer managment {{{
 " ----------------------------------------------------------------------------
 " Quick buffer/window access
