@@ -1,3 +1,4 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " bim.vim - vim keymaps for bépo keyboard layout
 " Author:       sheoak <dev@sheoak.fr>
 " Version:      0.1
@@ -7,7 +8,7 @@
 " TODO: fix window shortcuts
 " TODO: best way to remap surround plugin?
 " TODO: check bepo enabled in console?
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " bepo configuration, only if it’s current layout {{{
 " ----------------------------------------------------------------------------
@@ -173,7 +174,7 @@ if !exists("g:surround_no_mappings") || g:surround_no_mappings == 0
 endif
 " }}}
 
-" vim-commentary fix (cgc)
+" vim-commentary fix (cgc) {{{
 " TODO: test if installed
 xmap gc  <Plug>Commentary
 nmap gc  <Plug>Commentary
@@ -181,6 +182,7 @@ omap gc  <Plug>Commentary
 nmap gcc <Plug>CommentaryLine
 nmap lgc <Plug>ChangeCommentary
 nmap gcu <Plug>Commentary<Plug>Commentary
+" }}}
 
 " Plugin Unite {{{
 " FIXME: "t" map is broken (open tab)
