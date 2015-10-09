@@ -23,6 +23,15 @@ vim-bim must be before [vim-surround](https://github.com/tpope/vim-surround) by
 Tim Pope because it disables surround default mappings due to confict with "c"
 key remapped to "l" in this plugin.
 
+This plugin works better with "," as leader (better suggestions are welcome):
+
+    " we also remap \ to , to avoid losing "f" reverse repeat
+    let mapleader = ","
+    noremap \ ,
+
+This way you can save your file by hitting `,,` in normal mode (map defined in
+the plugin).
+
 To install using pathogen.vim:
 
     cd ~/.vim/bundle
