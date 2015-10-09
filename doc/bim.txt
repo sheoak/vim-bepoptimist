@@ -1,0 +1,47 @@
+*bim.txt* Plugin to handle bépo layout better
+
+Author:  sheoak <yannick@sheoak.fr>
+License: Same terms as Vim itself (see |license|)
+
+INTRODUCTION                                    *bim*
+
+
+MAPPINGS                                        *bim-mappings*
+
+
+MAPPINGS FAMOUS PLUGINS                         *bim-plugins*
+
+Bim includes mapping for famous plugins so that they work better with bepo
+layout. Bim try to preserve as many original mappings as possible and mainly
+remaps the home row keys when there is a conflict.
+
+To enable them, add this in your .vimrc:
+
+    " vim-commentary mappings
+    let g:bim_remap_commentary = 1
+    " vim-fugitive mappings
+    let g:bim_remap_fugitive   = 1
+    " vim-surround mappings
+    let g:bim_remap_surround   = 1
+
+CUSTOMIZING                                     *bim-customizing*
+
+You can disable some of the mappings by categeries by adding some settings in
+your .vimrc.
+
+Do not move $ to è, and do not create mappings starting by $:
+
+    let g:bim_remap_dollar = 0
+
+Do not remap w to é:
+
+    let g:bim_remap_word = 0
+
+Do not remap æ to CTRL-w with additionnal mappings:
+
+    let g:bim_remap_window = 0
+
+Do not remap à to " with additionnal mappings:
+    let g:bim_remap_registers = 0
+
+ vim:tw=78:ts=8:ft=help:norl:
