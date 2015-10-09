@@ -14,11 +14,11 @@
 " ----------------------------------------------------------------------------
 
 " disabled
-if exists("g:bepo_disable") && g:bepo_disable
+if exists("g:bepo_enable") && ! g:bepo_enable
     finish
 endif
 
-" layout detection, experimental
+" layout detection, experimental, except if enable war forced
 " ----------------------------------------------------------------------------
 if !exists("g:bepo_enable")
     " in tty (no X server), need testing on some other distributions
@@ -37,7 +37,7 @@ endif
 
 " Word: w -> é, easier for motions like daw viw -> daè diè {{{
 " ----------------------------------------------------------------------------
-if !exists("g:bim_no_remap_word")
+if !exists("g:bim_no_remap_word") || ! g:bim_no_remap_word
     noremap é w
     noremap É W
     onoremap aé aw
@@ -53,7 +53,7 @@ endif
 
 " Windows: Easier window manipulation with à instead of C-w {{{
 " ----------------------------------------------------------------------------
-if !exists("g:bim_no_remap_window")
+if !exists("g:bim_no_remap_window") || g:bim_no_remap_window
 
     " BEPO
     " quick window access
@@ -157,7 +157,7 @@ endif
 
 " Plugin Surround {{{
 " TODO: remap insert mappings?
-if !exists("g:surround_no_mappings") || g:surround_no_mappings == 0
+if !exists("g:surround_no_mappings") || ! g:surround_no_mappings
     let g:surround_no_mappings = 1
     " bépo mapping
     nmap ls  <Plug>Csurround
@@ -186,7 +186,7 @@ nmap gcu <Plug>Commentary<Plug>Commentary
 
 " Plugin Unite {{{
 " FIXME: "t" map is broken (open tab)
-if !exists("g:unite_no_mappings") || g:unite_no_mapping == 0
+if !exists("g:unite_no_mappings") || ! g:unite_no_mapping
     autocmd! FileType unite call s:unite_my_settings()
     function! s:unite_my_settings()
 
@@ -205,7 +205,7 @@ endif
 
 " Access registers more easily on bepo keyboard
 " Registers: switch à and "
-if !exists("g:bim_no_remap_registers")
+if !exists("g:bim_no_remap_registers") || ! g:bim_no_remap_registers
     nnoremap à "
     nnoremap " à
     nnoremap àà :registers<CR>
@@ -215,7 +215,7 @@ endif
 "  we remap $ to é and take advantage of $ free key
 " Remember: vars start by $
 " TODO: use è instead in g:bin_no_remap_dollar == 1
-if !exists("g:bim_no_remap_dollar")
+if !exists("g:bim_no_remap_dollar") || ! g:bim_no_remap_dollar
 
     nnoremap è $
     nnoremap $ è
