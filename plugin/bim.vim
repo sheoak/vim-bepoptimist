@@ -158,7 +158,6 @@ endif
 " TODO: remap insert mappings?
 if !exists("g:surround_no_mappings") || g:surround_no_mappings == 0
     let g:surround_no_mappings = 1
-    echo "First"
     " bépo mapping
     nmap ls  <Plug>Csurround
     nmap lS  <Plug>CSurround
