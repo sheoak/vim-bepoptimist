@@ -240,7 +240,7 @@ nnoremap dl :bufdo bd<CR>
 nnoremap d<Backspace> :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
 nnoremap d<Space> :%s/\s\+$//<CR>
 
-" retab
+" Delete/Yank/replace all content
 nnoremap d<return> ggdG
 nnoremap y<return> ggyG``
 nnoremap l<return> ggdG``
