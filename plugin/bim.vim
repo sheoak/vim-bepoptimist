@@ -63,7 +63,7 @@ endif
 
 " Word: w -> é, easier for motions like daw viw -> daè diè {{{
 " ----------------------------------------------------------------------------
-if !exists("g:bim_no_remap_word") || ! g:bim_no_remap_word
+if !exists("g:bim_remap_word") || ! g:bim_remap_word
     noremap é w
     noremap É W
     onoremap aé aw
@@ -79,10 +79,12 @@ endif
 
 " Windows: Easier window manipulation with à instead of C-w {{{
 " ----------------------------------------------------------------------------
-if !exists("g:bim_no_remap_window") || g:bim_no_remap_window
+if !exists("g:bim_remap_window") || g:bim_remap_window
 
     " BEPO
     " quick window access
+    " TODO: find something simple with æ ?
+    " TODO: free it for a nicer use (prev/next…)
     nnoremap € :bn<CR>
     nnoremap œ :bp<CR>
 
@@ -153,18 +155,6 @@ noremap « <
 noremap » >
 " }}}
 
-" Spell {{{
-" z= command is hard to type in bépo
-" FIXME « » is taken (remapped <>)
-if has("spell")
-    "map «s z=
-    "map «g zg
-    "map »w zw
-    "map «uw zuw
-    "map «ug zug
-end
-" }}}
-
 " Ex remapping {{{
 if has("autocmd")
     augroup netrw_dvorak_fix
@@ -181,9 +171,119 @@ if has("autocmd")
 endif
 " }}}
 
+" Others easier mappings {{{
+
+" Access registers more easily on bepo keyboard
+" Registers: switch à and "
+if !exists("g:bim_remap_registers") || ! g:bim_remap_registers
+    nnoremap à "
+    nnoremap " à
+    nnoremap àà :registers<CR>
+    " Delete/Yank/replace all content
+    nnoremap d<return> ggdG
+    nnoremap y<return> ggyG``
+    nnoremap l<return> ggdG``
+endif
+
+" }}}
+
+" Toggle options {{{
+"  we remap $ to é and take advantage of $ free key
+" Remember: vars start by $
+" TODO: use è instead in g:bin_no_remap_dollar == 1
+if !exists("g:bim_remap_dollar") || g:bim_remap_dollar
+
+    nnoremap è $
+    nnoremap $ è
+
+    nnoremap <silent> $n :set number!<CR>
+    nnoremap <silent> $r :set relativenumber!<CR>
+    nnoremap <silent> $f :set foldenable!<CR>
+    nnoremap <silent> $p :set invpaste<CR>
+    nnoremap <silent> $b :let &background = ( &background == "dark"? "light" : "dark" )<CR>
+    nnoremap <silent> $w :set wrap!<CR>
+
+    " spell options
+    " [S]et [S]pell, [S]et [S]pell [F]rench/[E]nglish
+    nnoremap <silent> $ss :setlocal spell!<CR>
+    nnoremap <silent> $sf :setlocal spell! spelllang=fr<CR>
+    nnoremap <silent> $se :setlocal spell! spelllang=en<CR>
+
+    " vim configuration and plugins
+    nnoremap $ev :e $MYVIMRC<cr>
+    nnoremap $sv :source $MYVIMRC<cr>
+    nnoremap $ss :source %<cr>
+
+endif
+" }}}
+
+" Window and buffer managment {{{
+" ----------------------------------------------------------------------------
+" Quick buffer/window access
+nnoremap dq :q<CR>
+nnoremap dQ :q!<CR>
+" delete ([K]ill) buffer/force/a[l]l/force a[L]l
+nnoremap dk :bd<CR>:bp<CR>
+nnoremap dK :bd!<CR>:bp<CR>
+nnoremap dl :bufdo bd<CR>:bp<CR>
+nnoremap dL :bufdo bd!<CR>
+" save and delete buffer/close window
+nnoremap yk :w<CR>:bd<CR>:bp<CR>
+nnoremap yq :wq<CR>
+
+" I do not map :w! because it should be used carefully
+" leader use is acceptable because it is very quick and a very common
+" operation
+map <leader>, :w<CR>
+map <leader>; :w !sudo tee % > /dev/null<CR>
+
+" Replace space by non breakable space where it should (French rules)
+nnoremap d<Backspace> :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
+nnoremap d<Space> :%s/\s\+$//<CR>
+
+" }}}
+
+" Plugin Tabularize {{{
+" TODO: check if plugin installed
+" TODO: do not use leader
+vmap <C-j> :Tabularize/=<CR>
+nmap <Leader>= :Tabularize /=<CR>
+vmap <Leader>= :Tabularize /=<CR>
+nmap <Leader>: :Tabularize /:\zs<CR>
+vmap <Leader>: :Tabularize /:\zs<CR>
+" }}}
+
+" Plugin Unite {{{
+" FIXME: "t" map is broken (open tab)
+if !exists("g:unite_no_mappings") || ! g:unite_no_mapping
+    autocmd! FileType unite call s:unite_my_settings()
+    function! s:unite_my_settings()
+
+      " Overwrite settings.
+      nmap <buffer> s         <Plug>(unite_loop_cursor_up)
+      nmap <buffer> t         <Plug>(unite_loop_cursor_down)
+      nmap <buffer> S         <Plug>(unite_skip_cursor_up)
+      nmap <buffer> T         <Plug>(unite_skip_cursor_down)
+
+    endfunction
+endif
+" }}}
+
+" Fugitive mappings {{{
+if exists(g:bim_remap_fugitive) && g:bim_remap_fugitive
+    nnoremap gys :Gstatus<CR><C-w>20+
+    nnoremap gye :Gedit<CR>
+    nnoremap gya :Gadd<CR>
+    nnoremap gyd :Gdiff<CR>
+    nnoremap gyl :Glog<CR>
+    nnoremap gyp :Gpush<CR>
+    nnoremap gyc :Gcommit<CR>
+endif
+" }}}
+
 " Plugin Surround {{{
 " TODO: remap insert mappings?
-if !exists("g:surround_no_mappings") || ! g:surround_no_mappings
+if exists(g:bim_remap_surround) && g:bim_remap_surround
     let g:surround_no_mappings = 1
     " bépo mapping
     nmap ls  <Plug>Csurround
@@ -201,76 +301,17 @@ endif
 " }}}
 
 " vim-commentary fix (cgc) {{{
-" TODO: test if installed
-xmap gc  <Plug>Commentary
-nmap gc  <Plug>Commentary
-omap gc  <Plug>Commentary
-nmap gcc <Plug>CommentaryLine
-nmap lgc <Plug>ChangeCommentary
-nmap gcu <Plug>Commentary<Plug>Commentary
+if exists(g:bim_remap_commentary) && g:bim_remap_commentary
+    " TODO: test if installed
+    " bepo, cgc becomes lgc
+    nmap lgc <Plug>ChangeCommentary
+    " same:
+    xmap gc  <Plug>Commentary
+    nmap gc  <Plug>Commentary
+    omap gc  <Plug>Commentary
+    nmap gcc <Plug>CommentaryLine
+    nmap gcu <Plug>Commentary<Plug>Commentary
+endif
 " }}}
-
-" Plugin Unite {{{
-" FIXME: "t" map is broken (open tab)
-if !exists("g:unite_no_mappings") || ! g:unite_no_mapping
-    autocmd! FileType unite call s:unite_my_settings()
-    function! s:unite_my_settings()
-
-      " Overwrite settings.
-      nmap <buffer> s         <Plug>(unite_loop_cursor_up)
-      nmap <buffer> t         <Plug>(unite_loop_cursor_down)
-      nmap <buffer> S         <Plug>(unite_skip_cursor_up)
-      nmap <buffer> T         <Plug>(unite_skip_cursor_down)
-
-    endfunction
-endif
-
-" }}}
-
-" Others easier mappings {{{
-
-" Access registers more easily on bepo keyboard
-" Registers: switch à and "
-if !exists("g:bim_no_remap_registers") || ! g:bim_no_remap_registers
-    nnoremap à "
-    nnoremap " à
-    nnoremap àà :registers<CR>
-endif
-
-" Toggle options
-"  we remap $ to é and take advantage of $ free key
-" Remember: vars start by $
-" TODO: use è instead in g:bin_no_remap_dollar == 1
-if !exists("g:bim_no_remap_dollar") || ! g:bim_no_remap_dollar
-
-    nnoremap è $
-    nnoremap $ è
-
-    nnoremap <silent> $n :set number!<CR>
-    nnoremap <silent> $r :set relativenumber!<CR>
-    nnoremap <silent> $f :set foldenable!<CR>
-    nnoremap <silent> $p :set invpaste<CR>
-    nnoremap <silent> $b :let &background = ( &background == "dark"? "light" : "dark" )<CR>
-    nnoremap <silent> $w :set wrap!<CR>
-
-endif
-" Window and buffer managment {{{
-" ----------------------------------------------------------------------------
-" Quick buffer/window access
-nnoremap dq :q<CR>
-nnoremap dQ :q!<CR>
-" delete ([K]ill) buffer/force/a[l]l
-nnoremap dk :bd<CR>
-nnoremap dK :bd!<CR>
-nnoremap dl :bufdo bd<CR>
-
-" Replace space by non breakable space where it should (French rules)
-nnoremap d<Backspace> :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
-nnoremap d<Space> :%s/\s\+$//<CR>
-
-" Delete/Yank/replace all content
-nnoremap d<return> ggdG
-nnoremap y<return> ggyG``
-nnoremap l<return> ggdG``
 
 " vim:foldmethod=marker:foldlevel=0
