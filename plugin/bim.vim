@@ -3,11 +3,37 @@
 " Author:       sheoak <dev@sheoak.fr>
 " Version:      0.1
 "
-" Based on http://bepo.fr/wiki/Vim suggestion, unknow author
+" Based on http://bepo.fr/wiki/Vim suggestions, unknow author
 "
 " TODO: fix window shortcuts
 " TODO: best way to remap surround plugin?
 " TODO: check bepo enabled in console?
+" TODO: read documentation about langmap and test it
+" TODO: reconfigure for php/js
+" TODO: debugger
+"
+" MEMO: use gà,gé,gè,zà,zé,zè,"g,"
+"
+" ----------------------------------------------------------------------------
+" Mapping scheme :
+" ----------------------------------------------------------------------------
+" $         is for options                  ($f toggles folding)
+" æ         is for window handling          (ææ cycle last windows)
+" gy        is for git                      (gys run :Gstatus)
+" gc        is for vim-commentary           (gcc comments a line)
+" ls/ds/ys  is for surround                 (ysaw" add quotes around word)
+"
+" ----------------------------------------------------------------------------
+" Meaning of the keys (most of the time):
+" ----------------------------------------------------------------------------
+" k         buffer (dk destroy a buffer)
+" q         window (dq destroy a window)
+" d         for destroy/deletion    (dk destroy a buffer)
+" y         for creation/saving…
+" l         '
+" ----------------------------------------------------------------------------
+"
+"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " bepo configuration, only if it’s current layout {{{
