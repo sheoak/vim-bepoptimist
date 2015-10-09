@@ -211,7 +211,7 @@ nnoremap dl :bufdo bd<CR>
 
 " Replace space by non breakable space where it should (French rules)
 nnoremap d<Backspace> :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
-nnoremap d<Space> :CleanWhiteSpace<CR>
+nnoremap d<Space> :%s/\s\+$//<CR>
 
 " retab
 nnoremap d<return> ggdG
