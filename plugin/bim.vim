@@ -220,16 +220,16 @@ endif
 " Window and buffer managment {{{
 " ----------------------------------------------------------------------------
 " Quick buffer/window access
-nnoremap dq :q<CR>
-nnoremap dQ :q!<CR>
+nnoremap <silent> dq :q<CR>
+nnoremap <silent> dQ :q!<CR>
 " delete ([K]ill) buffer/force/a[l]l/force a[L]l
-nnoremap dk :bd<CR>:bp<CR>
-nnoremap dK :bd!<CR>:bp<CR>
-nnoremap dl :bufdo bd<CR>:bp<CR>
-nnoremap dL :bufdo bd!<CR>
+nnoremap <silent> dk :bd<CR>:bp<CR>
+nnoremap <silent> dK :bd!<CR>:bp<CR>
+nnoremap <silent> dl :bufdo bd<CR>:bp<CR>
+nnoremap <silent> dL :bufdo bd!<CR>
 " save and delete buffer/close window
-nnoremap yk :w<CR>:bd<CR>:bp<CR>
-nnoremap yq :wq<CR>
+nnoremap <silent> yk :w<CR>:bd<CR>:bp<CR>
+nnoremap <silent> yq :wq<CR>
 
 " I do not map :w! because it should be used carefully
 " leader use is acceptable because it is very quick and a very common
