@@ -254,7 +254,6 @@ vmap <Leader>: :Tabularize /:\zs<CR>
 " }}}
 
 " Plugin Unite {{{
-" FIXME: "t" map is broken (open tab)
 if !exists("g:unite_no_mappings") || ! g:unite_no_mapping
     autocmd! FileType unite call s:unite_my_settings()
     function! s:unite_my_settings()
@@ -265,7 +264,10 @@ if !exists("g:unite_no_mappings") || ! g:unite_no_mapping
       nmap <buffer> S         <Plug>(unite_skip_cursor_up)
       nmap <buffer> T         <Plug>(unite_skip_cursor_down)
 
-    endfunction
+      " open in tab
+      nnoremap <silent><buffer><expr> j
+                  \ unite#smart_map('t', unite#do_action('tabopen'))
+  endfunction
 endif
 " }}}
 
