@@ -6,8 +6,6 @@
 " Based on http://bepo.fr/wiki/Vim suggestions, unknow author
 "
 " TODO: fix window shortcuts
-" TODO: best way to remap surround plugin?
-" TODO: check bepo enabled in console?
 " TODO: read documentation about langmap and test it
 " TODO: reconfigure for php/js
 " TODO: debugger
@@ -17,22 +15,11 @@
 " ----------------------------------------------------------------------------
 " Mapping scheme :
 " ----------------------------------------------------------------------------
-" $         is for options                  ($f toggles folding)
-" æ         is for window handling          (ææ cycle last windows)
+" $ or è    is for options                  ($f toggles folding)
+" w or é    is for window handling          (éé cycle last windows)
 " gy        is for git                      (gys run :Gstatus)
 " gc        is for vim-commentary           (gcc comments a line)
 " ls/ds/ys  is for surround                 (ysaw" add quotes around word)
-"
-" ----------------------------------------------------------------------------
-" Meaning of the keys (most of the time):
-" ----------------------------------------------------------------------------
-" k         buffer (dk destroy a buffer)
-" q         window (dq destroy a window)
-" d         for destroy/deletion    (dk destroy a buffer)
-" y         for creation/saving…
-" l         '
-" ----------------------------------------------------------------------------
-"
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -61,11 +48,23 @@ endif
 
 " }}}
 
+" shortcut to custom mapping, defined depending on options
+nnoremap [buffer] <Nop>
+nnoremap [window] <Nop>
+nnoremap [option] <Nop>
+nnoremap [register] <Nop>
+
 " Word: w -> é, easier for motions like daw viw -> daè diè {{{
 " ----------------------------------------------------------------------------
-if !exists("g:bim_remap_word") || ! g:bim_remap_word
+
+if !exists("g:bim_remap_word") || g:bim_remap_word
+    " swith w/W and é/É
     noremap é w
     noremap É W
+    nmap w [buffer]
+    nmap W [window]
+
+    " remap operators
     onoremap aé aw
     onoremap aÉ aW
     onoremap ié iw
@@ -74,36 +73,12 @@ if !exists("g:bim_remap_word") || ! g:bim_remap_word
     vnoremap aÉ aW
     vnoremap ié iw
     vnoremap iÉ iW
+else
+    " define shortcut
+    nmap é [buffer]
+    nmap É [window]
 endif
-" }}}
 
-" Windows: Easier window manipulation with à instead of C-w {{{
-" ----------------------------------------------------------------------------
-if !exists("g:bim_remap_window") || g:bim_remap_window
-
-    " BEPO
-    " quick window access
-    " TODO: find something simple with æ ?
-    " TODO: free it for a nicer use (prev/next…)
-    nnoremap € :bn<CR>
-    nnoremap œ :bp<CR>
-
-    noremap æ <C-w>
-    noremap ææ <C-w><C-w>
-
-    " direct acces to <C-w> with w
-    noremap æt <C-w>j
-    noremap æs <C-w>k
-    noremap æc <C-w>h
-    noremap ær <C-w>l
-    " move to the left/right/top/bottom
-    noremap æC <C-w>H
-    noremap æR <C-w>L
-    noremap æT <C-w>J
-    noremap æS <C-w>K
-    noremap æ<SPACE> :split<CR>
-    noremap æ<CR> :vsplit<CR>
-endif
 " }}}
 
 " Home row HJKL -> CTSR {{{
@@ -171,18 +146,60 @@ if has("autocmd")
 endif
 " }}}
 
+" Windows: Easier window manipulation with à instead of C-w {{{
+" ----------------------------------------------------------------------------
+
+" quick buffer access
+" -------------------------------------------------------------------------
+" cycle 2 last buffers
+nnoremap [buffer]é :b#<CR>
+" change buffer
+nnoremap [buffer]t :bp<CR>
+nnoremap [buffer]s :bn<CR>
+nnoremap [buffer]q :bd<CR>
+nnoremap [buffer]Q :bd!<CR>
+nnoremap [buffer]<SPACE> :split<CR>
+nnoremap [buffer]<CR> :vsplit<CR>
+
+nnoremap [buffer]= :retab<CR>
+nnoremap [buffer]d ggyG``
+nnoremap [buffer]y ggyG``
+
+" quick window access
+" -------------------------------------------------------------------------
+nnoremap [window] <C-w>
+nnoremap [window][window] <C-w><C-w>
+
+" direct acces to <C-w> with w
+nnoremap [window]t <C-w>j
+nnoremap [window]s <C-w>k
+nnoremap [window]c <C-w>h
+nnoremap [window]r <C-w>l
+" move to the left/right/top/bottom
+nnoremap [window]C <C-w>H
+nnoremap [window]R <C-w>L
+nnoremap [window]T <C-w>J
+nnoremap [window]S <C-w>K
+
+" }}}
+
+
 " Others easier mappings {{{
 
 " Access registers more easily on bepo keyboard
 " Registers: switch à and "
 if !exists("g:bim_remap_registers") || ! g:bim_remap_registers
+
+    " switch à and "
     nnoremap à "
     nnoremap " à
+    nmap à [register]
+
     nnoremap àà :registers<CR>
-    " Delete/Yank/replace all content
-    nnoremap d<return> ggdG
-    nnoremap y<return> ggyG``
-    nnoremap l<return> ggdG``
+
+else
+
+    nmap " [register]
 endif
 
 " }}}
@@ -190,46 +207,37 @@ endif
 " Toggle options {{{
 "  we remap $ to é and take advantage of $ free key
 " Remember: vars start by $
-" TODO: use è instead in g:bin_no_remap_dollar == 1
 if !exists("g:bim_remap_dollar") || g:bim_remap_dollar
 
     nnoremap è $
     nnoremap $ è
+    nmap $ [option]
 
-    nnoremap <silent> $n :set number!<CR>
-    nnoremap <silent> $r :set relativenumber!<CR>
-    nnoremap <silent> $f :set foldenable!<CR>
-    nnoremap <silent> $p :set invpaste<CR>
-    nnoremap <silent> $b :let &background = ( &background == "dark"? "light" : "dark" )<CR>
-    nnoremap <silent> $w :set wrap!<CR>
+else
 
-    " spell options
-    " [S]et [S]pell, [S]et [S]pell [F]rench/[E]nglish
-    nnoremap <silent> $ss :setlocal spell!<CR>
-    nnoremap <silent> $sf :setlocal spell! spelllang=fr<CR>
-    nnoremap <silent> $se :setlocal spell! spelllang=en<CR>
-
-    " vim configuration and plugins
-    nnoremap $ev :e $MYVIMRC<cr>
-    nnoremap $sv :source $MYVIMRC<cr>
-    nnoremap $ss :source %<cr>
+    nmap è [option]
 
 endif
-" }}}
 
-" Window and buffer managment {{{
-" ----------------------------------------------------------------------------
-" Quick buffer/window access
-nnoremap <silent> dq :q<CR>
-nnoremap <silent> dQ :q!<CR>
-" delete ([K]ill) buffer/force/a[l]l/force a[L]l
-nnoremap <silent> dk :bd<CR>:bp<CR>
-nnoremap <silent> dK :bd!<CR>:bp<CR>
-nnoremap <silent> dl :bufdo bd<CR>:bp<CR>
-nnoremap <silent> dL :bufdo bd!<CR>
-" save and delete buffer/close window
-nnoremap <silent> yk :w<CR>:bd<CR>:bp<CR>
-nnoremap <silent> yq :wq<CR>
+nnoremap <silent> [option]n :set number!<CR>
+nnoremap <silent> [option]r :set relativenumber!<CR>
+nnoremap <silent> [option]f :set foldenable!<CR>
+nnoremap <silent> [option]p :set invpaste<CR>
+nnoremap <silent> [option]b :let &background = ( &background == "dark"? "light" : "dark" )<CR>
+nnoremap <silent> [option]w :set wrap!<CR>
+
+" spell options
+" [S]et [S]pell, [S]et [S]pell [F]rench/[E]nglish
+nnoremap <silent> [option]ss :setlocal spell!<CR>
+nnoremap <silent> [option]sf :setlocal spell! spelllang=fr<CR>
+nnoremap <silent> [option]se :setlocal spell! spelllang=en<CR>
+
+" vim configuration and plugins
+nnoremap [option]ev :e $MYVIMRC<cr>
+nnoremap [option]sv :source $MYVIMRC<cr>
+nnoremap [option]ss :source %<cr>
+
+" }}}
 
 " I do not map :w! because it should be used carefully
 " leader use is acceptable because it is very quick and a very common
@@ -258,16 +266,16 @@ if !exists("g:unite_no_mappings") || ! g:unite_no_mapping
     autocmd! FileType unite call s:unite_my_settings()
     function! s:unite_my_settings()
 
-      " Overwrite settings.
-      nmap <buffer> s         <Plug>(unite_loop_cursor_up)
-      nmap <buffer> t         <Plug>(unite_loop_cursor_down)
-      nmap <buffer> S         <Plug>(unite_skip_cursor_up)
-      nmap <buffer> T         <Plug>(unite_skip_cursor_down)
+        " Overwrite settings.
+        nmap <buffer> s         <Plug>(unite_loop_cursor_up)
+        nmap <buffer> t         <Plug>(unite_loop_cursor_down)
+        nmap <buffer> S         <Plug>(unite_skip_cursor_up)
+        nmap <buffer> T         <Plug>(unite_skip_cursor_down)
 
-      " open in tab
-      nnoremap <silent><buffer><expr> j
-                  \ unite#smart_map('t', unite#do_action('tabopen'))
-  endfunction
+        " open in tab
+        nnoremap <silent><buffer><expr> j
+                    \ unite#smart_map('t', unite#do_action('tabopen'))
+    endfunction
 endif
 " }}}
 
