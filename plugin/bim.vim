@@ -272,7 +272,7 @@ endif
 " }}}
 
 " Fugitive mappings {{{
-if exists(g:bim_remap_fugitive) && g:bim_remap_fugitive
+if exists("g:bim_remap_fugitive") && g:bim_remap_fugitive
     nnoremap gys :Gstatus<CR><C-w>20+
     nnoremap gye :Gedit<CR>
     nnoremap gya :Gadd<CR>
@@ -285,7 +285,7 @@ endif
 
 " Plugin Surround {{{
 " TODO: remap insert mappings?
-if exists(g:bim_remap_surround) && g:bim_remap_surround
+if exists("g:bim_remap_surround") && g:bim_remap_surround
     let g:surround_no_mappings = 1
     " bépo mapping
     nmap ls  <Plug>Csurround
@@ -303,7 +303,7 @@ endif
 " }}}
 
 " vim-commentary fix (cgc) {{{
-if exists(g:bim_remap_commentary) && g:bim_remap_commentary
+if exists("g:bim_remap_commentary") && g:bim_remap_commentary
     " TODO: test if installed
     " bepo, cgc becomes lgc
     nmap lgc <Plug>ChangeCommentary
