@@ -1,15 +1,16 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" bim.vim - vim keymaps for bépo keyboard layout
+" bim.vim - vim keymaps for bépo keyboard layout {{{
 " Author:       sheoak <dev@sheoak.fr>
 " Version:      0.1
 "
 " Based on http://bepo.fr/wiki/Vim suggestions, unknow author
 "
-" TODO: fix window shortcuts
-" TODO: read documentation about langmap and test it
-" TODO: reconfigure for php/js
-" TODO: debugger
+" TODO: Unite
+" TODO: Better git shortcut
+" TODO: Tabular without leader
+" TODO: Save without leader?
+" TODO: better comments
 "
+" TODO: use à   ç
 " MEMO: use gà,gé,gè,zà,zé,zè,"g,"
 "
 " ----------------------------------------------------------------------------
@@ -21,7 +22,7 @@
 " gc        is for vim-commentary           (gcc comments a line)
 " ls/ds/ys  is for surround                 (ysaw" add quotes around word)
 "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 
 " bepo configuration, only if it’s current layout {{{
 " ----------------------------------------------------------------------------
@@ -48,37 +49,18 @@ endif
 
 " }}}
 
-" shortcut to custom mapping, defined depending on options
-nnoremap [buffer] <Nop>
-nnoremap [window] <Nop>
-nnoremap [option] <Nop>
-nnoremap [register] <Nop>
+" Shortcut to custom mapping, defined depending on options {{{
+nnoremap [buffer]   <Nop>
+nnoremap [window]   <Nop>
+nnoremap [option]   <Nop>
 
-" Word: w -> é, easier for motions like daw viw -> daè diè {{{
-" ----------------------------------------------------------------------------
-
-if !exists("g:bim_remap_word") || g:bim_remap_word
-    " swith w/W and é/É
-    noremap é w
-    noremap É W
-    nmap w [buffer]
-    nmap W [window]
-
-    " remap operators
-    onoremap aé aw
-    onoremap aÉ aW
-    onoremap ié iw
-    onoremap iÉ iW
-    vnoremap aé aw
-    vnoremap aÉ aW
-    vnoremap ié iw
-    vnoremap iÉ iW
-else
-    " define shortcut
-    nmap é [buffer]
-    nmap É [window]
-endif
-
+" é is for manipulation of buffer [é]cran
+nmap é [buffer]
+" É for manipulation of windows   [É]cran
+nmap É [window]
+" à is a prefix for setting options ([À] régler)
+nmap à [option]
+" è is for ?
 " }}}
 
 " Home row HJKL -> CTSR {{{
@@ -96,9 +78,8 @@ noremap S K
 " Previous / next fold
 noremap zt zj
 noremap zs zk
-" }}}
 
-" Remap home row keys somewhere else {{{
+" Remap home row keys somewhere else
 " ----------------------------------------------------------------------------
 " T move to J ([J]usqu'à)
 noremap j t
@@ -112,9 +93,8 @@ noremap H R
 " S move to K (Substitute)
 noremap k s
 noremap K S
-" }}}
 
-" Remap g… {{{
+" Remap g…
 " ----------------------------------------------------------------------------
 noremap gs gk
 noremap gt gj
@@ -130,23 +110,7 @@ noremap « <
 noremap » >
 " }}}
 
-" Ex remapping {{{
-if has("autocmd")
-    augroup netrw_dvorak_fix
-        autocmd!
-        autocmd filetype netrw call Fix_netrw_maps_for_dvorak()
-    augroup END
-    function! Fix_netrw_maps_for_dvorak()
-        noremap <buffer> t j
-        noremap <buffer> s k
-        noremap <buffer> k s
-        noremap <buffer> gb gT
-        noremap <buffer> gé gt
-    endfunction
-endif
-" }}}
-
-" Windows: Easier window manipulation with à instead of C-w {{{
+" Windows: Easier window manipulation with é instead of C-w {{{
 " ----------------------------------------------------------------------------
 
 " quick buffer access
@@ -156,14 +120,21 @@ nnoremap [buffer]é :b#<CR>
 " change buffer
 nnoremap [buffer]t :bp<CR>
 nnoremap [buffer]s :bn<CR>
-nnoremap [buffer]q :bd<CR>
-nnoremap [buffer]Q :bd!<CR>
+nnoremap [buffer]q :q<CR>
+nnoremap [buffer]Q :q!<CR>
 nnoremap [buffer]<SPACE> :split<CR>
 nnoremap [buffer]<CR> :vsplit<CR>
+nnoremap [buffer]<Backspace> :bd<CR>
 
 nnoremap [buffer]= :retab<CR>
-nnoremap [buffer]d ggyG``
+nnoremap [buffer]d :%d<CR>
 nnoremap [buffer]y ggyG``
+nnoremap [buffer]l :%d<CR>i
+
+" Replace space by non breakable space where it should (French rules)
+nnoremap [buffer]  :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
+" clean trailing spaces
+nnoremap [buffer]$ :%s/\s\+$//<CR>
 
 " quick window access
 " -------------------------------------------------------------------------
@@ -180,45 +151,9 @@ nnoremap [window]C <C-w>H
 nnoremap [window]R <C-w>L
 nnoremap [window]T <C-w>J
 nnoremap [window]S <C-w>K
-
 " }}}
 
-
-" Others easier mappings {{{
-
-" Access registers more easily on bepo keyboard
-" Registers: switch à and "
-if !exists("g:bim_remap_registers") || ! g:bim_remap_registers
-
-    " switch à and "
-    nnoremap à "
-    nnoremap " à
-    nmap à [register]
-
-    nnoremap àà :registers<CR>
-
-else
-
-    nmap " [register]
-endif
-
-" }}}
-
-" Toggle options {{{
-"  we remap $ to é and take advantage of $ free key
-" Remember: vars start by $
-if !exists("g:bim_remap_dollar") || g:bim_remap_dollar
-
-    nnoremap è $
-    nnoremap $ è
-    nmap $ [option]
-
-else
-
-    nmap è [option]
-
-endif
-
+" Setting options {{{
 nnoremap <silent> [option]n :set number!<CR>
 nnoremap <silent> [option]r :set relativenumber!<CR>
 nnoremap <silent> [option]f :set foldenable!<CR>
@@ -239,16 +174,12 @@ nnoremap [option]ss :source %<cr>
 
 " }}}
 
+" Saving {{{
 " I do not map :w! because it should be used carefully
 " leader use is acceptable because it is very quick and a very common
 " operation
 map <leader>, :w<CR>
 map <leader>; :w !sudo tee % > /dev/null<CR>
-
-" Replace space by non breakable space where it should (French rules)
-nnoremap d<Backspace> :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
-nnoremap d<Space> :%s/\s\+$//<CR>
-
 " }}}
 
 " Plugin Tabularize {{{
