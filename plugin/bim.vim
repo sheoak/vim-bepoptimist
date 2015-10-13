@@ -10,8 +10,13 @@
 " TODO: Save without leader?
 " TODO: better comments
 "
-" TODO: use à   ç
+" TODO: use   ç
 " MEMO: use gà,gé,gè,zà,zé,zè,"g,"
+"
+"
+" œ : ?
+" æ : ?
+" € : ?
 "
 " ----------------------------------------------------------------------------
 " Mapping scheme :
@@ -53,6 +58,11 @@ endif
 nnoremap [buffer]   <Nop>
 nnoremap [window]   <Nop>
 nnoremap [option]   <Nop>
+nnoremap [format]   <Nop>
+vnoremap [buffer]   <Nop>
+vnoremap [window]   <Nop>
+vnoremap [option]   <Nop>
+vnoremap [format]   <Nop>
 
 " é is for manipulation of buffer [é]cran
 nmap é [buffer]
@@ -60,49 +70,52 @@ nmap é [buffer]
 nmap É [window]
 " à is a prefix for setting options ([À] régler)
 nmap à [option]
-" è is for ?
+" è is for formatting
+nmap è [format]
 " }}}
 
 " Home row HJKL -> CTSR {{{
 " ----------------------------------------------------------------------------
-noremap c h
-noremap r l
-noremap t j
-noremap s k
-" Top/Bottom of the screen
-noremap C H
-noremap R L
-" Join line / help
-noremap T J
-noremap S K
-" Previous / next fold
-noremap zt zj
-noremap zs zk
+if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
+    noremap c h
+    noremap r l
+    noremap t j
+    noremap s k
+    " Top/Bottom of the screen
+    noremap C H
+    noremap R L
+    " Join line / help
+    noremap T J
+    noremap S K
+    " Previous / next fold
+    noremap zt zj
+    noremap zs zk
 
-" Remap home row keys somewhere else
-" ----------------------------------------------------------------------------
-" T move to J ([J]usqu'à)
-noremap j t
-noremap J T
-" C move to L (Change)
-noremap l c
-noremap L C
-" R move to H (Replace)
-noremap h r
-noremap H R
-" S move to K (Substitute)
-noremap k s
-noremap K S
+    " Remap home row keys somewhere else
+    " ----------------------------------------------------------------------------
+    " T move to J ([J]usqu'à)
+    noremap j t
+    noremap J T
+    " C move to L (Change)
+    noremap l c
+    noremap L C
+    " R move to H (Replace)
+    noremap h r
+    noremap H R
+    " S move to K (Substitute)
+    noremap k s
+    noremap K S
 
-" Remap g…
-" ----------------------------------------------------------------------------
-noremap gs gk
-noremap gt gj
-" Previous / next / first / last tab
-noremap gb gT
-noremap gé gt
-noremap gB :exe "silent! tabfirst"<CR>
-noremap gÉ :exe "silent! tablast"<CR>
+    " Remap g…
+    " ----------------------------------------------------------------------------
+    noremap gs gk
+    noremap gt gj
+    " Previous / next / first / last tab
+    noremap gb gT
+    noremap gé gt
+    noremap gB :exe "silent! tabfirst"<CR>
+    noremap gÉ :exe "silent! tablast"<CR>
+endif
 " }}}
 
 " <> direct access {{{
@@ -118,28 +131,25 @@ noremap » >
 " cycle 2 last buffers
 nnoremap [buffer]é :b#<CR>
 " change buffer
-nnoremap [buffer]t :bp<CR>
-nnoremap [buffer]s :bn<CR>
+nnoremap [buffer]d :bd<CR>
+nnoremap [buffer]c :bp<CR>
+nnoremap [buffer]r :bn<CR>
+nnoremap [buffer]u :bun<CR>
+nnoremap [buffer]U :bun!<CR>
 nnoremap [buffer]q :q<CR>
 nnoremap [buffer]Q :q!<CR>
+nnoremap [buffer]w :w<CR>
+nnoremap [buffer]W :w!<CR>
+nnoremap [buffer]s :save =expand('%')<CR>
+nnoremap [buffer]S :save! =expand('%')<CR>
 nnoremap [buffer]<SPACE> :split<CR>
 nnoremap [buffer]<CR> :vsplit<CR>
-nnoremap [buffer]<Backspace> :bd<CR>
-
-nnoremap [buffer]= :retab<CR>
-nnoremap [buffer]d :%d<CR>
-nnoremap [buffer]y ggyG``
-nnoremap [buffer]l :%d<CR>i
-
-" Replace space by non breakable space where it should (French rules)
-nnoremap [buffer]  :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
-" clean trailing spaces
-nnoremap [buffer]$ :%s/\s\+$//<CR>
 
 " quick window access
 " -------------------------------------------------------------------------
 nnoremap [window] <C-w>
-nnoremap [window][window] <C-w><C-w>
+nnoremap [window]é <C-w><C-w>
+nnoremap [window]É <C-w><C-w>
 
 " direct acces to <C-w> with w
 nnoremap [window]t <C-w>j
@@ -161,16 +171,43 @@ nnoremap <silent> [option]p :set invpaste<CR>
 nnoremap <silent> [option]b :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 nnoremap <silent> [option]w :set wrap!<CR>
 
-" spell options
-" [S]et [S]pell, [S]et [S]pell [F]rench/[E]nglish
+" spell options start with [option]s
+" [S]et [S]pell, [S]pell [F]rench/[E]nglish
 nnoremap <silent> [option]ss :setlocal spell!<CR>
 nnoremap <silent> [option]sf :setlocal spell! spelllang=fr<CR>
 nnoremap <silent> [option]se :setlocal spell! spelllang=en<CR>
 
 " vim configuration and plugins
+" [E]dit [V]imrc, [S]ource [V]imrc, [S]ource current
 nnoremap [option]ev :e $MYVIMRC<cr>
 nnoremap [option]sv :source $MYVIMRC<cr>
 nnoremap [option]ss :source %<cr>
+
+" }}}
+
+" Formatting {{{
+
+" Replace space by non breakable space where it should (French rules)
+nnoremap [format]  :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
+" vnoremap [format]  :s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
+" clean trailing spaces
+nnoremap [format]$ :%s/\s\+$//<CR>
+" vnoremap [format]$ :s/\s\+$//<CR>
+"
+nnoremap [format]= :retab<CR>
+nnoremap [format]d :%d<CR>
+nnoremap [format]y :%y<CR>
+nnoremap [format]l :%d<CR>i
+
+
+" Plugin Tabularize
+" TODO: check if plugin installed
+" FIXME
+" vnoremap [format]è :Tabularize/=<CR>
+nnoremap [format]t= :Tabularize /=<CR>
+" vnoremap [format]= :Tabularize /=<CR>
+nnoremap [format]t: :Tabularize /:\zs<CR>
+" vnoremap [format]: :Tabularize /:\zs<CR>
 
 " }}}
 
@@ -180,16 +217,6 @@ nnoremap [option]ss :source %<cr>
 " operation
 map <leader>, :w<CR>
 map <leader>; :w !sudo tee % > /dev/null<CR>
-" }}}
-
-" Plugin Tabularize {{{
-" TODO: check if plugin installed
-" TODO: do not use leader
-vmap <C-j> :Tabularize/=<CR>
-nmap <Leader>= :Tabularize /=<CR>
-vmap <Leader>= :Tabularize /=<CR>
-nmap <Leader>: :Tabularize /:\zs<CR>
-vmap <Leader>: :Tabularize /:\zs<CR>
 " }}}
 
 " Plugin Unite {{{
