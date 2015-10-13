@@ -198,6 +198,9 @@ nnoremap [format]= :retab<CR>
 nnoremap [format]d :%d<CR>
 nnoremap [format]y :%y<CR>
 nnoremap [format]l :%d<CR>i
+" format current paragraph/buffer
+nnoremap [format]q gqip
+nnoremap [format]Q :g/^/normal gqgq<CR>
 
 
 " Plugin Tabularize
