@@ -55,24 +55,16 @@ endif
 
 " }}}
 
-" Shortcut to custom mapping, defined depending on options {{{
-nnoremap [buffer]   <Nop>
-nnoremap [window]   <Nop>
-nnoremap [option]   <Nop>
-nnoremap [format]   <Nop>
-vnoremap [buffer]   <Nop>
-vnoremap [window]   <Nop>
-vnoremap [option]   <Nop>
-vnoremap [format]   <Nop>
+" Plugins configuration
+" TODO: before?
+let g:surround_no_mappings = 1
 
-" é is for manipulation of buffer [é]cran
-nmap é [buffer]
-" É for manipulation of windows   [É]cran
-nmap É [window]
-" à is a prefix for setting options ([À] régler)
-nmap à [option]
-" è is for formatting
-nmap è [format]
+" Options default mappings {{{
+let g:bim_option_prefix   = 'à'
+let g:bim_buffer_prefix   = 'é'
+let g:bim_window_prefix   = 'É'
+let g:bim_buffer_operator = 'é'
+
 " }}}
 
 " Home row HJKL -> CTSR {{{
@@ -124,88 +116,85 @@ noremap « <
 noremap » >
 " }}}
 
-" Windows: Easier window manipulation with é instead of C-w {{{
-" ----------------------------------------------------------------------------
-
-" quick buffer access
+" quick buffer access {{{
 " -------------------------------------------------------------------------
+
 " cycle 2 last buffers
-nnoremap [buffer]é :b#<CR>
+execute "nnoremap " . g:bim_buffer_prefix . g:bim_buffer_prefix . " :<C-U>b#<CR>"
 " change buffer
-nnoremap [buffer]d :bd<CR>
-nnoremap [buffer]c :bp<CR>
-nnoremap [buffer]r :bn<CR>
-nnoremap [buffer]u :bun<CR>
-nnoremap [buffer]U :bun!<CR>
-nnoremap [buffer]q :q<CR>
-nnoremap [buffer]Q :q!<CR>
-nnoremap [buffer]w :w<CR>
-nnoremap [buffer]W :w!<CR>
-nnoremap [buffer]s :save =expand('%')<CR>
-nnoremap [buffer]S :save! =expand('%')<CR>
-nnoremap [buffer]<SPACE> :split<CR>
-nnoremap [buffer]<CR> :vsplit<CR>
+execute "nnoremap " . g:bim_buffer_prefix . "d :<C-U>bd<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . "c :<C-U>bp<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . "r :<C-U>bn<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . "u :<C-U>bun<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . "U :<C-U>bun!<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . "q :<C-U>q<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . "Q :<C-U>q!<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . "w :<C-U>w<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . "W :<C-U>w!<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . "s :<C-U>save =expand('%')<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . "S :<C-U>save! =expand('%')<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . "<SPACE> :<C-U>split<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . "<CR> :<C-U>vsplit<CR>"
 
 " quick window access
 " -------------------------------------------------------------------------
-nnoremap [window] <C-w>
-nnoremap [window]é <C-w><C-w>
-nnoremap [window]É <C-w><C-w>
+execute "nnoremap " . g:bim_window_prefix . " <C-w>"
+execute "nnoremap " . g:bim_window_prefix . "é <C-w><C-w>"
+execute "nnoremap " . g:bim_window_prefix . "É <C-w><C-w>"
 
 " direct acces to <C-w> with w
-nnoremap [window]t <C-w>j
-nnoremap [window]s <C-w>k
-nnoremap [window]c <C-w>h
-nnoremap [window]r <C-w>l
+execute "nnoremap " . g:bim_window_prefix . "t <C-w>j"
+execute "nnoremap " . g:bim_window_prefix . "s <C-w>k"
+execute "nnoremap " . g:bim_window_prefix . "c <C-w>h"
+execute "nnoremap " . g:bim_window_prefix . "r <C-w>l"
 " move to the left/right/top/bottom
-nnoremap [window]C <C-w>H
-nnoremap [window]R <C-w>L
-nnoremap [window]T <C-w>J
-nnoremap [window]S <C-w>K
+execute "nnoremap " . g:bim_window_prefix . "C <C-w>H"
+execute "nnoremap " . g:bim_window_prefix . "R <C-w>L"
+execute "nnoremap " . g:bim_window_prefix . "T <C-w>J"
+execute "nnoremap " . g:bim_window_prefix . "S <C-w>K"
 " }}}
 
 " Setting options {{{
-nnoremap <silent> [option]n :set number!<CR>
-nnoremap <silent> [option]r :set relativenumber!<CR>
-nnoremap <silent> [option]f :set foldenable!<CR>
-nnoremap <silent> [option]p :set invpaste<CR>
-nnoremap <silent> [option]b :let &background = ( &background == "dark"? "light" : "dark" )<CR>
-nnoremap <silent> [option]w :set wrap!<CR>
+execute "nnoremap <silent> " . g:bim_option_prefix . "n :<C-U>set number!<CR>"
+execute "nnoremap <silent> " . g:bim_option_prefix . "r :<C-U>set relativenumber!<CR>"
+execute "nnoremap <silent> " . g:bim_option_prefix . "f :<C-U>set foldenable!<CR>:set foldenable?<CR>"
+execute "nnoremap <silent> " . g:bim_option_prefix . "p :<C-U>set invpaste<CR>"
+execute "nnoremap <silent> " . g:bim_option_prefix . "b :<C-U>let &background = ( &background == 'dark'? 'light' : 'dark' )<CR>"
+execute "nnoremap <silent> " . g:bim_option_prefix . "w :<C-U>set wrap!<CR>:set wrap?<CR>"
 
-" spell options start with [option]s
-" [S]et [S]pell, [S]pell [F]rench/[E]nglish
-nnoremap <silent> [option]ss :setlocal spell!<CR>
-nnoremap <silent> [option]sf :setlocal spell! spelllang=fr<CR>
-nnoremap <silent> [option]se :setlocal spell! spelllang=en<CR>
+" spell options start with l
+execute "nnoremap <silent> " . g:bim_option_prefix . "ll :<C-U>setlocal spell!<CR>"
+execute "nnoremap <silent> " . g:bim_option_prefix . "lf :<C-U>setlocal spell! spelllang=fr<CR>"
+execute "nnoremap <silent> " . g:bim_option_prefix . "le :<C-U>setlocal spell! spelllang=en<CR>"
 
 " vim configuration and plugins
 " [E]dit [V]imrc, [S]ource [V]imrc, [S]ource current
-nnoremap [option]ev :e $MYVIMRC<cr>
-nnoremap [option]sv :source $MYVIMRC<cr>
-nnoremap [option]ss :source %<cr>
+execute "nnoremap <silent> " . g:bim_option_prefix . "ev :<C-U>e $MYVIMRC<cr>"
+execute "nnoremap <silent> " . g:bim_option_prefix . "sv :<C-U>source $MYVIMRC<cr>"
+execute "nnoremap <silent> " . g:bim_option_prefix . "ss :<C-U>source %<cr>"
 
 " }}}
 
 " Formatting {{{
 
 " Replace space by non breakable space where it should (French rules)
-nnoremap [format]  :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
+"nnoremap [format]  :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
 " vnoremap [format]  :s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
 " clean trailing spaces
-nnoremap [format]$ :%s/\s\+$//<CR>
+"nnoremap [format]$ :%s/\s\+$//<CR>
 " vnoremap [format]$ :s/\s\+$//<CR>
 
 " new operator é = full buffer
 " a very powerfull mapping!
-onoremap é :<c-u>normal! ggVG<cr>
+execute "onoremap " . g:bim_buffer_operator . " :<c-u>normal! ggVG<cr>"
 
 " Plugin Tabularize
 " TODO: check if plugin installed
 " FIXME
 " vnoremap [format]è :Tabularize/=<CR>
-nnoremap [format]t= :Tabularize /=<CR>
+"nnoremap [format]t= :Tabularize /=<CR>
 " vnoremap [format]= :Tabularize /=<CR>
-nnoremap [format]t: :Tabularize /:\zs<CR>
+" nnoremap [format]t: :Tabularize /:\zs<CR>
 " vnoremap [format]: :Tabularize /:\zs<CR>
 
 " }}}
@@ -218,67 +207,5 @@ map <leader>, :w<CR>
 map <leader>; :w !sudo tee % > /dev/null<CR>
 " }}}
 
-" Plugin Unite {{{
-if !exists("g:unite_no_mappings") || ! g:unite_no_mapping
-    autocmd! FileType unite call s:unite_my_settings()
-    function! s:unite_my_settings()
-
-        " Overwrite settings.
-        nmap <buffer> s         <Plug>(unite_loop_cursor_up)
-        nmap <buffer> t         <Plug>(unite_loop_cursor_down)
-        nmap <buffer> S         <Plug>(unite_skip_cursor_up)
-        nmap <buffer> T         <Plug>(unite_skip_cursor_down)
-
-        " open in tab
-        nnoremap <silent><buffer><expr> j
-                    \ unite#smart_map('t', unite#do_action('tabopen'))
-    endfunction
-endif
-" }}}
-
-" Fugitive mappings {{{
-if exists("g:bim_remap_fugitive") && g:bim_remap_fugitive
-    nnoremap gys :Gstatus<CR><C-w>20+
-    nnoremap gye :Gedit<CR>
-    nnoremap gya :Gadd<CR>
-    nnoremap gyd :Gdiff<CR>
-    nnoremap gyl :Glog<CR>
-    nnoremap gyp :Gpush<CR>
-    nnoremap gyc :Gcommit<CR>
-endif
-" }}}
-
-" Plugin Surround {{{
-" TODO: remap insert mappings?
-if exists("g:bim_remap_surround") && g:bim_remap_surround
-    let g:surround_no_mappings = 1
-    " bépo mapping
-    nmap ls  <Plug>Csurround
-    nmap lS  <Plug>CSurround
-    " same
-    nmap ds  <Plug>Dsurround
-    nmap ys  <Plug>Ysurround
-    nmap yS  <Plug>YSurround
-    nmap yss <Plug>Yssurround
-    nmap ySs <Plug>YSsurround
-    nmap ySS <Plug>YSsurround
-    xmap S   <Plug>VSurround
-    xmap gS  <Plug>VgSurround
-endif
-" }}}
-
-" vim-commentary fix (cgc) {{{
-if exists("g:bim_remap_commentary") && g:bim_remap_commentary
-    " TODO: test if installed
-    " bepo, cgc becomes lgc
-    nmap lgc <Plug>ChangeCommentary
-    " same:
-    xmap gc  <Plug>Commentary
-    nmap gc  <Plug>Commentary
-    omap gc  <Plug>Commentary
-    nmap gcc <Plug>CommentaryLine
-    nmap gcu <Plug>Commentary<Plug>Commentary
-endif
-" }}}
 
 " vim:foldmethod=marker:foldlevel=0
