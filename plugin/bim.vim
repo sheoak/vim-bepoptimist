@@ -4,15 +4,16 @@
 "
 " Based on http://bepo.fr/wiki/Vim suggestions, unknow author
 "
-" TODO: Unite
+" TODO: settings before loading/after loading
 " TODO: Better git shortcut
-" TODO: Tabular without leader
 " TODO: Save without leader?
 " TODO: better comments
 "
 " TODO: use   ç
 " MEMO: use gà,gé,gè,zà,zé,zè,"g,"
 "
+" TODO: :execute "map " . a:key . " :!" . a:action
+" TODO: operator buffer: é
 "
 " œ : ?
 " æ : ?
@@ -193,15 +194,10 @@ nnoremap [format]  :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
 " clean trailing spaces
 nnoremap [format]$ :%s/\s\+$//<CR>
 " vnoremap [format]$ :s/\s\+$//<CR>
-"
-nnoremap [format]= :retab<CR>
-nnoremap [format]d :%d<CR>
-nnoremap [format]y :%y<CR>
-nnoremap [format]l :%d<CR>i
-" format current paragraph/buffer
-nnoremap [format]q gqip
-nnoremap [format]Q :g/^/normal gqgq<CR>
 
+" new operator é = full buffer
+" a very powerfull mapping!
+onoremap é :<c-u>normal! ggVG<cr>
 
 " Plugin Tabularize
 " TODO: check if plugin installed
