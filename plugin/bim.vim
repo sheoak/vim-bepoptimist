@@ -55,9 +55,10 @@ endif
 
 " }}}
 
-" Plugins configuration
-" TODO: before?
-let g:surround_no_mappings = 1
+" Plugin configuration {{{
+" vim-bim must be loaded before vim-sneak for this to works
+let g:sneak#nextprev_t = 'j'
+" }}}
 
 " Options default mappings {{{
 let g:bim_option_prefix   = 'à'

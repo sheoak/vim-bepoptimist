@@ -33,54 +33,31 @@ endif
 
 " Sneak {{{
 if exists("g:loaded_sneak_plugin")
-    nnoremap <expr> j sneak#reset('t')
-    nnoremap <expr> J sneak#reset('T')
-    xnoremap <expr> j sneak#reset('t')
-    xnoremap <expr> J sneak#reset('T')
-    onoremap <expr> j sneak#reset('t')
-    onoremap <expr> J sneak#reset('T')
-
     nmap è <Plug>Sneak_s
     nmap È <Plug>Sneak_S
     xmap è <Plug>Sneak_s
     xmap È <Plug>Sneak_S
     omap è <Plug>Sneak_s
     omap È <Plug>Sneak_S
-    nmap \ <Plug>SneakPrevious
-    xmap \ <Plug>SneakPrevious
+
 endif
 " }}}
 
 " Plugin Surround {{{
-" TODO: remap insert mappings?
-if exists("g:loaded_surround")
-    " bépo mapping
+if hasmapto('<Plug>CSurround')
+    " bépo mapping only
+    nunmap cs
+    nunmap cS
     nmap ls  <Plug>Csurround
     nmap lS  <Plug>CSurround
-    " same
-    nmap ds  <Plug>Dsurround
-    nmap ys  <Plug>Ysurround
-    nmap yS  <Plug>YSurround
-    nmap yss <Plug>Yssurround
-    nmap ySs <Plug>YSsurround
-    nmap ySS <Plug>YSsurround
-    xmap S   <Plug>VSurround
-    xmap gS  <Plug>VgSurround
 endif
 " }}}
 
 " vim-commentary fix (cgc) {{{
 " bepo, cgc becomes lgc
-" TODO: how to test if installed?
-" must be defined before loading vim-commentary
-if exists("g:loaded_commentary")
+if hasmapto('<Plug>ChangeCommentary')
+    nunmap cgc
     nmap lgc <Plug>ChangeCommentary
-    " same:
-    xmap gc  <Plug>Commentary
-    nmap gc  <Plug>Commentary
-    omap gc  <Plug>Commentary
-    nmap gcc <Plug>CommentaryLine
-    nmap gcu <Plug>Commentary<Plug>Commentary
 endif
 " }}}
 
