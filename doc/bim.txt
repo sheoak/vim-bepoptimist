@@ -5,8 +5,55 @@ License: Same terms as Vim itself (see |license|)
 
 INTRODUCTION                                    *bim*
 
+Bim is a vim plugin that remaps and adds vim keymaps for Bépo keyboard.
+*Bim* is for *Bépo IMproved*.
+
+It does more than just remapping *jklm* and suggest a lot of keymaps that
+have been designed to be easy to access in bépo layout. It also take advantage
+of keys not available or hard to access in qwerty or azerty layouts, like œ,
+æ, …
+
+This plugin is under development, **no backward compatibility guaranteed** for
+now. I am style looking for ways to take advantage of the bepo layout as much
+as possible. Suggestions are very welcome.
 
 MAPPINGS                                        *bim-mappings*
+
+The philosophy of this plugin is to keep vim native keys if possible, while
+preserving the position of the home row. The remapping of the home row is
+optional. It regroups mappings by categories using a prefix for each group.
+Default is:
+
+    é       buffer prefix
+    é       buffer operator
+    É       window prefix
+    à       option prefix
+
+    Coming soon: other prefix
+
+Exemples:
+
+    " new buffer operator (é is for [é]cran)
+    yé      Yank all buffer content
+    =é      Retab all buffer content
+    gqé     Reformat all buffer content
+
+    " buffer prefix "é"
+    éé      Previous buffer
+    éc      Move to previous buffer
+    ér      Move to next buffer
+
+    " Window prefix "É"
+    ÉÉ      Previous window
+    Éc      Move to left window
+    Ét      Move to bottom window
+
+    " Option prefix "à"
+    àp      Toggle paste
+    àr      Toggle relative number
+    àf      Toggle folding
+    àev     Edit vimrc
+    àsv     Source vimrc
 
 
 MAPPINGS FAMOUS PLUGINS                         *bim-plugins*
@@ -15,33 +62,37 @@ Bim includes mapping for famous plugins so that they work better with bepo
 layout. Bim try to preserve as many original mappings as possible and mainly
 remaps the home row keys when there is a conflict.
 
-To enable them, add this in your .vimrc:
+Plugins recognized by vim are:
 
-    " vim-commentary mappings
-    let g:bim_remap_commentary = 1
-    " vim-fugitive mappings
-    let g:bim_remap_fugitive   = 1
-    " vim-surround mappings
-    let g:bim_remap_surround   = 1
+- Unite by Shougo Matsushita : fixes home row keys
+- vim-sneak by Justin M. Keyes : replace s by è by default
+- vim-commentary by Tim Pope : fix cg* mapping (c is take in home row)
+- vim-surround by Tim Pope : fix cs mapping (c is taken in home row)
+- vim-fugitive by Tim Pope : optional mapping for easy access to git features
+
 
 CUSTOMIZING                                     *bim-customizing*
 
-You can disable some of the mappings by categeries by adding some settings in
-your .vimrc.
+Bim also try to detect the bepo layout and quit if nothing is detected. This
+is experimental. You can force bepo layout in your .vimrc:
 
-Do not move $ to è, and do not create mappings starting by $:
+    let g:bepo_enable = 1
 
-    let g:bim_remap_dollar = 0
+If you do not wish to remap the home row and are using the keyboard arrows:
 
-Do not remap w to é:
+    let g:bim_remap_homerow = 0
 
-    let g:bim_remap_word = 0
+Enable fugitive mappings:
 
-Do not remap æ to CTRL-w with additionnal mappings:
+    let g:bim_map_fugitive
 
-    let g:bim_remap_window = 0
 
-Do not remap à to " with additionnal mappings:
-    let g:bim_remap_registers = 0
+You can change the prefix keys by settings them in your vimrc. This is the
+default settings:
+
+    let g:bim_option_prefix   = 'à'
+    let g:bim_buffer_prefix   = 'é'
+    let g:bim_window_prefix   = 'É'
+    let g:bim_buffer_operator = 'é'
 
  vim:tw=78:ts=8:ft=help:norl:
