@@ -4,17 +4,23 @@
 "
 " Based on http://bepo.fr/wiki/Vim suggestions, unknow author
 "
-" TODO: settings before loading/after loading
 " TODO: Better git shortcut
 " TODO: Save without leader?
 " TODO: better comments
 "
-" TODO: use   ç
+" TODO: use   ç ù
 " MEMO: use gà,gé,gè,zà,zé,zè,"g,"
 "
-" TODO: :execute "map " . a:key . " :!" . a:action
-" TODO: operator buffer: é
+" TODO: operators è à ç / ù œ æ €
+" TODO: tabularize operator waiting like :ù:é ù=àp
+" TODO: lang cleaner operator waiting like æap, æé
+" TODO: next/previous ident? ambient/inner ident
 "
+" TABULARIZE:
+" FORMATING LANG AWARE: 
+" CLEANING TRAIL:           €           €€, €ap, €é
+" INNER FUNCTION: if
+" AMBIANT FUNCTION: af
 " œ : ?
 " æ : ?
 " € : ?
@@ -61,16 +67,32 @@ let g:sneak#nextprev_t = 'j'
 " }}}
 
 " Options default mappings {{{
-let g:bim_option_prefix   = 'à'
-let g:bim_buffer_prefix   = 'é'
-let g:bim_window_prefix   = 'É'
-let g:bim_buffer_operator = 'é'
+if !exists("g:bim_option_prefix")
+    let g:bim_option_prefix   = 'à'
+endif
+if !exists("g:bim_buffer_prefix")
+    let g:bim_buffer_prefix   = 'é'
+endif
+if !exists("g:bim_window_prefix")
+    let g:bim_window_prefix   = 'É'
+endif
+if !exists("g:bim_buffer_prefix")
+    let g:bim_buffer_operator = 'é'
+endif
 
 " }}}
 
 " Home row HJKL -> CTSR {{{
 " ----------------------------------------------------------------------------
 if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
+
+    " Bepo home row keys
+    let g:bim_left_key   = 'c'
+    let g:bim_right_key  = 'r'
+    let g:bim_top_key    = 's'
+    let g:bim_bottom_key = 't'
+
+    " TODO: dynamic homerow
     noremap c h
     noremap r l
     noremap t j
@@ -109,6 +131,14 @@ if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
     noremap gé gt
     noremap gB :exe "silent! tabfirst"<CR>
     noremap gÉ :exe "silent! tablast"<CR>
+else
+
+    " default vim home row
+    let g:bim_left_key     = 'h'
+    let g:bim_right_key    = 'l'
+    let g:bim_top_key      = 'k'
+    let g:bim_bottom_key   = 'j'
+
 endif
 " }}}
 
@@ -117,15 +147,17 @@ noremap « <
 noremap » >
 " }}}
 
-" quick buffer access {{{
+" Buffers and windows (default: é/É) {{{
 " -------------------------------------------------------------------------
 
-" cycle 2 last buffers
+" New operator "é" = full buffer ; a very powerfull mapping!
+" Drawback: move to top of the screen, as any vim motion would do
+execute "onoremap " . g:bim_buffer_operator . " :<c-u>normal! ggVG<cr>"
+
+" cycle 2 last buffers, like <C-w><C-w> for windows
 execute "nnoremap " . g:bim_buffer_prefix . g:bim_buffer_prefix . " :<C-U>b#<CR>"
 " change buffer
 execute "nnoremap " . g:bim_buffer_prefix . "d :<C-U>bd<CR>"
-execute "nnoremap " . g:bim_buffer_prefix . "c :<C-U>bp<CR>"
-execute "nnoremap " . g:bim_buffer_prefix . "r :<C-U>bn<CR>"
 execute "nnoremap " . g:bim_buffer_prefix . "u :<C-U>bun<CR>"
 execute "nnoremap " . g:bim_buffer_prefix . "U :<C-U>bun!<CR>"
 execute "nnoremap " . g:bim_buffer_prefix . "q :<C-U>q<CR>"
@@ -136,23 +168,34 @@ execute "nnoremap " . g:bim_buffer_prefix . "s :<C-U>save =expand('%')<CR>"
 execute "nnoremap " . g:bim_buffer_prefix . "S :<C-U>save! =expand('%')<CR>"
 execute "nnoremap " . g:bim_buffer_prefix . "<SPACE> :<C-U>split<CR>"
 execute "nnoremap " . g:bim_buffer_prefix . "<CR> :<C-U>vsplit<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . g:bim_left_key  . " :<C-U>bp<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . g:bim_right_key . " :<C-U>bn<CR>"
 
-" quick window access
-" -------------------------------------------------------------------------
+" Quick window access
 execute "nnoremap " . g:bim_window_prefix . " <C-w>"
-execute "nnoremap " . g:bim_window_prefix . "é <C-w><C-w>"
-execute "nnoremap " . g:bim_window_prefix . "É <C-w><C-w>"
+execute "nnoremap " . g:bim_window_prefix . g:bim_window_prefix " <C-w><C-w>"
+if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
+    " Remap window + home row
+    execute "nnoremap " . g:bim_window_prefix . "c <C-w>h"
+    execute "nnoremap " . g:bim_window_prefix . "t <C-w>j"
+    execute "nnoremap " . g:bim_window_prefix . "s <C-w>k"
+    execute "nnoremap " . g:bim_window_prefix . "r <C-w>l"
+    " Move to the left/right/top/bottom
+    execute "nnoremap " . g:bim_window_prefix . "C <C-w>H"
+    execute "nnoremap " . g:bim_window_prefix . "T <C-w>J"
+    execute "nnoremap " . g:bim_window_prefix . "S <C-w>K"
+    execute "nnoremap " . g:bim_window_prefix . "R <C-w>L"
+    " Remap moved keys ([C]lose -> h, [T]ab -> j, [S]plit -> k, [R]otate -> l
+    execute "nnoremap " . g:bim_window_prefix . "h <C-w>c"
+    execute "nnoremap " . g:bim_window_prefix . "j <C-w>t"
+    execute "nnoremap " . g:bim_window_prefix . "k <C-w>s"
+    execute "nnoremap " . g:bim_window_prefix . "l <C-w>r"
+    execute "nnoremap " . g:bim_window_prefix . "H <C-w>C"
+    execute "nnoremap " . g:bim_window_prefix . "J <C-w>T"
+    execute "nnoremap " . g:bim_window_prefix . "K <C-w>S"
+    execute "nnoremap " . g:bim_window_prefix . "L <C-w>R"
+endif
 
-" direct acces to <C-w> with w
-execute "nnoremap " . g:bim_window_prefix . "t <C-w>j"
-execute "nnoremap " . g:bim_window_prefix . "s <C-w>k"
-execute "nnoremap " . g:bim_window_prefix . "c <C-w>h"
-execute "nnoremap " . g:bim_window_prefix . "r <C-w>l"
-" move to the left/right/top/bottom
-execute "nnoremap " . g:bim_window_prefix . "C <C-w>H"
-execute "nnoremap " . g:bim_window_prefix . "R <C-w>L"
-execute "nnoremap " . g:bim_window_prefix . "T <C-w>J"
-execute "nnoremap " . g:bim_window_prefix . "S <C-w>K"
 " }}}
 
 " Setting options {{{
@@ -185,10 +228,6 @@ execute "nnoremap <silent> " . g:bim_option_prefix . "ss :<C-U>source %<cr>"
 "nnoremap [format]$ :%s/\s\+$//<CR>
 " vnoremap [format]$ :s/\s\+$//<CR>
 
-" new operator é = full buffer
-" a very powerfull mapping!
-execute "onoremap " . g:bim_buffer_operator . " :<c-u>normal! ggVG<cr>"
-
 " Plugin Tabularize
 " TODO: check if plugin installed
 " FIXME
@@ -201,12 +240,10 @@ execute "onoremap " . g:bim_buffer_operator . " :<c-u>normal! ggVG<cr>"
 " }}}
 
 " Saving {{{
-" I do not map :w! because it should be used carefully
 " leader use is acceptable because it is very quick and a very common
 " operation
 map <leader>, :w<CR>
 map <leader>; :w !sudo tee % > /dev/null<CR>
 " }}}
-
 
 " vim:foldmethod=marker:foldlevel=0
