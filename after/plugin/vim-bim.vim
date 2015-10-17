@@ -43,10 +43,10 @@ endif
 " Remap Sneak "s/S" to "è/È" (default) {{{
 if exists("g:loaded_sneak_plugin")
 
-    if !exist("g:bim_sneak_next")
+    if !exists("g:bim_sneak_next")
         let g:bim_sneak_next = 'è'
     endif
-    if !exist("g:bim_sneak_prev")
+    if !exists("g:bim_sneak_prev")
         let g:bim_sneak_prev = 'È'
     endif
 

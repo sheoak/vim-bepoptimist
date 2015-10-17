@@ -76,7 +76,7 @@ endif
 if !exists("g:bim_window_prefix")
     let g:bim_window_prefix   = 'É'
 endif
-if !exists("g:bim_buffer_prefix")
+if !exists("g:bim_buffer_operator")
     let g:bim_buffer_operator = 'é'
 endif
 
