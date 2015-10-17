@@ -9,7 +9,7 @@
 " simple and to stay up to date if new mappings are added.
 
 " Plugin Unite
-if exists(':Unite') && exists("g:bim_remap_homerow") && g:bim_remap_homerow
+if exists(':Unite') && (!exists("g:bim_remap_homerow") || g:bim_remap_homerow)
     autocmd! FileType unite call s:unite_my_settings()
     function! s:unite_my_settings()
 
@@ -58,7 +58,7 @@ if exists("g:loaded_sneak_plugin")
 endif
 
 " Plugin Surround
-if hasmapto('<Plug>CSurround') && exists("g:bim_remap_homerow") && g:bim_remap_homerow
+if hasmapto('<Plug>CSurround') && (!exists("g:bim_remap_homerow") || g:bim_remap_homerow)
     " bépo mapping only
     nunmap cs
     nunmap cS
@@ -68,7 +68,7 @@ endif
 
 " vim-commentary fix (cgc)
 " bepo, cgc becomes lgc
-if hasmapto('<Plug>ChangeCommentary') && exists("g:bim_remap_homerow") && g:bim_remap_homerow
+if hasmapto('<Plug>ChangeCommentary') && (! exists("g:bim_remap_homerow") || g:bim_remap_homerow)
     nunmap cgc
     nmap lgc <Plug>ChangeCommentary
 endif
