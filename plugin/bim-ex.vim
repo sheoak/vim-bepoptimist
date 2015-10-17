@@ -1,9 +1,7 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " bim-ex.vim - vim keymaps for Explorer in bépo keyboard layout
 " Author:       sheoak <dev@sheoak.fr>
 " Version:      0.1
-"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 if has("autocmd")
     augroup netrw_dvorak_fix
         autocmd!
@@ -17,4 +15,3 @@ if has("autocmd")
         noremap <buffer> gé gt
     endfunction
 endif
-" }}}

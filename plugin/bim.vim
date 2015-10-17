@@ -1,4 +1,4 @@
-" bim.vim - vim keymaps for bépo keyboard layout {{{
+" bim.vim - vim keymaps for bépo keyboard layout
 " Author:       sheoak <dev@sheoak.fr>
 " Version:      0.1
 "
@@ -15,6 +15,8 @@
 " TODO: tabularize operator waiting like :ù:é ù=àp
 " TODO: lang cleaner operator waiting like æap, æé
 " TODO: next/previous ident? ambient/inner ident
+"
+" TODO: namespace bim#var
 "
 " TABULARIZE:
 " FORMATING LANG AWARE: 
@@ -33,19 +35,22 @@
 " gy        is for git                      (gys run :Gstatus)
 " gc        is for vim-commentary           (gcc comments a line)
 " ls/ds/ys  is for surround                 (ysaw" add quotes around word)
-"
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
-
-" bepo configuration, only if it’s current layout {{{
 " ----------------------------------------------------------------------------
 
-" disabled
+" ----------------------------------------------------------------------------
+" Init
+" ----------------------------------------------------------------------------
+if exists('g:loaded_bim_plugin') || &compatible || v:version < 700
+    finish
+endif
+let g:loaded_bim_plugin = 1
+
+" bepo configuration, only if it’s current layout
 if exists("g:bepo_enable") && ! g:bepo_enable
     finish
 endif
 
 " layout detection, experimental, except if enable war forced
-" ----------------------------------------------------------------------------
 if !exists("g:bepo_enable")
     " in tty (no X server), need testing on some other distributions
     if $TERM == "linux"
@@ -59,14 +64,14 @@ if !exists("g:bepo_enable")
     endif
 endif
 
-" }}}
+" ----------------------------------------------------------------------------
+" Plugin configuration
+" ----------------------------------------------------------------------------
 
-" Plugin configuration {{{
-" vim-bim must be loaded before vim-sneak for this to works
+" vim-sneak: vim-bim must be loaded before vim-sneak for this to works
 let g:sneak#nextprev_t = 'j'
-" }}}
 
-" Options default mappings {{{
+" Options default mappings
 if !exists("g:bim_option_prefix")
     let g:bim_option_prefix   = 'à'
 endif
@@ -80,9 +85,8 @@ if !exists("g:bim_buffer_operator")
     let g:bim_buffer_operator = 'é'
 endif
 
-" }}}
-
-" Home row HJKL -> CTSR {{{
+" ----------------------------------------------------------------------------
+" Home row HJKL -> CTSR
 " ----------------------------------------------------------------------------
 if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
 
@@ -92,7 +96,6 @@ if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
     let g:bim_top_key    = 's'
     let g:bim_bottom_key = 't'
 
-    " TODO: dynamic homerow
     noremap c h
     noremap r l
     noremap t j
@@ -108,22 +111,20 @@ if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
     noremap zs zk
 
     " Remap home row keys somewhere else
-    " ----------------------------------------------------------------------------
-    " T move to J ([J]usqu'à)
+    " T move to J
     noremap j t
     noremap J T
-    " C move to L (Change)
+    " C move to L
     noremap l c
     noremap L C
-    " R move to H (Replace)
+    " R move to H
     noremap h r
     noremap H R
-    " S move to K (Substitute)
+    " S move to K
     noremap k s
     noremap K S
 
     " Remap g…
-    " ----------------------------------------------------------------------------
     noremap gs gk
     noremap gt gj
     " Previous / next / first / last tab
@@ -132,23 +133,20 @@ if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
     noremap gB :exe "silent! tabfirst"<CR>
     noremap gÉ :exe "silent! tablast"<CR>
 else
-
     " default vim home row
     let g:bim_left_key     = 'h'
     let g:bim_right_key    = 'l'
     let g:bim_top_key      = 'k'
     let g:bim_bottom_key   = 'j'
-
 endif
-" }}}
 
-" <> direct access {{{
+" <> direct access
 noremap « <
 noremap » >
-" }}}
 
-" Buffers and windows (default: é/É) {{{
-" -------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
+" Buffers and windows (default: é/É)
+" ----------------------------------------------------------------------------
 
 " New operator "é" = full buffer ; a very powerfull mapping!
 " Drawback: move to top of the screen, as any vim motion would do
@@ -196,9 +194,9 @@ if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
     execute "nnoremap " . g:bim_window_prefix . "L <C-w>R"
 endif
 
-" }}}
-
-" Setting options {{{
+" ----------------------------------------------------------------------------
+" Setting options (default: à)
+" ----------------------------------------------------------------------------
 execute "nnoremap <silent> " . g:bim_option_prefix . "n :<C-U>set number!<CR>"
 execute "nnoremap <silent> " . g:bim_option_prefix . "r :<C-U>set relativenumber!<CR>"
 execute "nnoremap <silent> " . g:bim_option_prefix . "f :<C-U>set foldenable!<CR>:set foldenable?<CR>"
@@ -217,9 +215,7 @@ execute "nnoremap <silent> " . g:bim_option_prefix . "ev :<C-U>e $MYVIMRC<cr>"
 execute "nnoremap <silent> " . g:bim_option_prefix . "sv :<C-U>source $MYVIMRC<cr>"
 execute "nnoremap <silent> " . g:bim_option_prefix . "ss :<C-U>source %<cr>"
 
-" }}}
-
-" Formatting {{{
+" Formatting
 
 " Replace space by non breakable space where it should (French rules)
 "nnoremap [format]  :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
@@ -237,13 +233,11 @@ execute "nnoremap <silent> " . g:bim_option_prefix . "ss :<C-U>source %<cr>"
 " nnoremap [format]t: :Tabularize /:\zs<CR>
 " vnoremap [format]: :Tabularize /:\zs<CR>
 
-" }}}
-
-" Saving {{{
+" ----------------------------------------------------------------------------
+" Saving
+" ----------------------------------------------------------------------------
 " leader use is acceptable because it is very quick and a very common
 " operation
+" TODO: find something more "bepo"
 map <leader>, :w<CR>
 map <leader>; :w !sudo tee % > /dev/null<CR>
-" }}}
-
-" vim:foldmethod=marker:foldlevel=0

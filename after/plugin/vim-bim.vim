@@ -1,4 +1,4 @@
-" after/plugin/bim.vim - vim keymaps for bépo keyboard layout {{{
+" after/plugin/bim.vim - vim keymaps for bépo keyboard layout
 " Author:       sheoak <dev@sheoak.fr>
 " Version:      0.1
 "
@@ -7,9 +7,8 @@
 "
 " We unmap/remap instead of remapping everything to keep it
 " simple and to stay up to date if new mappings are added.
-" }}}
 
-" Plugin Unite {{{
+" Plugin Unite
 if exists(':Unite') && exists("g:bim_remap_homerow") && g:bim_remap_homerow
     autocmd! FileType unite call s:unite_my_settings()
     function! s:unite_my_settings()
@@ -25,10 +24,8 @@ if exists(':Unite') && exists("g:bim_remap_homerow") && g:bim_remap_homerow
                     \ unite#smart_map('t', unite#do_action('tabopen'))
     endfunction
 endif
-" }}}
 
-" Fugitive mappings {{{
-" TODO: optionnal
+" Fugitive mappings
 " TODO: better mapping
 if exists("g:loaded_fugitive") && exists("g:bim_map_fugitive") && g:bim_map_fugitive
     nnoremap gys :Gstatus<CR><C-w>20+
@@ -39,9 +36,8 @@ if exists("g:loaded_fugitive") && exists("g:bim_map_fugitive") && g:bim_map_fugi
     nnoremap gyp :Gpush<CR>
     nnoremap gyc :Gcommit<CR>
 endif
-" }}}
 
-" Remap Sneak "s/S" to "è/È" (default) {{{
+" Remap Sneak "s/S" to "è/È" (default)
 if exists("g:loaded_sneak_plugin")
 
     if !exists("g:bim_sneak_next")
@@ -60,9 +56,8 @@ if exists("g:loaded_sneak_plugin")
     execute "omap " . g:bim_sneak_prev . " <Plug>Sneak_S"
 
 endif
-" }}}
 
-" Plugin Surround {{{
+" Plugin Surround
 if hasmapto('<Plug>CSurround') && exists("g:bim_remap_homerow") && g:bim_remap_homerow
     " bépo mapping only
     nunmap cs
@@ -70,14 +65,10 @@ if hasmapto('<Plug>CSurround') && exists("g:bim_remap_homerow") && g:bim_remap_h
     nmap ls  <Plug>Csurround
     nmap lS  <Plug>CSurround
 endif
-" }}}
 
-" vim-commentary fix (cgc) {{{
+" vim-commentary fix (cgc)
 " bepo, cgc becomes lgc
 if hasmapto('<Plug>ChangeCommentary') && exists("g:bim_remap_homerow") && g:bim_remap_homerow
     nunmap cgc
     nmap lgc <Plug>ChangeCommentary
 endif
-" }}}
-
-" vim:foldmethod=marker:foldlevel=0
