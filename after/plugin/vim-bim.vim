@@ -7,6 +7,7 @@
 "
 " We unmap/remap instead of remapping everything to keep it
 " simple and to stay up to date if new mappings are added.
+" }}}
 
 " Plugin Unite {{{
 if exists(':Unite') && exists("g:bim_remap_homerow") && g:bim_remap_homerow
@@ -29,7 +30,7 @@ endif
 " Fugitive mappings {{{
 " TODO: optionnal
 " TODO: better mapping
-if exists("g:loaded_fugitive")
+if exists("g:loaded_fugitive") && exists("g:bim_map_fugitive") && g:bim_map_fugitive
     nnoremap gys :Gstatus<CR><C-w>20+
     nnoremap gye :Gedit<CR>
     nnoremap gya :Gadd<CR>
