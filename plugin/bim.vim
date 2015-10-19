@@ -224,6 +224,56 @@ execute "nnoremap <silent> " . g:bim_option_prefix . "ss :<C-U>source %<cr>"
 "nnoremap [format]$ :%s/\s\+$//<CR>
 " vnoremap [format]$ :s/\s\+$//<CR>
 
+" new operator é = full buffer
+" a very powerfull mapping!
+onoremap é :<c-u>normal! ggVG<cr>
+
+nnoremap <silent> € :set opfunc=CleanTrailingSpaces<CR>g@
+"nnoremap <silent> €€ :set opfunc=CleanTrailingSpaces<CR>g@
+vnoremap <silent> € :<C-U>call CleanTrailingSpaces(visualmode(), 1)<CR>
+nnoremap <silent> æ :set opfunc=NonBreakableSpaces<CR>g@
+"nnoremap <silent> ææ :set opfunc=NonBreakableSpaces<CR>g@
+"nnoremap <silent> Æ :set opfunc=NonBreakableSpaces<CR>g@
+vnoremap <silent> æ :<C-U>call NonBreakableSpaces(visualmode(), 1)<CR>
+
+fun! CleanTrailingSpaces(type, ...)
+
+    let sel_save = &selection
+    let &selection = "inclusive"
+
+    if a:0  " Invoked from Visual mode, use gv command.
+        "silent exe "normal! gv"
+    elseif a:type == 'line'
+        "silent exe "normal! '[V']"
+    else
+        silent exe "normal! `[v`]"
+    endif
+
+    exe "'<,'>s/\\s\\+$//g"
+
+    let &selection = sel_save
+
+endfun
+
+fun! NonBreakableSpaces(type, ...)
+    "let sel_save = &selection
+    "let &selection = "inclusive"
+    "let reg_save = @@
+
+    if a:0  " Invoked from Visual mode, use gv command.
+        silent exe "normal! gv"
+    elseif a:type == 'line'
+        silent exe "normal! '[V']"
+    else
+        silent exe "normal! `[v`]"
+    endif
+
+    exe "s/(\S) ([:;?!])/\1 \2/g"
+
+    "let &selection = sel_save
+    "let @@ = reg_save
+endfunction
+
 " Plugin Tabularize
 " TODO: check if plugin installed
 " FIXME
@@ -239,5 +289,20 @@ execute "nnoremap <silent> " . g:bim_option_prefix . "ss :<C-U>source %<cr>"
 " leader use is acceptable because it is very quick and a very common
 " operation
 " TODO: find something more "bepo"
-map <leader>, :w<CR>
-map <leader>; :w !sudo tee % > /dev/null<CR>
+map <leader>\ :w<CR>
+" map <leader>; :w !sudo tee % > /dev/null<CR>
+
+nnoremap ô o<ESC>
+nnoremap Ô O<ESC>
+onoremap ô :<C-u>execute "normal! jV" . (v:count == 0 ? '' : v:count - 1 . "j" )<CR>
+onoremap Ô :<C-u>execute "normal! kV" . (v:count == 0 ? '' : v:count - 1 . "k" )<CR>
+
+" à/À : sneak               àte, Àte…
+" é/É : buffer              éé, ÉÉ, Ér, éd… dé, yé…
+" À : window                ÀÀ, Àr, Àc…
+" æ : Align Expression      æ=ap, æ==, æé…
+" œ : Option Edit           œf, œsv, œev, œlf…
+" ô : line over/below       dô, dÔ, ô, Ô
+" ù : Unite                 ùf, ùb, ùa, ùm, ùg…
+" € : Trailing spaces       €€, €ap, €é…
+
