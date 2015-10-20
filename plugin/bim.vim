@@ -228,34 +228,76 @@ execute "nnoremap <silent> " . g:bim_option_prefix . "ss :<C-U>source %<cr>"
 " a very powerfull mapping!
 onoremap é :<c-u>normal! ggVG<cr>
 
-nnoremap <silent> € :set opfunc=CleanTrailingSpaces<CR>g@
-"nnoremap <silent> €€ :set opfunc=CleanTrailingSpaces<CR>g@
-vnoremap <silent> € :<C-U>call CleanTrailingSpaces(visualmode(), 1)<CR>
-nnoremap <silent> æ :set opfunc=NonBreakableSpaces<CR>g@
-"nnoremap <silent> ææ :set opfunc=NonBreakableSpaces<CR>g@
-"nnoremap <silent> Æ :set opfunc=NonBreakableSpaces<CR>g@
-vnoremap <silent> æ :<C-U>call NonBreakableSpaces(visualmode(), 1)<CR>
+nnoremap <silent> € :set opfunc=bim#CleanTrailingSpaces<CR>g@
+nnoremap <silent> €€ €l
+vnoremap <silent> € :<C-U>call bim#CleanTrailingSpaces(visualmode(), 1)<CR>
+nnoremap <silent> æ :set opfunc=bim#TabularizeOp<CR>g@
+nnoremap <silent> æ :set opfunc=bim#TabularizeOp<CR>g@
 
-fun! CleanTrailingSpaces(type, ...)
+" last/first chars of line
+onoremap â :<c-u>execute "normal! $v" . v:count1 . "hl"<CR>
+onoremap Â :<c-u>execute "normal! ^v" . v:count1 . "lh"<CR>
+
+" TODO: trail delete
+" nnoremap ê … opfunc …
+" nnoremap Ê … opfunc …
+" TODO: delete last char 
+" nnoremap â … opfunc …
+" nnoremap Â … opfunc …
+"
+" TODO: lang formating
+" nnoremap € … opfunc …
+
+" ----------------------------------------------------------------------------
+" Saving
+" ----------------------------------------------------------------------------
+" leader use is acceptable because it is very quick and a very common
+" operation
+" TODO: find something more "bepo"
+map <leader>, :w<CR>
+" map <leader>; :w !sudo tee % > /dev/null<CR>
+
+" Add line above/below but without insert mode
+nnoremap ô o<ESC>
+nnoremap Ô O<ESC>
+
+" Operator "line" (l)
+onoremap l :<c-u>normal! 0v$<CR>
+" [B]elow/[A]bove [L]ine
+onoremap bl :<C-u>execute "normal! jV" . (v:count == 0 ? '' : v:count - 1 . "j" )<CR>
+onoremap al :<C-u>execute "normal! kV" . (v:count == 0 ? '' : v:count - 1 . "k" )<CR>
+
+" à/À : sneak               àte, Àte…
+" é/É : buffer              éé, ÉÉ, Ér, éd… dé, yé…
+" À : window                ÀÀ, Àr, Àc…
+" æ : Align Expression      æ=ap, æ==, æé…
+" œ : Option Edit           œf, œsv, œev, œlf…
+" ô : line over/below       dô, dÔ, ô, Ô
+" ù : Unite                 ùf, ùb, ùa, ùm, ùg…
+" € : Trailing spaces       €€, €ap, €é…
+" â/Â
+
+fun! bim#CleanTrailingSpaces(type, ...)
 
     let sel_save = &selection
     let &selection = "inclusive"
 
     if a:0  " Invoked from Visual mode, use gv command.
-        "silent exe "normal! gv"
+        silent exe "normal! gv"
     elseif a:type == 'line'
         "silent exe "normal! '[V']"
     else
         silent exe "normal! `[v`]"
     endif
 
-    exe "'<,'>s/\\s\\+$//g"
+    exe "silent! '<,'>s/\\s\\+$//g"
+    exe "normal! "
 
     let &selection = sel_save
 
 endfun
 
-fun! NonBreakableSpaces(type, ...)
+fun! bim#NonBreakableSpaces(type, ...)
     "let sel_save = &selection
     "let &selection = "inclusive"
     "let reg_save = @@
@@ -268,41 +310,30 @@ fun! NonBreakableSpaces(type, ...)
         silent exe "normal! `[v`]"
     endif
 
-    exe "s/(\S) ([:;?!])/\1 \2/g"
+    exe "silent! s/(\S) ([:;?!])/\1 \2/g"
 
     "let &selection = sel_save
     "let @@ = reg_save
 endfunction
 
-" Plugin Tabularize
-" TODO: check if plugin installed
-" FIXME
-" vnoremap [format]è :Tabularize/=<CR>
-"nnoremap [format]t= :Tabularize /=<CR>
-" vnoremap [format]= :Tabularize /=<CR>
-" nnoremap [format]t: :Tabularize /:\zs<CR>
-" vnoremap [format]: :Tabularize /:\zs<CR>
+function! s:InputChar()
+    let c = getchar()
+    return type(c) == type(0) ? nr2char(c) : c
+endfunction
 
-" ----------------------------------------------------------------------------
-" Saving
-" ----------------------------------------------------------------------------
-" leader use is acceptable because it is very quick and a very common
-" operation
-" TODO: find something more "bepo"
-map <leader>\ :w<CR>
-" map <leader>; :w !sudo tee % > /dev/null<CR>
+fun! bim#TabularizeOp(type, ...)
+    let sel_save = &selection
+    let &selection = "inclusive"
 
-nnoremap ô o<ESC>
-nnoremap Ô O<ESC>
-onoremap ô :<C-u>execute "normal! jV" . (v:count == 0 ? '' : v:count - 1 . "j" )<CR>
-onoremap Ô :<C-u>execute "normal! kV" . (v:count == 0 ? '' : v:count - 1 . "k" )<CR>
+    let c = s:InputChar()
+    let c = c ? c : '='
 
-" à/À : sneak               àte, Àte…
-" é/É : buffer              éé, ÉÉ, Ér, éd… dé, yé…
-" À : window                ÀÀ, Àr, Àc…
-" æ : Align Expression      æ=ap, æ==, æé…
-" œ : Option Edit           œf, œsv, œev, œlf…
-" ô : line over/below       dô, dÔ, ô, Ô
-" ù : Unite                 ùf, ùb, ùa, ùm, ùg…
-" € : Trailing spaces       €€, €ap, €é…
+    if ! a:0 && a:type != "line"
+        silent exe "normal! `[v`]"
+    endif
+
+    exe "Tabularize/" . c
+
+    let &selection = sel_save
+endfunction
 
