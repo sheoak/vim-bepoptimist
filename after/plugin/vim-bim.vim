@@ -44,10 +44,10 @@ endif
 if exists("g:loaded_sneak_plugin")
 
     if !exists("g:bim_sneak_next")
-        let g:bim_sneak_next = 'è'
+        let g:bim_sneak_next = 'à'
     endif
     if !exists("g:bim_sneak_prev")
-        let g:bim_sneak_prev = 'È'
+        let g:bim_sneak_prev = 'À'
     endif
 
     execute "nmap " . g:bim_sneak_next . " <Plug>Sneak_s"
