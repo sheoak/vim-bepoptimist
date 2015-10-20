@@ -228,9 +228,9 @@ execute "nnoremap <silent> " . g:bim_option_prefix . "ss :<C-U>source %<cr>"
 " a very powerfull mapping!
 onoremap é :<c-u>normal! ggVG<cr>
 
-nnoremap <silent> € :set opfunc=bim#CleanTrailingSpaces<CR>g@
-nnoremap <silent> €€ €l
-vnoremap <silent> € :<C-U>call bim#CleanTrailingSpaces(visualmode(), 1)<CR>
+"nnoremap <silent> € :set opfunc=bim#CleanTrailingSpaces<CR>g@
+"nnoremap <silent> €€ €l
+"vnoremap <silent> € :<C-U>call bim#CleanTrailingSpaces(visualmode(), 1)<CR>
 nnoremap <silent> æ :set opfunc=bim#TabularizeOp<CR>g@
 nnoremap <silent> æ :set opfunc=bim#TabularizeOp<CR>g@
 
@@ -266,6 +266,8 @@ onoremap l :<c-u>normal! 0v$<CR>
 " [B]elow/[A]bove [L]ine
 onoremap bl :<C-u>execute "normal! jV" . (v:count == 0 ? '' : v:count - 1 . "j" )<CR>
 onoremap al :<C-u>execute "normal! kV" . (v:count == 0 ? '' : v:count - 1 . "k" )<CR>
+onoremap ô bl
+onoremap Ô bl
 
 " à/À : sneak               àte, Àte…
 " é/É : buffer              éé, ÉÉ, Ér, éd… dé, yé…
