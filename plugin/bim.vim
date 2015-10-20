@@ -73,7 +73,7 @@ let g:sneak#nextprev_t = 'j'
 
 " Options default mappings
 if !exists("g:bim_option_prefix")
-    let g:bim_option_prefix   = 'à'
+    let g:bim_option_prefix   = 'œ'
 endif
 if !exists("g:bim_buffer_prefix")
     let g:bim_buffer_prefix   = 'é'
