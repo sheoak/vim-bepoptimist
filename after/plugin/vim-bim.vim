@@ -75,3 +75,15 @@ if hasmapto('<Plug>ChangeCommentary') && (! exists("g:bim_remap_homerow") || g:b
     nunmap cgc
     nmap lgc <Plug>ChangeCommentary
 endif
+
+" Gundo fix and mapping
+if exists(':GundoToggle')
+    if !exists("g:bim_gundo_key")
+        let g:bim_gundo_key = 'ù'
+    endif
+    if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
+        let g:gundo_map_move_older = "t"
+        let g:gundo_map_move_newer = "s"
+    endif
+    execute "nnoremap " . g:bim_gundo_key . " :GundoToggle<CR>"
+endif
