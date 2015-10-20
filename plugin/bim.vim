@@ -1,6 +1,6 @@
 " bim.vim - vim keymaps for bépo keyboard layout
 " Author:       sheoak <dev@sheoak.fr>
-" Version:      0.1
+" Version:      0.0.1
 "
 " Based on http://bepo.fr/wiki/Vim suggestions, unknow author
 "
