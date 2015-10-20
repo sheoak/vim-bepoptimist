@@ -28,13 +28,16 @@ endif
 " Fugitive mappings
 " TODO: better mapping
 if exists("g:loaded_fugitive") && exists("g:bim_map_fugitive") && g:bim_map_fugitive
-    nnoremap gys :Gstatus<CR><C-w>20+
-    nnoremap gye :Gedit<CR>
-    nnoremap gya :Gadd<CR>
-    nnoremap gyd :Gdiff<CR>
-    nnoremap gyl :Glog<CR>
-    nnoremap gyp :Gpush<CR>
-    nnoremap gyc :Gcommit<CR>
+    if !exists("g:bim_fugitive_prefix")
+        let g:bim_fugitive_prefix = 'gy'
+    endif
+    execute "nnoremap " . g:bim_fugitive_prefix . "s :Gstatus<CR><C-w>20+"
+    execute "nnoremap " . g:bim_fugitive_prefix . "e :Gedit<CR>"
+    execute "nnoremap " . g:bim_fugitive_prefix . "a :Gadd<CR>"
+    execute "nnoremap " . g:bim_fugitive_prefix . "d :Gdiff<CR>"
+    execute "nnoremap " . g:bim_fugitive_prefix . "l :Glog<CR>"
+    execute "nnoremap " . g:bim_fugitive_prefix . "p :Gpush<CR>"
+    execute "nnoremap " . g:bim_fugitive_prefix . "c :Gcommit<CR>"
 endif
 
 " Remap Sneak "s/S" to "è/È" (default)
