@@ -3,8 +3,6 @@
 Author:  sheoak <yannick@sheoak.fr>
 License: Same terms as Vim itself (see |license|)
 
-INTRODUCTION                                    *bim*
-
 Bim is a vim plugin that remaps and adds vim keymaps for Bépo keyboard.
 *Bim* is for *Bépo IMproved*.
 
@@ -17,19 +15,95 @@ This plugin is under development, **no backward compatibility guaranteed** for
 now. I am style looking for ways to take advantage of the bepo layout as much
 as possible. Suggestions are very welcome.
 
-MAPPINGS                                        *bim-mappings*
+====================================================================
+CONTENTS                                            *bim-contents*
+
+    1. Usage ................ |bim-usage|
+    2. Mappings ............. |bim-mappings|
+        2.1 Prefix .......... |bim-prefix|
+        2.2 Operators ....... |bim-operators|
+        2.3 Motions ......... |bim-motions|
+        2.4 Plugins ......... |bim-plugins|
+    2. Configuration ........ |bim-configuration|
+    3. License .............. |bim-licence|
+    4. Contributing ......... |bim-contribute|
+    5. Changelog ............ |bim-changelog|
+    6. Credits .............. |bim-credits|
+
+====================================================================
+Section 1: Usage                                       *bim-usage*
+
+====================================================================
+Section 2: Mappings                                    *bim-mappings*
 
 The philosophy of this plugin is to keep vim native keys if possible, while
 preserving the position of the home row. The remapping of the home row is
 optional. It regroups mappings by categories using a prefix for each group.
-Default is:
+It also try to have mapping with mnemonics, keeping vim philosophy in mind.
+French letters have french mnemonics.
 
-    é       buffer prefix
-    é       buffer operator
-    É       window prefix
-    à       option prefix
+------------------------------------------------------------------------------
+2.1 Prefix mappings                                     *bim-prefix*
 
-    Coming soon: other prefix
+                                                    *é*
+é               buffer prefix ([é]cran in French)
+                                                    *É*
+É               window prefix
+                                                    *œ*
+œ               option prefix ([O]ption [E]dit)
+
+------------------------------------------------------------------------------
+2.2 Operators                                           *bim-operators*
+
+                                                    *v_é* *é*
+é               select all content
+                                                    *v_â* *â*
+â               select [count] last char(s) of the line (same mnemonic as vim key "a")
+                                                    *v_Â* *Â*
+Â               select [count] first char(s) of the line
+                                                    *v_ô* *ô*
+ô               select [count] next line(s) (same mnemonic as vim key "o")
+                                                    *v_Ô* *Ô*
+Ô               select [count] previous line(s) (same mnemonic as vim key "o")
+
+------------------------------------------------------------------------------
+2.3 Motions                                             *bim-motions*
+
+                                                    *â*
+â{motion}       delete last char(s) of the line (same mnemonic as vim key "a")
+                                                    *Â*
+Â{motion}       delete firt char(s) of the line
+                                                    *Ô*
+ô{motion}       insert n line(s) below
+                                                    *Ô*
+Ô{motion}       insert n line(s) above
+
+------------------------------------------------------------------------------
+2.4 Plugins                                             *bim-plugins*
+
+Bim includes mapping for famous plugins so that they work better with bepo
+layout. Bim try to preserve as many original mappings as possible and mainly
+remaps the home row keys when there is a conflict.
+
+Plugins recognized by vim are:
+
+- Unite by Shougo Matsushita : fixes home row keys
+- vim-sneak by Justin M. Keyes : replace s by è by default
+- vim-commentary by Tim Pope : fix cg* mapping (c is take in home row)
+- vim-surround by Tim Pope : fix cs mapping (c is taken in home row)
+- vim-fugitive by Tim Pope : optional mapping for easy access to git features
+- Gundo by Steve Losh : mapping of the toggle feature
+
+                                                    *æ*
+æ               tabularize ([A]lign [E]dit)
+                                                    *à*
+à               sneak next (French: aller [à])
+                                                    *À*
+À               sneak previous (French: aller [à])
+                                                    *ù*
+ù               Gundo toggle ([U]ndo)
+                                                    *gy*
+gy              Fugitive prefix
 
 Exemples:
 
@@ -56,22 +130,8 @@ Exemples:
     àsv     Source vimrc
 
 
-MAPPINGS FAMOUS PLUGINS                         *bim-plugins*
-
-Bim includes mapping for famous plugins so that they work better with bepo
-layout. Bim try to preserve as many original mappings as possible and mainly
-remaps the home row keys when there is a conflict.
-
-Plugins recognized by vim are:
-
-- Unite by Shougo Matsushita : fixes home row keys
-- vim-sneak by Justin M. Keyes : replace s by è by default
-- vim-commentary by Tim Pope : fix cg* mapping (c is take in home row)
-- vim-surround by Tim Pope : fix cs mapping (c is taken in home row)
-- vim-fugitive by Tim Pope : optional mapping for easy access to git features
-
-
-CUSTOMIZING                                     *bim-customizing*
+==============================================================================
+3. Configuration                                *bim-configuration*
 
 Bim also try to detect the bepo layout and quit if nothing is detected. This
 is experimental. You can force bepo layout in your .vimrc:
@@ -95,4 +155,37 @@ default settings:
     let g:bim_window_prefix   = 'É'
     let g:bim_buffer_operator = 'é'
 
- vim:tw=78:ts=8:ft=help:norl:
+
+==============================================================================
+3. Licence                                      *bim-licence*
+
+Same at vim itself. See |licence|.
+
+
+==============================================================================
+4. Contributing                                 *bim-contribute*
+
+You have ideas to make bim better? Any suggestions are very welcome.
+
+Fork the project on GitHub and send a pull request:
+
+    GitHub:    http://github.com/sheoak/vim-bim
+
+
+==============================================================================
+5. Changelog                                    *bim-changelog*
+
+v0.0.1
+    * Experimental version, use at your own risk!
+    * No backward compatibility guaranteed
+
+
+==============================================================================
+6. Credits                                      *bim-credits*
+
+Bim was originally written by Yannick Huerre to improve the experience of vim 
+using a bepo keyboard.
+
+==============================================================================
+
+ vim:tw=78:ts=4:ft=help:norl:
