@@ -231,8 +231,8 @@ onoremap é :<c-u>normal! ggVG<cr>
 "nnoremap <silent> € :set opfunc=bim#CleanTrailingSpaces<CR>g@
 "nnoremap <silent> €€ €l
 "vnoremap <silent> € :<C-U>call bim#CleanTrailingSpaces(visualmode(), 1)<CR>
-nnoremap <silent> æ :set opfunc=bim#TabularizeOp<CR>g@
-nnoremap <silent> æ :set opfunc=bim#TabularizeOp<CR>g@
+nnoremap <silent> æ :set opfunc=<SID>TabularizeOp<CR>g@
+nnoremap <silent> æ :set opfunc=<SID>TabularizeOp<CR>g@
 
 " last/first chars of line
 onoremap â :<c-u>execute "normal! $v" . v:count1 . "hl"<CR>
@@ -258,8 +258,8 @@ map <leader>, :w<CR>
 " map <leader>; :w !sudo tee % > /dev/null<CR>
 
 " Add line above/below but without insert mode
-nnoremap ô o<ESC>
-nnoremap Ô O<ESC>
+nnoremap <silent> Ô :<C-U>call <SID>BlankUp(v:count1)<CR>
+nnoremap <silent> ô :<C-U>call <SID>BlankDown(v:count1)<CR>
 
 " Operator "line" (l)
 onoremap l :<c-u>normal! 0v$<CR>
@@ -279,7 +279,7 @@ onoremap Ô bl
 " € : Trailing spaces       €€, €ap, €é…
 " â/Â
 
-fun! bim#CleanTrailingSpaces(type, ...)
+fun! s:CleanTrailingSpaces(type, ...)
 
     let sel_save = &selection
     let &selection = "inclusive"
@@ -299,7 +299,7 @@ fun! bim#CleanTrailingSpaces(type, ...)
 
 endfun
 
-fun! bim#NonBreakableSpaces(type, ...)
+fun! s:NonBreakableSpaces(type, ...)
     "let sel_save = &selection
     "let &selection = "inclusive"
     "let reg_save = @@
@@ -318,12 +318,7 @@ fun! bim#NonBreakableSpaces(type, ...)
     "let @@ = reg_save
 endfunction
 
-function! s:InputChar()
-    let c = getchar()
-    return type(c) == type(0) ? nr2char(c) : c
-endfunction
-
-fun! bim#TabularizeOp(type, ...)
+fun! s:TabularizeOp(type, ...)
     let sel_save = &selection
     let &selection = "inclusive"
 
@@ -337,5 +332,24 @@ fun! bim#TabularizeOp(type, ...)
     exe "Tabularize/" . c
 
     let &selection = sel_save
+endfunction
+
+
+function! s:InputChar()
+    let c = getchar()
+    return type(c) == type(0) ? nr2char(c) : c
+endfunction
+
+" based on vim-surround plugin code
+function! s:BlankUp(count) abort
+  put!=repeat(nr2char(10), a:count)
+  ']+1
+  silent! call repeat#set("Ô", a:count)
+endfunction
+
+function! s:BlankDown(count) abort
+  put =repeat(nr2char(10), a:count)
+  '[-1
+  silent! call repeat#set("ô", a:count)
 endfunction
 
