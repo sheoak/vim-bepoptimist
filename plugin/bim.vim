@@ -96,33 +96,33 @@ if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
     let g:bim_top_key    = 's'
     let g:bim_bottom_key = 't'
 
-    noremap c h
-    noremap r l
-    noremap t j
-    noremap s k
+    noremap <nowait> c h
+    noremap <nowait> r l
+    noremap <nowait> t j
+    noremap <nowait> s k
     " Top/Bottom of the screen
-    noremap C H
-    noremap R L
+    noremap <nowait> C H
+    noremap <nowait> R L
     " Join line / help
-    noremap T J
-    noremap S K
+    noremap <nowait> T J
+    noremap <nowait> S K
     " Previous / next fold
     noremap zt zj
     noremap zs zk
 
     " Remap home row keys somewhere else
     " T move to J
-    noremap j t
-    noremap J T
+    noremap <nowait> j t
+    noremap <nowait> J T
     " C move to L
-    noremap l c
-    noremap L C
+    noremap <nowait> l c
+    noremap <nowait> L C
     " R move to H
-    noremap h r
-    noremap H R
+    noremap <nowait> h r
+    noremap <nowait> H R
     " S move to K
-    noremap k s
-    noremap K S
+    noremap <nowait> k s
+    noremap <nowait> K S
 
     " Remap g…
     noremap gs gk
