@@ -261,13 +261,13 @@ map <leader>, :w<CR>
 nnoremap <silent> Ô :<C-U>call <SID>BlankUp(v:count1)<CR>
 nnoremap <silent> ô :<C-U>call <SID>BlankDown(v:count1)<CR>
 
-" Operator "line" (l)
-onoremap l :<c-u>normal! 0v$<CR>
+" Operator "line" (l), only if homerow has been remapped
+if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
+    onoremap l :<c-u>normal! 0v$<CR>
+endif
 " [B]elow/[A]bove [L]ine
 onoremap bl :<C-u>execute "normal! jV" . (v:count == 0 ? '' : v:count - 1 . "j" )<CR>
 onoremap al :<C-u>execute "normal! kV" . (v:count == 0 ? '' : v:count - 1 . "k" )<CR>
-onoremap ô bl
-onoremap Ô bl
 
 " à/À : sneak               àte, Àte…
 " é/É : buffer              éé, ÉÉ, Ér, éd… dé, yé…
