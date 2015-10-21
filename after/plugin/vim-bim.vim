@@ -61,6 +61,8 @@ if exists("g:loaded_sneak_plugin")
 endif
 
 " Plugin Surround
+" TODO: unmap ds, ys, yss and remap everything without "s" if homerow is
+" remapped
 if hasmapto('<Plug>CSurround') && (!exists("g:bim_remap_homerow") || g:bim_remap_homerow)
     " bépo mapping only
     nunmap cs
