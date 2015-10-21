@@ -11,8 +11,8 @@ have been designed to be easy to access in bépo layout. It also take advantage
 of keys not available or hard to access in qwerty or azerty layouts, like œ,
 æ, …
 
-This plugin is under development, **no backward compatibility guaranteed** for
-now. I am style looking for ways to take advantage of the bepo layout as much
+This plugin is under development — no backward compatibility guaranteed — for
+now. I am still looking for ways to take advantage of the bepo layout as much
 as possible. Suggestions are very welcome.
 
 ====================================================================
@@ -25,10 +25,11 @@ CONTENTS                                            *bim-contents*
         2.3 Motions ......... |bim-motions|
         2.4 Plugins ......... |bim-plugins|
     2. Configuration ........ |bim-configuration|
-    3. License .............. |bim-licence|
-    4. Contributing ......... |bim-contribute|
-    5. Changelog ............ |bim-changelog|
-    6. Credits .............. |bim-credits|
+    3. FAQ .................. |bim-faq|
+    4. License .............. |bim-licence|
+    5. Contributing ......... |bim-contribute|
+    6. Changelog ............ |bim-changelog|
+    7. Credits .............. |bim-credits|
 
 ====================================================================
 Section 1: Usage                                       *bim-usage*
@@ -157,13 +158,40 @@ default settings:
 
 
 ==============================================================================
+3. FAQ                                          *bim-faq*
+
+- Why not using vim-impaired by Tim Pope for options?
+
+Vim-impaired is great, but I find it more intuitive to toggle options rather
+that setting it on or off. It also avoid to many dependencies and regrouping
+everything under brackets shortcuts.
+
+- "w" is terrible on bepo, why not remapping it to "è"?
+
+Bim tries to keep vim’s shortcuts as they are, because vim has not been
+designed for shortcuts ergonomy, but for mnemonics. "è" is hard to remember
+compared to "w" for *word*. You can however switch to "bepow" keyboard layout
+system wide.
+
+- Why mixing French an English Mnemonics
+
+You can not find English Mnemonics for French letters like "é" or "è". I used
+French words for these cases. Digraphs like "œ" or "æ" are however using
+English mnemonics.
+
+- I want to reconfigure some mappings, not just prefix
+
+Bim has not been designed for that, but you can remap anything to a bim
+mapping if you wish to.
+
+==============================================================================
 3. Licence                                      *bim-licence*
 
 Same at vim itself. See |licence|.
 
 
 ==============================================================================
-4. Contributing                                 *bim-contribute*
+5. Contributing                                 *bim-contribute*
 
 You have ideas to make bim better? Any suggestions are very welcome.
 
@@ -173,7 +201,7 @@ Fork the project on GitHub and send a pull request:
 
 
 ==============================================================================
-5. Changelog                                    *bim-changelog*
+6. Changelog                                    *bim-changelog*
 
 v0.0.1
     * Experimental version, use at your own risk!
@@ -181,7 +209,7 @@ v0.0.1
 
 
 ==============================================================================
-6. Credits                                      *bim-credits*
+7. Credits                                      *bim-credits*
 
 Bim was originally written by Yannick Huerre to improve the experience of vim 
 using a bepo keyboard.
