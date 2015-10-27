@@ -8,7 +8,6 @@
 " TODO: Save without leader?
 " TODO: better comments
 "
-" TODO: use   ç ù
 " MEMO: use gà,gé,gè,zà,zé,zè,"g,"
 "
 " TODO: operators è à ç / ù œ æ €
@@ -23,20 +22,27 @@
 " CLEANING TRAIL:           €           €€, €ap, €é
 " INNER FUNCTION: if
 " AMBIANT FUNCTION: af
-" œ : ?
-" æ : ?
-" € : ?
+" FREE:
 "
-" ----------------------------------------------------------------------------
-" Mapping scheme :
-" ----------------------------------------------------------------------------
-" $ or è    is for options                  ($f toggles folding)
-" w or é    is for window handling          (éé cycle last windows)
-" gy        is for git                      (gys run :Gstatus)
-" gc        is for vim-commentary           (gcc comments a line)
-" ls/ds/ys  is for surround                 (ysaw" add quotes around word)
-" ----------------------------------------------------------------------------
-
+" gl
+" gh (select mode ?)
+" gj (moved to arrow)
+" gk (moved to arrow)
+" gà : invert sneak? Easier than À? À stays free?
+" gy : git ?
+" gè :
+" gç :
+" gc : vim commentary
+" zà :
+" zé :
+" zè :
+" zù :
+" â : trail?
+" è : ?
+" € : lang formating?
+" ê : ?
+" û : ?
+"
 " ----------------------------------------------------------------------------
 " Init
 " ----------------------------------------------------------------------------
@@ -65,7 +71,7 @@ if !exists("g:bepo_enable")
 endif
 
 " ----------------------------------------------------------------------------
-" Plugin configuration
+" Prefix configuration
 " ----------------------------------------------------------------------------
 
 " vim-sneak: vim-bim must be loaded before vim-sneak for this to works
@@ -124,14 +130,10 @@ if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
     noremap <nowait> k s
     noremap <nowait> K S
 
-    " Remap g…
-    noremap gs gk
-    noremap gt gj
-    " Previous / next / first / last tab
-    noremap gb gT
-    noremap gé gt
-    noremap gB :exe "silent! tabfirst"<CR>
-    noremap gÉ :exe "silent! tablast"<CR>
+    " we avoid remapping "gt" and "gs"
+    nnoremap <nowait> <up>   gs
+    nnoremap <nowait> <down> gt
+
 else
     " default vim home row
     let g:bim_left_key     = 'h'
@@ -145,7 +147,7 @@ noremap « <
 noremap » >
 
 " ----------------------------------------------------------------------------
-" Buffers and windows (default: é/É)
+" Buffers and windows
 " ----------------------------------------------------------------------------
 
 " New operator "é" = full buffer ; a very powerfull mapping!
@@ -166,12 +168,15 @@ execute "nnoremap " . g:bim_buffer_prefix . "s :<C-U>save =expand('%')<CR>"
 execute "nnoremap " . g:bim_buffer_prefix . "S :<C-U>save! =expand('%')<CR>"
 execute "nnoremap " . g:bim_buffer_prefix . "<SPACE> :<C-U>split<CR>"
 execute "nnoremap " . g:bim_buffer_prefix . "<CR> :<C-U>vsplit<CR>"
-execute "nnoremap " . g:bim_buffer_prefix . g:bim_left_key  . " :<C-U>bp<CR>"
-execute "nnoremap " . g:bim_buffer_prefix . g:bim_right_key . " :<C-U>bn<CR>"
+
+" works like gt/gT but for buffers ([G]oto [É]cran)
+execute "nnoremap g" . g:bim_buffer_prefix . " :<C-U>bp<CR>"
+execute "nnoremap g" . toupper(g:bim_buffer_prefix) . " :<C-U>bn<CR>"
 
 " Quick window access
 execute "nnoremap " . g:bim_window_prefix . " <C-w>"
 execute "nnoremap " . g:bim_window_prefix . g:bim_window_prefix " <C-w><C-w>"
+
 if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
     " Remap window + home row
     execute "nnoremap " . g:bim_window_prefix . "c <C-w>h"
@@ -195,25 +200,46 @@ if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
 endif
 
 " ----------------------------------------------------------------------------
-" Setting options (default: à)
+" Setting options
 " ----------------------------------------------------------------------------
-execute "nnoremap <silent> " . g:bim_option_prefix . "n :<C-U>set number!<CR>"
-execute "nnoremap <silent> " . g:bim_option_prefix . "r :<C-U>set relativenumber!<CR>"
-execute "nnoremap <silent> " . g:bim_option_prefix . "f :<C-U>set foldenable!<CR>:set foldenable?<CR>"
-execute "nnoremap <silent> " . g:bim_option_prefix . "p :<C-U>set invpaste<CR>"
-execute "nnoremap <silent> " . g:bim_option_prefix . "b :<C-U>let &background = ( &background == 'dark'? 'light' : 'dark' )<CR>"
-execute "nnoremap <silent> " . g:bim_option_prefix . "w :<C-U>set wrap!<CR>:set wrap?<CR>"
+execute "nnoremap <silent> " . g:bim_option_prefix .
+    \ "n :<C-U>set number!<CR>"
+
+execute "nnoremap <silent> " . g:bim_option_prefix .
+    \ "r :<C-U>set relativenumber!<CR>"
+
+execute "nnoremap <silent> " . g:bim_option_prefix .
+    \ "f :<C-U>set foldenable!<CR>:set foldenable?<CR>"
+
+execute "nnoremap <silent> " . g:bim_option_prefix .
+    \ "p :<C-U>set invpaste<CR>"
+
+execute "nnoremap <silent> " . g:bim_option_prefix .
+    \ "b :<C-U>let &background = ( &background == 'dark'? 'light' : 'dark' )<CR>"
+
+execute "nnoremap <silent> " . g:bim_option_prefix .
+    \ "w :<C-U>set wrap!<CR>:set wrap?<CR>"
 
 " spell options start with l
-execute "nnoremap <silent> " . g:bim_option_prefix . "ll :<C-U>setlocal spell!<CR>"
-execute "nnoremap <silent> " . g:bim_option_prefix . "lf :<C-U>setlocal spell! spelllang=fr<CR>"
-execute "nnoremap <silent> " . g:bim_option_prefix . "le :<C-U>setlocal spell! spelllang=en<CR>"
+execute "nnoremap <silent> " . g:bim_option_prefix .
+    \ "ll :<C-U>setlocal spell!<CR>"
+
+execute "nnoremap <silent> " . g:bim_option_prefix .
+    \ "lf :<C-U>setlocal spell! spelllang=fr<CR>"
+
+execute "nnoremap <silent> " . g:bim_option_prefix
+    \ . "le :<C-U>setlocal spell! spelllang=en<CR>"
 
 " vim configuration and plugins
 " [E]dit [V]imrc, [S]ource [V]imrc, [S]ource current
 execute "nnoremap <silent> " . g:bim_option_prefix . "ev :<C-U>e $MYVIMRC<cr>"
 execute "nnoremap <silent> " . g:bim_option_prefix . "sv :<C-U>source $MYVIMRC<cr>"
 execute "nnoremap <silent> " . g:bim_option_prefix . "ss :<C-U>source %<cr>"
+
+" Plugins options ([A]ddons)
+" TODO: create a function to add custom "option-a" mappings in vimrc
+execute "nnoremap <silent> " . g:bim_option_prefix . "ag :<C-U>Goyo<CR>"
+execute "nnoremap <silent> " . g:bim_option_prefix . "an :<C-U>NeoCompleteToggle<CR>"
 
 " Formatting
 
@@ -231,8 +257,13 @@ onoremap é :<c-u>normal! ggVG<cr>
 "nnoremap <silent> € :set opfunc=bim#CleanTrailingSpaces<CR>g@
 "nnoremap <silent> €€ €l
 "vnoremap <silent> € :<C-U>call bim#CleanTrailingSpaces(visualmode(), 1)<CR>
+" TODO: after, only if tabularize is found
 nnoremap <silent> æ :set opfunc=<SID>TabularizeOp<CR>g@
 nnoremap <silent> æ :set opfunc=<SID>TabularizeOp<CR>g@
+
+" move line down/up
+nnoremap <silent> lm :set opfunc=<SID>MoveLineDown<CR>g@
+nnoremap <silent> lM :set opfunc=<SID>MoveLineUp<CR>g@
 
 " last/first chars of line
 onoremap â :<c-u>execute "normal! $v" . v:count1 . "hl"<CR>
@@ -241,7 +272,7 @@ onoremap Â :<c-u>execute "normal! ^v" . v:count1 . "lh"<CR>
 " TODO: trail delete
 " nnoremap ê … opfunc …
 " nnoremap Ê … opfunc …
-" TODO: delete last char 
+" TODO: delete last char
 " nnoremap â … opfunc …
 " nnoremap Â … opfunc …
 "
