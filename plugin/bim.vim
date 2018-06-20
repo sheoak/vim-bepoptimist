@@ -4,45 +4,10 @@
 "
 " Based on http://bepo.fr/wiki/Vim suggestions, unknow author
 "
-" TODO: Better git shortcut
-" TODO: Save without leader?
-" TODO: better comments
-"
-" MEMO: use gà,gé,gè,zà,zé,zè,"g,"
-"
-" TODO: operators è à ç / ù œ æ €
 " TODO: tabularize operator waiting like :ù:é ù=àp
 " TODO: lang cleaner operator waiting like æap, æé
 " TODO: next/previous ident? ambient/inner ident
-"
-" TODO: namespace bim#var
-"
-" TABULARIZE:
-" FORMATING LANG AWARE: 
-" CLEANING TRAIL:           €           €€, €ap, €é
-" INNER FUNCTION: if
-" AMBIANT FUNCTION: af
-" FREE:
-"
-" gl
-" gh (select mode ?)
-" gj (moved to arrow)
-" gk (moved to arrow)
-" gà : invert sneak? Easier than À? À stays free?
-" gy : git ?
-" gè :
-" gç :
-" gc : vim commentary
-" zà :
-" zé :
-" zè :
-" zù :
-" â : trail?
-" è : ?
-" € : lang formating?
-" ê : ?
-" û : ?
-"
+
 " ----------------------------------------------------------------------------
 " Init
 " ----------------------------------------------------------------------------
@@ -56,26 +21,26 @@ if exists("g:bepo_enable") && ! g:bepo_enable
     finish
 endif
 
-" layout detection, experimental, except if enable war forced
-if !exists("g:bepo_enable")
-    " in tty (no X server), need testing on some other distributions
-    if $TERM == "linux"
-        if executable('localectl') && empty(system("localectl|grep bepo"))
-            finish
-        endif
-    else
-        if executable('setxkbmap') && empty(system("setxkbmap -print|grep bepo"))
-            finish
-        endif
+" Check if the setting to remap homerow is on
+fun! Vimbim_is_homerow()
+    if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
+        return 1
     endif
-endif
+endfunction
 
 " ----------------------------------------------------------------------------
 " Prefix configuration
 " ----------------------------------------------------------------------------
 
-" vim-sneak: vim-bim must be loaded before vim-sneak for this to works
-let g:sneak#nextprev_t = 'j'
+" Keyboard / keymap specific mapping
+" default leader is bad in azerty and bépo keyboards
+" we also remap ’ to , to avoid losing "f" reverse repeat
+if exists("g:bim_remap_leader") && g:bim_remap_leader
+    let mapleader = ","
+    noremap ’ ,
+    " Quick save with new leader
+    map <leader>, :w<CR>
+endif
 
 " Options default mappings
 if !exists("g:bim_option_prefix")
@@ -94,7 +59,7 @@ endif
 " ----------------------------------------------------------------------------
 " Home row HJKL -> CTSR
 " ----------------------------------------------------------------------------
-if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
+if Vimbim_is_homerow()
 
     " Bepo home row keys
     let g:bim_left_key   = 'c'
@@ -152,7 +117,7 @@ noremap » >
 
 " New operator "é" = full buffer ; a very powerfull mapping!
 " Drawback: move to top of the screen, as any vim motion would do
-execute "onoremap " . g:bim_buffer_operator . " :<c-u>normal! ggVG<cr>"
+execute "onoremap " . g:bim_buffer_operator . ":<c-u>normal! mzggVG<cr>`z"
 
 " cycle 2 last buffers, like <C-w><C-w> for windows
 execute "nnoremap " . g:bim_buffer_prefix . g:bim_buffer_prefix . " :<C-U>b#<CR>"
@@ -177,7 +142,7 @@ execute "nnoremap g" . toupper(g:bim_buffer_prefix) . " :<C-U>bn<CR>"
 execute "nnoremap " . g:bim_window_prefix . " <C-w>"
 execute "nnoremap " . g:bim_window_prefix . g:bim_window_prefix " <C-w><C-w>"
 
-if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
+if Vimbim_is_homerow()
     " Remap window + home row
     execute "nnoremap " . g:bim_window_prefix . "c <C-w>h"
     execute "nnoremap " . g:bim_window_prefix . "t <C-w>j"
@@ -236,79 +201,22 @@ execute "nnoremap <silent> " . g:bim_option_prefix . "ev :<C-U>e $MYVIMRC<cr>"
 execute "nnoremap <silent> " . g:bim_option_prefix . "sv :<C-U>source $MYVIMRC<cr>"
 execute "nnoremap <silent> " . g:bim_option_prefix . "ss :<C-U>source %<cr>"
 
-" Plugins options ([A]ddons)
-" TODO: create a function to add custom "option-a" mappings in vimrc
-execute "nnoremap <silent> " . g:bim_option_prefix . "ag :<C-U>Goyo<CR>"
-execute "nnoremap <silent> " . g:bim_option_prefix . "an :<C-U>NeoCompleteToggle<CR>"
-
 " Formatting
 
-" Replace space by non breakable space where it should (French rules)
-"nnoremap [format]  :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
-" vnoremap [format]  :s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
-" clean trailing spaces
-"nnoremap [format]$ :%s/\s\+$//<CR>
-" vnoremap [format]$ :s/\s\+$//<CR>
-
 " new operator é = full buffer
-" a very powerfull mapping!
 onoremap é :<c-u>normal! ggVG<cr>
 
-"nnoremap <silent> € :set opfunc=bim#CleanTrailingSpaces<CR>g@
-"nnoremap <silent> €€ €l
-"vnoremap <silent> € :<C-U>call bim#CleanTrailingSpaces(visualmode(), 1)<CR>
 " TODO: after, only if tabularize is found
 nnoremap <silent> æ :set opfunc=<SID>TabularizeOp<CR>g@
 nnoremap <silent> æ :set opfunc=<SID>TabularizeOp<CR>g@
-
-" move line down/up
-nnoremap <silent> lm :set opfunc=<SID>MoveLineDown<CR>g@
-nnoremap <silent> lM :set opfunc=<SID>MoveLineUp<CR>g@
 
 " last/first chars of line
 onoremap â :<c-u>execute "normal! $v" . v:count1 . "hl"<CR>
 onoremap Â :<c-u>execute "normal! ^v" . v:count1 . "lh"<CR>
 
-" TODO: trail delete
-" nnoremap ê … opfunc …
-" nnoremap Ê … opfunc …
-" TODO: delete last char
-" nnoremap â … opfunc …
-" nnoremap Â … opfunc …
-"
-" TODO: lang formating
-" nnoremap € … opfunc …
-
-" ----------------------------------------------------------------------------
-" Saving
-" ----------------------------------------------------------------------------
-" leader use is acceptable because it is very quick and a very common
-" operation
-" TODO: find something more "bepo"
-map <leader>, :w<CR>
-" map <leader>; :w !sudo tee % > /dev/null<CR>
-
 " Add line above/below but without insert mode
 nnoremap <silent> Ô :<C-U>call <SID>BlankUp(v:count1)<CR>
 nnoremap <silent> ô :<C-U>call <SID>BlankDown(v:count1)<CR>
-
-" Operator "line" (l), only if homerow has been remapped
-if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
-    onoremap l :<c-u>normal! 0v$<CR>
-endif
-" [B]elow/[A]bove [L]ine
-onoremap bl :<C-u>execute "normal! jV" . (v:count == 0 ? '' : v:count - 1 . "j" )<CR>
-onoremap al :<C-u>execute "normal! kV" . (v:count == 0 ? '' : v:count - 1 . "k" )<CR>
-
-" à/À : sneak               àte, Àte…
-" é/É : buffer              éé, ÉÉ, Ér, éd… dé, yé…
-" À : window                ÀÀ, Àr, Àc…
-" æ : Align Expression      æ=ap, æ==, æé…
-" œ : Option Edit           œf, œsv, œev, œlf…
-" ô : line over/below       dô, dÔ, ô, Ô
-" ù : Unite                 ùf, ùb, ùa, ùm, ùg…
-" € : Trailing spaces       €€, €ap, €é…
-" â/Â
 
 fun! s:CleanTrailingSpaces(type, ...)
 
@@ -365,7 +273,6 @@ fun! s:TabularizeOp(type, ...)
     let &selection = sel_save
 endfunction
 
-
 function! s:InputChar()
     let c = getchar()
     return type(c) == type(0) ? nr2char(c) : c
@@ -383,4 +290,40 @@ function! s:BlankDown(count) abort
   '[-1
   silent! call repeat#set("ô", a:count)
 endfunction
+
+" MEMO: use gà,gé,gè,zà,zé,zè,"g,"
+" gl
+" gh (select mode ?)
+" gj (moved to arrow)
+" gk (moved to arrow)
+" gy : git ?
+" gè :
+" gç :
+" gc : vim commentary
+" zà :
+" zé :
+" zè :
+" zù :
+" â : trail?
+" è : ?
+" € : lang formating?
+" ê : ?
+" û : ?
+"
+" à/À : sneak               àte, Àte…
+" é/É : buffer/window       éé, ÉÉ, Ér, éd… dé, yé…
+" æ : Align Expression      æ=ap, æ==, æé…
+" œ : Option Edit           œf, œsv, œev, œlf…
+" ô : line over/below       dô, dÔ, ô, Ô
+" € : Trailing spaces       €€, €ap, €é…
+
+" Replace space by non breakable space where it should (French rules)
+"nnoremap [format]  :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
+" vnoremap [format]  :s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
+" clean trailing spaces
+"nnoremap [format]$ :%s/\s\+$//<CR>
+" vnoremap [format]$ :s/\s\+$//<CR>
+"nnoremap <silent> € :set opfunc=bim#CleanTrailingSpaces<CR>g@
+"nnoremap <silent> €€ €l
+"vnoremap <silent> € :<C-U>call bim#CleanTrailingSpaces(visualmode(), 1)<CR>
 
