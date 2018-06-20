@@ -9,14 +9,16 @@ of keys not available in qwerty or azerty layouts, like œ, æ, …
 
 # Features
 
-- Detecting keyboard layout
 - Remapping *jklm* to *ctsr*
-- Improving access to some keys like $, ", w…
-- Adding new easy keymaps
-- Fixing shortcuts for some famous plugins (surround, unite…)
+- Improving access to some keys like w or leader key
+- Adding new easy keymaps using additional bepo keys
+- Fugitive, sneak, tabular mappings for bépo
 
 **Under development.**
 
+# Abandonned features
+
+- Detecting keyboard layout: it was too much trouble…
 
 # Installation
 
