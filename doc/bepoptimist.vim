@@ -1,10 +1,9 @@
-*bim.txt* Plugin to handle bépo layout better
+*Bepoptimist.txt* Plugin to handle bépo layout better
 
 Author:  sheoak <yannick@sheoak.fr>
-License: Same terms as Vim itself (see |license|)
+licence: Same terms as Vim itself (see |licence|)
 
-Bim is a vim plugin that remaps and adds vim keymaps for Bépo keyboard.
-*Bim* is for *Bépo IMproved*.
+Bepoptimist is a vim plugin that remaps and adds vim keymaps for Bépo keyboard.
 
 It does more than just remapping *jklm* and suggest a lot of keymaps that
 have been designed to be easy to access in bépo layout. It also take advantage
@@ -16,26 +15,26 @@ now. I am still looking for ways to take advantage of the bepo layout as much
 as possible. Suggestions are very welcome.
 
 ====================================================================
-CONTENTS                                            *bim-contents*
+CONTENTS                                            *bepoptimist-contents*
 
-    1. Usage ................ |bim-usage|
-    2. Mappings ............. |bim-mappings|
-        2.1 Prefix .......... |bim-prefix|
-        2.2 Operators ....... |bim-operators|
-        2.3 Motions ......... |bim-motions|
-        2.4 Plugins ......... |bim-plugins|
-    2. Configuration ........ |bim-configuration|
-    3. FAQ .................. |bim-faq|
-    4. License .............. |bim-licence|
-    5. Contributing ......... |bim-contribute|
-    6. Changelog ............ |bim-changelog|
-    7. Credits .............. |bim-credits|
-
-====================================================================
-Section 1: Usage                                       *bim-usage*
+    1. Usage ................ |bepoptimist-usage|
+    2. Mappings ............. |bepoptimist-mappings|
+        2.1 Prefix .......... |bepoptimist-prefix|
+        2.2 Operators ....... |bepoptimist-operators|
+        2.3 Motions ......... |bepoptimist-motions|
+        2.4 Plugins ......... |bepoptimist-plugins|
+    2. Configuration ........ |bepoptimist-configuration|
+    3. FAQ .................. |bepoptimist-faq|
+    4. Licence .............. |bepoptimist-licence|
+    5. Contributing ......... |bepoptimist-contribute|
+    6. Changelog ............ |bepoptimist-changelog|
+    7. Credits .............. |bepoptimist-credits|
 
 ====================================================================
-Section 2: Mappings                                    *bim-mappings*
+Section 1: Usage                                       *bepoptimist-usage*
+
+====================================================================
+Section 2: Mappings                                    *bepoptimist-mappings*
 
 The philosophy of this plugin is to keep vim native keys if possible, while
 preserving the position of the home row. The remapping of the home row is
@@ -44,17 +43,17 @@ It also try to have mapping with mnemonics, keeping vim philosophy in mind.
 French letters have french mnemonics.
 
 ------------------------------------------------------------------------------
-2.1 Prefix mappings                                     *bim-prefix*
+2.1 Prefix mappings                                     *bepoptimist-prefix*
 
                                                     *é*
 é               buffer prefix ([é]cran in French)
-                                                    *É*
-É               window prefix
+                                                    *è*
+è               window prefix
                                                     *œ*
 œ               option prefix ([O]ption [E]dit)
 
 ------------------------------------------------------------------------------
-2.2 Operators                                           *bim-operators*
+2.2 Operators                                           *bepoptimist-operators*
 
                                                     *v_é* *é*
 é               select all content
@@ -68,7 +67,7 @@ French letters have french mnemonics.
 Ô               select [count] previous line(s) (same mnemonic as vim key "o")
 
 ------------------------------------------------------------------------------
-2.3 Motions                                             *bim-motions*
+2.3 Motions                                             *bepoptimist-motions*
 
                                                     *â*
 â{motion}       delete last char(s) of the line (same mnemonic as vim key "a")
@@ -80,16 +79,15 @@ French letters have french mnemonics.
 Ô{motion}       insert n line(s) above
 
 ------------------------------------------------------------------------------
-2.4 Plugins                                             *bim-plugins*
+2.4 Plugins                                             *bepoptimist-plugins*
 
-Bim includes mapping for famous plugins so that they work better with bepo
-layout. Bim try to preserve as many original mappings as possible and mainly
-remaps the home row keys when there is a conflict.
+Bepoptimist includes mapping for famous plugins so that they work better with
+bepo layout. Bepoptimist try to preserve as many original mappings as possible
+and mainly remaps the home row keys when there is a conflict.
 
 Plugins recognized by vim are:
 
-- Unite by Shougo Matsushita : fixes home row keys
-- vim-sneak by Justin M. Keyes : replace s by è by default
+- vim-sneak by Justin M. Keyes : replace s by à by default and fixes mappings.
 - vim-commentary by Tim Pope : fix cg* mapping (c is take in home row)
 - vim-surround by Tim Pope : fix cs mapping (c is taken in home row)
 - vim-fugitive by Tim Pope : optional mapping for easy access to git features
@@ -117,48 +115,49 @@ Exemples:
     éé      Previous buffer
     éc      Move to previous buffer
     ér      Move to next buffer
+    év      Vertical split
+    éh      Horizontal split
 
-    " Window prefix "É"
-    ÉÉ      Previous window
-    Éc      Move to left window
-    Ét      Move to bottom window
+    " Window prefix "è"
+    èè      Previous window
+    èc      Move to left window
+    èt      Move to bottom window
 
-    " Option prefix "à"
-    àp      Toggle paste
-    àr      Toggle relative number
-    àf      Toggle folding
-    àev     Edit vimrc
-    àsv     Source vimrc
+    " Option prefix "œ"
+    œp      Toggle paste
+    œr      Toggle relative number
+    œf      Toggle folding
+    œev     Edit vimrc
+    œsv     Source vimrc
 
 
 ==============================================================================
-3. Configuration                                *bim-configuration*
+3. Configuration                                *bepoptimist-configuration*
 
-Bim also try to detect the bepo layout and quit if nothing is detected. This
-is experimental. You can force bepo layout in your .vimrc:
+Enable the plugin:
 
     let g:bepo_enable = 1
 
 If you do not wish to remap the home row and are using the keyboard arrows:
 
-    let g:bim_remap_homerow = 0
+    let g:bepoptimist_remap_homerow = 0
 
 Enable fugitive mappings:
 
-    let g:bim_map_fugitive
+    let g:bepoptimist_map_fugitive
 
 
 You can change the prefix keys by settings them in your vimrc. This is the
 default settings:
 
-    let g:bim_option_prefix   = 'à'
-    let g:bim_buffer_prefix   = 'é'
-    let g:bim_window_prefix   = 'É'
-    let g:bim_buffer_operator = 'é'
+    let g:bepoptimist_option_prefix   = 'à'
+    let g:bepoptimist_buffer_prefix   = 'k'
+    let g:bepoptimist_window_prefix   = 'É'
+    let g:bepoptimist_buffer_operator = 'ç'
 
 
 ==============================================================================
-3. FAQ                                          *bim-faq*
+3. FAQ                                          *bepoptimist-faq*
 
 - Why not using vim-impaired by Tim Pope for options?
 
@@ -168,51 +167,51 @@ everything under brackets shortcuts.
 
 - "w" is terrible on bepo, why not remapping it to "è"?
 
-Bim tries to keep vim’s shortcuts as they are, because vim has not been
+Bepoptimist tries to keep vim’s shortcuts as they are, because vim has not been
 designed for shortcuts ergonomy, but for mnemonics. "è" is hard to remember
 compared to "w" for *word*. You can however switch to "bepow" keyboard layout
 system wide.
 
 - Why mixing French an English Mnemonics
 
-You can not find English Mnemonics for French letters like "é" or "è". I used
+You cannot find English Mnemonics for French letters like "é" or "è". I used
 French words for these cases. Digraphs like "œ" or "æ" are however using
 English mnemonics.
 
 - I want to reconfigure some mappings, not just prefix
 
-Bim has not been designed for that, but you can remap anything to a bim
-mapping if you wish to.
+Bepoptimist has not been designed for that, but you can remap anything to a
+bepoptimist mapping if you wish to.
 
 ==============================================================================
-3. Licence                                      *bim-licence*
+4. Licence                                      *bepoptimist-licence*
 
 Same at vim itself. See |licence|.
 
 
 ==============================================================================
-5. Contributing                                 *bim-contribute*
+5. Contributing                                 *bepoptimist-contribute*
 
-You have ideas to make bim better? Any suggestions are very welcome.
+You have ideas to make bepoptimist better? Any suggestions are very welcome.
 
 Fork the project on GitHub and send a pull request:
 
-    GitHub:    http://github.com/sheoak/vim-bim
+    GitHub:    http://github.com/sheoak/vim-bepoptimist
 
 
 ==============================================================================
-6. Changelog                                    *bim-changelog*
+6. Changelog                                    *bepoptimist-changelog*
 
-v0.0.1
+v0.0.2
     * Experimental version, use at your own risk!
     * No backward compatibility guaranteed
 
 
 ==============================================================================
-7. Credits                                      *bim-credits*
+7. Credits                                      *bepoptimist-credits*
 
-Bim was originally written by Yannick Huerre to improve the experience of vim 
-using a bepo keyboard.
+Bepoptimist was originally written by Yannick Huerre to improve the experience
+of vim using a bepo keyboard.
 
 ==============================================================================
 
