@@ -72,3 +72,13 @@ if exists(':GundoToggle')
     endif
     execute "nnoremap <silent> " . g:bim_gundo_key . " :GundoToggle<CR>"
 endif
+
+" Plugin Surround
+if hasmapto('<Plug>CSurround') && (!exists("g:bim_remap_homerow") || g:bim_remap_homerow)
+    let g:surround_no_mappings = 1
+    nunmap cs
+    nunmap cS
+    nmap ls  <Plug>Csurround
+    nmap lS  <Plug>CSurround
+endif
+
