@@ -1,6 +1,7 @@
-# vim-bim
+# vim-bepoptimist
+
 A vim plugin that remaps and adds vim keymaps for Bépo keyboard
-*Bim* is for *Bépo IMproved*.
+(previously "bepo-vim")
 
 It does more than just remapping *jklm* and suggest a lot of keymaps that
 have been designed to be easy to access in bépo layout. It also take advantage
