@@ -32,7 +32,6 @@ endfunction
 " Prefix configuration
 " ----------------------------------------------------------------------------
 
-" Keyboard / keymap specific mapping
 " default leader is bad in azerty and bépo keyboards
 " we also remap ’ to , to avoid losing "f" reverse repeat
 if exists("g:bim_remap_leader") && g:bim_remap_leader
@@ -50,7 +49,7 @@ if !exists("g:bim_buffer_prefix")
     let g:bim_buffer_prefix   = 'é'
 endif
 if !exists("g:bim_window_prefix")
-    let g:bim_window_prefix   = 'É'
+    let g:bim_window_prefix   = 'è'
 endif
 if !exists("g:bim_buffer_operator")
     let g:bim_buffer_operator = 'é'
@@ -131,8 +130,10 @@ execute "nnoremap " . g:bim_buffer_prefix . "w :<C-U>w<CR>"
 execute "nnoremap " . g:bim_buffer_prefix . "W :<C-U>w!<CR>"
 execute "nnoremap " . g:bim_buffer_prefix . "s :<C-U>save =expand('%')<CR>"
 execute "nnoremap " . g:bim_buffer_prefix . "S :<C-U>save! =expand('%')<CR>"
-execute "nnoremap " . g:bim_buffer_prefix . "<SPACE> :<C-U>split<CR>"
-execute "nnoremap " . g:bim_buffer_prefix . "<CR> :<C-U>vsplit<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . "h :<C-U>split<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . "v :<C-U>vsplit<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . "x :<C-U>x<CR>"
+execute "nnoremap " . g:bim_buffer_prefix . "X :<C-U>X<CR>"
 
 " works like gt/gT but for buffers ([G]oto [É]cran)
 execute "nnoremap g" . g:bim_buffer_prefix . " :<C-U>bp<CR>"
@@ -141,6 +142,11 @@ execute "nnoremap g" . toupper(g:bim_buffer_prefix) . " :<C-U>bn<CR>"
 " Quick window access
 execute "nnoremap " . g:bim_window_prefix . " <C-w>"
 execute "nnoremap " . g:bim_window_prefix . g:bim_window_prefix " <C-w><C-w>"
+
+" close preview window
+execute "nnoremap " . g:bim_window_prefix . "z :pc<CR>"
+" close quickfix window
+execute "nnoremap " . g:bim_window_prefix . "f :ccl<CR>"
 
 if Vimbim_is_homerow()
     " Remap window + home row
@@ -206,9 +212,11 @@ execute "nnoremap <silent> " . g:bim_option_prefix . "ss :<C-U>source %<cr>"
 " new operator é = full buffer
 onoremap é :<c-u>normal! ggVG<cr>
 
-" TODO: after, only if tabularize is found
-nnoremap <silent> æ :set opfunc=<SID>TabularizeOp<CR>g@
-nnoremap <silent> æ :set opfunc=<SID>TabularizeOp<CR>g@
+" > have been remap to » so it's free for a similar more complex operation
+" with Tabularize
+nnoremap <silent> æ :<C-U>Tabularize /
+" Reuse last pattern
+nnoremap <silent> ææ :<C-U>Tabularize<CR>
 
 " last/first chars of line
 onoremap â :<c-u>execute "normal! $v" . v:count1 . "hl"<CR>
@@ -255,22 +263,6 @@ fun! s:NonBreakableSpaces(type, ...)
 
     "let &selection = sel_save
     "let @@ = reg_save
-endfunction
-
-fun! s:TabularizeOp(type, ...)
-    let sel_save = &selection
-    let &selection = "inclusive"
-
-    let c = s:InputChar()
-    let c = c ? c : '='
-
-    if ! a:0 && a:type != "line"
-        silent exe "normal! `[v`]"
-    endif
-
-    exe "Tabularize/" . c
-
-    let &selection = sel_save
 endfunction
 
 function! s:InputChar()
