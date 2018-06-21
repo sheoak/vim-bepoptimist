@@ -71,8 +71,12 @@ endif
 " Plugin Surround
 if hasmapto('<Plug>CSurround') && Vimbim_is_homerow()
     let g:surround_no_mappings = 1
-    nunmap cs
-    nunmap cS
+    if (hasmapto('cs'))
+        nunmap cs
+    endif
+    if (hasmapto('cS'))
+        nunmap cS
+    endif
     nmap ls  <Plug>Csurround
     nmap lS  <Plug>CSurround
 endif
