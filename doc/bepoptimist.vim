@@ -94,7 +94,7 @@ Plugins recognized by vim are:
 - Gundo by Steve Losh : mapping of the toggle feature
 
                                                     *æ*
-æ               tabularize ([A]lign [E]dit)
+æ               easyalign ([A]lign [E]asy)
                                                     *à*
 à               sneak next (French: aller [à])
                                                     *À*
@@ -129,6 +129,9 @@ Exemples:
     œf      Toggle folding
     œev     Edit vimrc
     œsv     Source vimrc
+
+    " Align paragraph with =
+    æap=
 
 
 ==============================================================================
