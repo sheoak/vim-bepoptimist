@@ -3,10 +3,6 @@
 " Version:      0.0.1
 "
 " Based on http://bepo.fr/wiki/Vim suggestions, unknow author
-"
-" TODO: tabularize operator waiting like :ù:é ù=àp
-" TODO: lang cleaner operator waiting like æap, æé
-" TODO: next/previous ident? ambient/inner ident
 
 " ----------------------------------------------------------------------------
 " Init
@@ -214,9 +210,8 @@ onoremap é :<c-u>normal! ggVG<cr>
 
 " > have been remap to » so it's free for a similar more complex operation
 " with Tabularize
-nnoremap <silent> æ :<C-U>Tabularize /
-" Reuse last pattern
-nnoremap <silent> ææ :<C-U>Tabularize<CR>
+nmap æ <Plug>(EasyAlign)
+xmap æ <Plug>(EasyAlign)
 
 " last/first chars of line
 onoremap â :<c-u>execute "normal! $v" . v:count1 . "hl"<CR>
