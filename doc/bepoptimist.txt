@@ -55,28 +55,28 @@ French letters have french mnemonics.
 ------------------------------------------------------------------------------
 2.2 Operators                                           *bepoptimist-operators*
 
-                                                    *v_é* *é*
+                                                    *v_é* *o_é*
 é               select all content
-                                                    *v_â* *â*
+                                                    *v_â* *o_â*
 â               select [count] last char(s) of the line (same mnemonic as vim key "a")
-                                                    *v_Â* *Â*
+                                                    *v_Â* *o_Â*
 Â               select [count] first char(s) of the line
-                                                    *v_ô* *ô*
+                                                    *v_ô* *o_ô*
 ô               select [count] next line(s) (same mnemonic as vim key "o")
-                                                    *v_Ô* *Ô*
+                                                    *v_Ô* *o_Ô*
 Ô               select [count] previous line(s) (same mnemonic as vim key "o")
 
 ------------------------------------------------------------------------------
 2.3 Motions                                             *bepoptimist-motions*
 
                                                     *â*
-â{motion}       delete last char(s) of the line (same mnemonic as vim key "a")
+â               delete last char(s) of the line (same mnemonic as vim key "a")
                                                     *Â*
-Â{motion}       delete firt char(s) of the line
+Â               delete firt char(s) of the line
+                                                    *ô*
+ô               insert n line(s) below
                                                     *Ô*
-ô{motion}       insert n line(s) below
-                                                    *Ô*
-Ô{motion}       insert n line(s) above
+Ô               insert n line(s) above
 
 ------------------------------------------------------------------------------
 2.4 Plugins                                             *bepoptimist-plugins*
