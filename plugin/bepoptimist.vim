@@ -34,7 +34,7 @@ if exists("g:bim_remap_leader") && g:bim_remap_leader
     let mapleader = ","
     noremap ’ ,
     " Quick save with new leader
-    map <leader>, :w<CR>
+    noremap <leader>, :w<CR>
 endif
 
 " Options default mappings
