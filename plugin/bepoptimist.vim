@@ -106,6 +106,14 @@ endif
 noremap « <
 noremap » >
 
+" this leave us a nice logical combo to replace , and ; when we remap , to
+" leader.
+if exists("g:bim_remap_leader") && g:bim_remap_leader
+    noremap < ,
+    noremap > ;
+    " ; is now free for another use
+endif
+
 " ----------------------------------------------------------------------------
 " Buffers and windows
 " ----------------------------------------------------------------------------
