@@ -229,6 +229,21 @@ onoremap Â :<c-u>execute "normal! ^v" . v:count1 . "lh"<CR>
 nnoremap <silent> Ô :<C-U>call <SID>BlankUp(v:count1)<CR>
 nnoremap <silent> ô :<C-U>call <SID>BlankDown(v:count1)<CR>
 
+" Plugin Surround
+" We need to remap everything to avoid conflict
+if exists('g:surround_no_mappings') && g:surround_no_mappings
+    nmap ds  <Plug>Dsurround
+    nmap ls  <Plug>Csurround
+    nmap lS  <Plug>CSurround
+    nmap ys  <Plug>Ysurround
+    nmap yS  <Plug>YSurround
+    nmap yss <Plug>Yssurround
+    nmap ySs <Plug>YSsurround
+    nmap ySS <Plug>YSsurround
+    xmap S   <Plug>VSurround
+    xmap gS  <Plug>VgSurround
+endif
+
 fun! s:CleanTrailingSpaces(type, ...)
 
     let sel_save = &selection
