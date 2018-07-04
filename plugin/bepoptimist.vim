@@ -28,15 +28,6 @@ endfunction
 " Prefix configuration
 " ----------------------------------------------------------------------------
 
-" default leader is bad in azerty and bépo keyboards
-" we also remap ’ to , to avoid losing "f" reverse repeat
-if exists("g:bim_remap_leader") && g:bim_remap_leader
-    let mapleader = ","
-    noremap ’ ,
-    " Quick save with new leader
-    noremap <leader>, :w<CR>
-endif
-
 " Options default mappings
 if !exists("g:bim_option_prefix")
     let g:bim_option_prefix   = 'œ'
@@ -102,17 +93,24 @@ else
     let g:bim_bottom_key   = 'j'
 endif
 
+" direct access to command by switching . and :
+if exists("g:bim_switch_command") && g:bim_switch_command
+    nnoremap . :
+    nnoremap : .
+    vnoremap . :
+    vnoremap : .
+    " for compatibility with vim-repeat
+    nmap : <Plug>(RepeatDot)
+endif
+
 " <> direct access
 noremap « <
 noremap » >
 
-" this leave us a nice logical combo to replace , and ; when we remap , to
-" leader.
-if exists("g:bim_remap_leader") && g:bim_remap_leader
-    noremap < ,
-    noremap > ;
-    " ; is now free for another use
-endif
+" this leave us a nice logical combo to replace , and ; 
+" when we remap , to leader
+noremap < ,
+noremap > ;
 
 " ----------------------------------------------------------------------------
 " Buffers and windows

@@ -45,14 +45,12 @@ if exists("g:loaded_sneak_plugin") && Vimbim_is_homerow()
     xmap J <Plug>Sneak_T
     omap J <Plug>Sneak_T
 
-    if exists("g:bim_remap_leader") && g:bim_remap_leader
-        " reset "," in vim-sneak, because taken by leader
-        nnoremap <expr> ’ sneak#reset(',')
-        xnoremap <expr> ’ sneak#reset(',')
-        onoremap <expr> ’ sneak#reset(',')
-        nmap ’ <Plug>SneakPrevious
-        xmap ’ <Plug>SneakPrevious
-    endif
+    " we have replaced ,/; by </> and this way have previous
+    " and next in a much easier mnemonic and free ;
+    nmap < <Plug>SneakPrevious
+    xmap < <Plug>SneakPrevious
+    nmap > <Plug>SneakNext
+    xmap > <Plug>SneakNext
 
 endif
 
