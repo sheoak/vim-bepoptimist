@@ -162,14 +162,20 @@ if Vimbim_is_homerow()
     execute "nnoremap " . g:bim_window_prefix . "S <C-w>K"
     execute "nnoremap " . g:bim_window_prefix . "R <C-w>L"
     " Remap moved keys ([C]lose -> h, [T]ab -> j, [S]plit -> k, [R]otate -> l
-    execute "nnoremap " . g:bim_window_prefix . "h <C-w>c"
     execute "nnoremap " . g:bim_window_prefix . "j <C-w>t"
-    execute "nnoremap " . g:bim_window_prefix . "k <C-w>s"
+    " h to split horizontaly, v for verticaly
+    execute "nnoremap " . g:bim_window_prefix . "h <C-w>s"
+    execute "nnoremap " . g:bim_window_prefix . "H <C-w>S"
     execute "nnoremap " . g:bim_window_prefix . "l <C-w>r"
-    execute "nnoremap " . g:bim_window_prefix . "H <C-w>C"
     execute "nnoremap " . g:bim_window_prefix . "J <C-w>T"
     execute "nnoremap " . g:bim_window_prefix . "K <C-w>S"
     execute "nnoremap " . g:bim_window_prefix . "L <C-w>R"
+    execute "nnoremap " . g:bim_window_prefix . "« <C-w><"
+    execute "nnoremap " . g:bim_window_prefix . "» <C-w>>"
+
+    " TODO find something for close
+    execute "nnoremap " . g:bim_window_prefix . "ç <C-w>c"
+    execute "nnoremap " . g:bim_window_prefix . "Ç <C-w>C"
 endif
 
 " ----------------------------------------------------------------------------
