@@ -93,14 +93,13 @@ else
     let g:bim_bottom_key   = 'j'
 endif
 
+" Not compatible with vim-repeat for now
 " direct access to command by switching . and :
 if exists("g:bim_switch_command") && g:bim_switch_command
     nnoremap . :
     nnoremap : .
     vnoremap . :
     vnoremap : .
-    " for compatibility with vim-repeat
-    nmap : <Plug>(RepeatDot)
 endif
 
 " <> direct access
