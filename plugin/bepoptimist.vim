@@ -111,6 +111,13 @@ noremap » >
 noremap < ,
 noremap > ;
 
+" quick jump with à
+nnoremap à <C-]>
+nnoremap À g<C-]><C-w>T
+" previous / next jump (replace C-o and C-i)
+nnoremap gà <C-o>
+nnoremap gÀ <C-i>
+
 " ----------------------------------------------------------------------------
 " Buffers and windows
 " ----------------------------------------------------------------------------
