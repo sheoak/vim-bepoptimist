@@ -144,8 +144,10 @@ execute "nnoremap " . g:bim_buffer_prefix . "x :<C-U>x<CR>"
 execute "nnoremap " . g:bim_buffer_prefix . "X :<C-U>X<CR>"
 
 " works like gt/gT but for buffers ([G]oto [É]cran)
-execute "nnoremap g" . g:bim_buffer_prefix . " :<C-U>bp<CR>"
-execute "nnoremap g" . toupper(g:bim_buffer_prefix) . " :<C-U>bn<CR>"
+execute "nnoremap g" . toupper(g:bim_buffer_prefix) . " :<C-U>bp<CR>"
+execute "nnoremap g" . g:bim_buffer_prefix . " :<C-U>bn<CR>"
+" gb is more convenient than gÉ
+execute "nnoremap gb :<C-U>bp<CR>"
 
 " Quick window access
 execute "nnoremap " . g:bim_window_prefix . " <C-w>"
