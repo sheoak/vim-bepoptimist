@@ -82,8 +82,8 @@ if Vimbim_is_homerow()
     noremap <nowait> K S
 
     " we avoid remapping "gt" and "gs"
-    nnoremap <nowait> <up>   gs
-    nnoremap <nowait> <down> gt
+    nnoremap <nowait> <up>   gk
+    nnoremap <nowait> <down> gj
 
 else
     " default vim home row
