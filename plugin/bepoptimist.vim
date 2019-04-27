@@ -224,10 +224,10 @@ execute "nnoremap <silent> " . g:bim_option_prefix .
     \ "ll :<C-U>setlocal spell!<CR>"
 
 execute "nnoremap <silent> " . g:bim_option_prefix .
-    \ "lf :<C-U>setlocal spell! spelllang=fr<CR>"
+    \ "lf :<C-U>setlocal spelllang=fr<CR>"
 
 execute "nnoremap <silent> " . g:bim_option_prefix
-    \ . "le :<C-U>setlocal spell! spelllang=en<CR>"
+    \ . "le :<C-U>setlocal spelllang=en<CR>"
 
 " vim configuration and plugins
 " [E]dit [V]imrc, [S]ource [V]imrc, [S]ource current
