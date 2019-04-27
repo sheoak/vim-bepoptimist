@@ -103,13 +103,25 @@ if exists("g:bim_switch_command") && g:bim_switch_command
 endif
 
 " <> direct access
-noremap « <
-noremap » >
+
+" for vim-unimpaired:
+nmap « [
+nmap » ]
+omap « [
+omap » ]
+xmap « [
+xmap » ]
+
+noremap «« <<
+noremap »» >>
+
+" noremap « <
+" noremap » >
 
 " this leave us a nice logical combo to replace , and ; 
 " when we remap , to leader
-noremap < ,
-noremap > ;
+noremap <nowait> < ,
+noremap <nowait> > ;
 
 " quick jump with à
 nnoremap à <C-]>
