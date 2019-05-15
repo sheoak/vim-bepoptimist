@@ -130,13 +130,12 @@ nnoremap À g<C-]><C-w>T
 nnoremap gà <C-o>
 nnoremap gÀ <C-i>
 
+" repeat last command
+nnoremap … @:
+
 " ----------------------------------------------------------------------------
 " Buffers and windows
 " ----------------------------------------------------------------------------
-
-" New operator "é" = full buffer ; a very powerfull mapping!
-" Drawback: move to top of the screen, as any vim motion would do
-execute "onoremap " . g:bim_buffer_operator . ":<c-u>normal! mzggVG<cr>`z"
 
 " cycle 2 last buffers, like <C-w><C-w> for windows
 execute "nnoremap " . g:bim_buffer_prefix . g:bim_buffer_prefix . " :<C-U>b#<CR>"
@@ -237,8 +236,8 @@ execute "nnoremap <silent> " . g:bim_option_prefix . "ss :<C-U>source %<cr>"
 
 " Formatting
 
-" new operator é = full buffer
-onoremap é :<c-u>normal! ggVG<cr>
+" New operator "é" = full buffer
+execute "onoremap " . g:bim_buffer_operator . " :<c-u>normal! mzggVG<cr>`z"
 
 " > have been remap to » so it's free for a similar more complex operation
 " with Tabularize
