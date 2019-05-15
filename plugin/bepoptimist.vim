@@ -195,6 +195,10 @@ if Vimbim_is_homerow()
     " TODO find something for close
     execute "nnoremap " . g:bim_window_prefix . "ç <C-w>c"
     execute "nnoremap " . g:bim_window_prefix . "Ç <C-w>C"
+
+    " close quickfix
+    execute "nnoremap " . g:bim_window_prefix . "<space> :cclose<CR>"
+
 endif
 
 " ----------------------------------------------------------------------------
@@ -249,8 +253,8 @@ onoremap â :<c-u>execute "normal! $v" . v:count1 . "hl"<CR>
 onoremap Â :<c-u>execute "normal! ^v" . v:count1 . "lh"<CR>
 
 " Add line above/below but without insert mode
-nnoremap <silent> Ô :<C-U>call <SID>BlankUp(v:count1)<CR>
 nnoremap <silent> ô :<C-U>call <SID>BlankDown(v:count1)<CR>
+nnoremap <silent> Ô :<C-U>call <SID>BlankUp(v:count1)<CR>
 
 " Plugin Surround
 " We need to remap everything to avoid conflict
