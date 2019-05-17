@@ -24,14 +24,26 @@ fun! Vimbim_is_homerow()
     endif
 endfunction
 
+" Remove mapping starting by r in Gstatus
+fun! s:FixFugitive()
+    let l:arr = map(range(char2nr('a'),char2nr('z')),'nr2char(v:val)')
+    for l:key in l:arr
+        if !empty(maparg('r' . l:key))
+            execute "nunmap <buffer>r" . l:key
+        endif
+    endfor
+endfunction
+
+" ----------------------------------------------------------------------------
+" Filetype detection
+" ----------------------------------------------------------------------------
+autocmd FileType fugitive call s:FixFugitive()
+
 " ----------------------------------------------------------------------------
 " Prefix configuration
 " ----------------------------------------------------------------------------
 
 " Options default mappings
-if !exists("g:bim_option_prefix")
-    let g:bim_option_prefix   = 'œ'
-endif
 if !exists("g:bim_buffer_prefix")
     let g:bim_buffer_prefix   = 'é'
 endif
@@ -48,32 +60,33 @@ endif
 if Vimbim_is_homerow()
 
     " Bepo home row keys
-    let g:bim_left_key   = 'c'
-    let g:bim_right_key  = 'r'
-    let g:bim_top_key    = 's'
-    let g:bim_bottom_key = 't'
+    let g:bim_left_key   = 't'
+    let g:bim_right_key  = 'n'
+    let g:bim_top_key    = 'r'
+    let g:bim_bottom_key = 's'
 
-    noremap <nowait> c h
-    noremap <nowait> r l
-    noremap <nowait> t j
-    noremap <nowait> s k
+    " noremap <nowait> c h
+    noremap <nowait> t h
+    noremap <nowait> s j
+    noremap <nowait> r k
+    noremap <nowait> n l
     " Top/Bottom of the screen
-    noremap <nowait> C H
     noremap <nowait> R L
     " Join line / help
     noremap <nowait> T J
     noremap <nowait> S K
     " Previous / next fold
-    noremap zt zj
-    noremap zs zk
+    noremap zs zj
+    noremap zr zk
+    noremap zR zr
 
     " Remap home row keys somewhere else
     " T move to J
     noremap <nowait> j t
     noremap <nowait> J T
-    " C move to L
-    noremap <nowait> l c
-    noremap <nowait> L C
+    " N move to L
+    noremap <nowait> l n
+    noremap <nowait> L N
     " R move to H
     noremap <nowait> h r
     noremap <nowait> H R
@@ -103,40 +116,50 @@ if exists("g:bim_switch_command") && g:bim_switch_command
 endif
 
 " <> direct access
+noremap « <
+noremap » >
+noremap < «
+noremap > »
 
-" for vim-unimpaired:
-nmap « [
-nmap » ]
-omap « [
-omap » ]
-xmap « [
-xmap » ]
+" quick align paragraphs
+nnoremap g« <ip
+nnoremap g» >ip
 
-noremap «« <<
-noremap »» >>
+" for coding, it make sense to have < > in direct acces
+" but not for typing.
+" TODO: do not apply in text files? or add an option to toggle it?
+" TODO: add configuration for init.vim
+inoremap « <
+inoremap » >
+inoremap > »
+inoremap < «
+cnoremap « <
+cnoremap » >
+cnoremap > »
+cnoremap < «
 
-" noremap « <
-" noremap » >
+" TODO: find an easier key? ù ’ …
+nmap \ <Plug>(EasyAlign)
+xmap \ <Plug>(EasyAlign)
 
-" this leave us a nice logical combo to replace , and ; 
-" when we remap , to leader
-noremap <nowait> < ,
-noremap <nowait> > ;
+" À keys is reseved for jumps:
+" previous / next jump (replace C-o and C-i)
+nnoremap à <C-o>
+nnoremap À <C-i>
 
 " quick jump with à
-nnoremap à <C-]>
-nnoremap À g<C-]><C-w>T
-" previous / next jump (replace C-o and C-i)
-nnoremap gà <C-o>
-nnoremap gÀ <C-i>
+nnoremap gà <C-]>
+nnoremap gÀ g<C-]><C-w>T
 
 " repeat last command
+" TODO: counter ( 4… ) like for .
 nnoremap … @:
 
 " ----------------------------------------------------------------------------
 " Buffers and windows
 " ----------------------------------------------------------------------------
 
+" TODO: clean me
 " cycle 2 last buffers, like <C-w><C-w> for windows
 execute "nnoremap " . g:bim_buffer_prefix . g:bim_buffer_prefix . " :<C-U>b#<CR>"
 " change buffer
@@ -153,22 +176,17 @@ execute "nnoremap " . g:bim_buffer_prefix . "h :<C-U>split<CR>"
 execute "nnoremap " . g:bim_buffer_prefix . "v :<C-U>vsplit<CR>"
 execute "nnoremap " . g:bim_buffer_prefix . "x :<C-U>x<CR>"
 execute "nnoremap " . g:bim_buffer_prefix . "X :<C-U>X<CR>"
-
-" works like gt/gT but for buffers ([G]oto [É]cran)
-execute "nnoremap g" . toupper(g:bim_buffer_prefix) . " :<C-U>bp<CR>"
-execute "nnoremap g" . g:bim_buffer_prefix . " :<C-U>bn<CR>"
-" gb is more convenient than gÉ
-execute "nnoremap gb :<C-U>bp<CR>"
+execute "nnoremap " . g:bim_window_prefix . "z :pc<CR>"
 
 " Quick window access
 execute "nnoremap " . g:bim_window_prefix . " <C-w>"
-execute "nnoremap " . g:bim_window_prefix . g:bim_window_prefix " <C-w><C-w>"
-
-" close preview window
-execute "nnoremap " . g:bim_window_prefix . "z :pc<CR>"
+execute "nnoremap " . g:bim_window_prefix . g:bim_window_prefix " <C-w><C-p>"
 " close quickfix window
+" FIXME: this overrides built-in
 execute "nnoremap " . g:bim_window_prefix . "f :ccl<CR>"
 
+
+" remap to new homerow
 if Vimbim_is_homerow()
     " Remap window + home row
     execute "nnoremap " . g:bim_window_prefix . "c <C-w>h"
@@ -201,76 +219,81 @@ if Vimbim_is_homerow()
 
 endif
 
+" executing
+nmap ;p <Nop>
+nmap ;s <Nop>
+vmap ;x :call bexec#Visual()<CR>
+nmap ;x :call bexec#Normal()<CR>
+nmap ;l :call bexec#Live()<CR>
+nmap ;sv :source ~/.config/nvim/init.vim<CR>
+nmap ;ss source %<CR>
+nmap ;pi :PlugInstall<CR>
+nmap ;pu :PlugUpdate<CR>
+nmap ;pU :PlugUpgrade<CR>
+nmap ;pc :PlugClean<CR>
+nmap ;ps :PlugStatus<CR>
+nmap ;pd :PlugDiff<CR>
+" reinstall plugins quickly
+nmap ;pI :w<CR>:source ~/.config/nvim/init.vim<CR>:PlugInstall<CR>
+nmap ;m :make<CR>
+nmap ;tt :!tox<CR>
+nmap ;tp :!pytest<CR>
+
 " ----------------------------------------------------------------------------
 " Setting options
 " ----------------------------------------------------------------------------
-execute "nnoremap <silent> " . g:bim_option_prefix .
-    \ "n :<C-U>set number!<CR>"
 
-execute "nnoremap <silent> " . g:bim_option_prefix .
-    \ "r :<C-U>set relativenumber!<CR>"
+" todo move to vim unimpaired
+" execute "nnoremap <silent> " . g:bim_option_prefix .
+" \ "lf :<C-U>setlocal spelllang=fr<CR>"
 
-execute "nnoremap <silent> " . g:bim_option_prefix .
-    \ "f :<C-U>set foldenable!<CR>:set foldenable?<CR>"
-
-execute "nnoremap <silent> " . g:bim_option_prefix .
-    \ "p :<C-U>set invpaste<CR>"
-
-execute "nnoremap <silent> " . g:bim_option_prefix .
-    \ "b :<C-U>let &background = ( &background == 'dark'? 'light' : 'dark' )<CR>"
-
-execute "nnoremap <silent> " . g:bim_option_prefix .
-    \ "w :<C-U>set wrap!<CR>:set wrap?<CR>"
-
-" spell options start with l
-execute "nnoremap <silent> " . g:bim_option_prefix .
-    \ "ll :<C-U>setlocal spell!<CR>"
-
-execute "nnoremap <silent> " . g:bim_option_prefix .
-    \ "lf :<C-U>setlocal spelllang=fr<CR>"
-
-execute "nnoremap <silent> " . g:bim_option_prefix
-    \ . "le :<C-U>setlocal spelllang=en<CR>"
-
-" vim configuration and plugins
-" [E]dit [V]imrc, [S]ource [V]imrc, [S]ource current
-execute "nnoremap <silent> " . g:bim_option_prefix . "ev :<C-U>e $MYVIMRC<cr>"
-execute "nnoremap <silent> " . g:bim_option_prefix . "sv :<C-U>source $MYVIMRC<cr>"
-execute "nnoremap <silent> " . g:bim_option_prefix . "ss :<C-U>source %<cr>"
+" execute "nnoremap <silent> " . g:bim_option_prefix
+"     \ . "le :<C-U>setlocal spelllang=en<CR>"
 
 " Formatting
 
 " New operator "é" = full buffer
 execute "onoremap " . g:bim_buffer_operator . " :<c-u>normal! mzggVG<cr>`z"
 
-" > have been remap to » so it's free for a similar more complex operation
-" with Tabularize
-nmap æ <Plug>(EasyAlign)
-xmap æ <Plug>(EasyAlign)
-
 " last/first chars of line
+" dâ removes last char of line
+" todo: move to è ?
+" todo: remember position
 onoremap â :<c-u>execute "normal! $v" . v:count1 . "hl"<CR>
 onoremap Â :<c-u>execute "normal! ^v" . v:count1 . "lh"<CR>
 
-" Add line above/below but without insert mode
-nnoremap <silent> ô :<C-U>call <SID>BlankDown(v:count1)<CR>
-nnoremap <silent> Ô :<C-U>call <SID>BlankUp(v:count1)<CR>
+" Add line above/below but act as with :set paste
+nnoremap ô o<C-U>
+nnoremap Ô O<C-U>
+
+" buffer and window navigation
+" in the same style than the homerow but for left hand
+nnoremap æ :<C-U>bp<CR>
+nnoremap € :<C-U>bn<CR>
+nnoremap \| :<C-U>tabp<CR>
+nnoremap œ :<C-U>tabn<CR>
+
+" likely for CTRL-p: we move it to CTRL-t
+inoremap <C-t> <C-p>
+inoremap <C-p> <C-t>
 
 " Plugin Surround
 " We need to remap everything to avoid conflict
 if exists('g:surround_no_mappings') && g:surround_no_mappings
-    nmap ds  <Plug>Dsurround
-    nmap ls  <Plug>Csurround
-    nmap lS  <Plug>CSurround
-    nmap ys  <Plug>Ysurround
-    nmap yS  <Plug>YSurround
-    nmap yss <Plug>Yssurround
-    nmap ySs <Plug>YSsurround
-    nmap ySS <Plug>YSsurround
-    xmap S   <Plug>VSurround
-    xmap gS  <Plug>VgSurround
+    nmap dè  <Plug>Dsurround
+    nmap cè  <Plug>Csurround
+    nmap cÈ  <Plug>CSurround
+    nmap yè  <Plug>Ysurround
+    nmap yÈ  <Plug>YSurround
+    nmap yèè <Plug>Yssurround
+    nmap yÈÈ <Plug>YSsurround
+    xmap È   <Plug>VSurround
+    xmap gè  <Plug>VgSurround
 endif
 
+
+" TODO: create an operator:
+" ip<operator> deletes trailing chars in the paragraph
 fun! s:CleanTrailingSpaces(type, ...)
 
     let sel_save = &selection
@@ -291,6 +314,8 @@ fun! s:CleanTrailingSpaces(type, ...)
 
 endfun
 
+" TODO: create an operator:
+" ip<operator> adds nbsp in the paragraph
 fun! s:NonBreakableSpaces(type, ...)
     "let sel_save = &selection
     "let &selection = "inclusive"
@@ -310,20 +335,3 @@ fun! s:NonBreakableSpaces(type, ...)
     "let @@ = reg_save
 endfunction
 
-function! s:InputChar()
-    let c = getchar()
-    return type(c) == type(0) ? nr2char(c) : c
-endfunction
-
-" based on vim-surround plugin code
-function! s:BlankUp(count) abort
-  put!=repeat(nr2char(10), a:count)
-  ']+1
-  silent! call repeat#set("Ô", a:count)
-endfunction
-
-function! s:BlankDown(count) abort
-  put =repeat(nr2char(10), a:count)
-  '[-1
-  silent! call repeat#set("ô", a:count)
-endfunction

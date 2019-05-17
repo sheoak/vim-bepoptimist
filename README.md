@@ -7,6 +7,8 @@ It does more than just remapping *jklm* and suggest a lot of keymaps that
 have been designed to be easy to access in bépo layout. It also take advantage
 of keys not available in qwerty or azerty layouts, like œ, æ, …
 
+The documentation is currently not up to date due to a refactoring.
+
 # Features
 
 - Remapping *jklm* to *ctsr*
