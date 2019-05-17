@@ -8,8 +8,8 @@ if has("autocmd")
         autocmd filetype netrw call Fix_netrw_maps_for_dvorak()
     augroup END
     function! Fix_netrw_maps_for_dvorak()
-        noremap <buffer> t j
-        noremap <buffer> s k
+        noremap <buffer> s j
+        noremap <buffer> r k
         noremap <buffer> k s
         noremap <buffer> gb gT
         noremap <buffer> gé gt
