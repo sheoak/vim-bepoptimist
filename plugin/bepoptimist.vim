@@ -121,6 +121,10 @@ nnoremap « <
 nnoremap » >
 nnoremap < «
 nnoremap > »
+onoremap « <
+onoremap » >
+onoremap < «
+onoremap > »
 
 " quick align paragraphs
 nnoremap g« <ip
