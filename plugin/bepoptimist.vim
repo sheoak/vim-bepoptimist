@@ -116,27 +116,15 @@ if exists("g:bim_switch_command") && g:bim_switch_command
 endif
 
 " <> direct access
-noremap « <
-noremap » >
-noremap < «
-noremap > »
+" TODO: remap system wise to have < > direct access everywhere
+nnoremap « <
+nnoremap » >
+nnoremap < «
+nnoremap > »
 
 " quick align paragraphs
 nnoremap g« <ip
 nnoremap g» >ip
-
-" for coding, it make sense to have < > in direct acces
-" but not for typing.
-" TODO: do not apply in text files? or add an option to toggle it?
-" TODO: add configuration for init.vim
-inoremap « <
-inoremap » >
-inoremap > »
-inoremap < «
-cnoremap « <
-cnoremap » >
-cnoremap > »
-cnoremap < «
 
 " TODO: find an easier key? ù ’ …
 nmap \ <Plug>(EasyAlign)
@@ -242,13 +230,6 @@ nmap ;tp :!pytest<CR>
 " ----------------------------------------------------------------------------
 " Setting options
 " ----------------------------------------------------------------------------
-
-" todo move to vim unimpaired
-" execute "nnoremap <silent> " . g:bim_option_prefix .
-" \ "lf :<C-U>setlocal spelllang=fr<CR>"
-
-" execute "nnoremap <silent> " . g:bim_option_prefix
-"     \ . "le :<C-U>setlocal spelllang=en<CR>"
 
 " Formatting
 
