@@ -244,8 +244,8 @@ onoremap â :<c-u>execute "normal! $v" . v:count1 . "hl"<CR>
 onoremap Â :<c-u>execute "normal! ^v" . v:count1 . "lh"<CR>
 
 " Add line above/below but act as with :set paste
-nnoremap ô o<C-U>
-nnoremap Ô O<C-U>
+nnoremap ô :let b:s=&formatoptions<CR>:set formatoptions-=o<CR>o<Esc>:let &formatoptions=b:s<CR>i
+nnoremap Ô :let b:s=&formatoptions<CR>:set formatoptions-=o<CR>O<Esc>:let &formatoptions=b:s<CR>i
 
 " buffer and window navigation
 " in the same style than the homerow but for left hand
