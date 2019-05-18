@@ -121,6 +121,10 @@ nnoremap « <
 nnoremap » >
 nnoremap < «
 nnoremap > »
+vnoremap « <
+vnoremap » >
+vnoremap < «
+vnoremap > »
 onoremap « <
 onoremap » >
 onoremap < «
