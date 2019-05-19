@@ -21,6 +21,12 @@ if exists("g:loaded_fugitive") && exists("g:bim_map_fugitive") && g:bim_map_fugi
     nnoremap ’s :Gstatus<CR>"
 endif
 
+if exists("g:loaded_gitgutter")
+    nmap ’a <Plug>GitGutterStageHunk
+    nmap ’u <Plug>GitGutterUndoHunk
+    nmap ’z <Plug>GitGutterPreviewHunk
+endif
+
 " Remap Sneak "s/S" to "é/É" (default)
 if exists("g:loaded_sneak_plugin") && Vimbim_is_homerow()
 
