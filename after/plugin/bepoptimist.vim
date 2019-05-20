@@ -24,6 +24,7 @@ endif
 
 if exists("g:loaded_fzf")
     " FZF
+    nnoremap ’’ :GFiles<CR>
     nnoremap ’h :Commits!<CR>
     nnoremap ’H :CBommits!<CR>
 endif
