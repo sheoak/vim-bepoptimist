@@ -25,6 +25,7 @@ endif
 if exists("g:loaded_fzf")
     " FZF
     nnoremap ’h :Commits!
+    nnoremap ’H :CBommits!
 endif
 
 if exists("g:loaded_gitgutter")
