@@ -22,6 +22,11 @@ if exists("g:loaded_fugitive") && exists("g:bim_map_fugitive") && g:bim_map_fugi
     nnoremap ’w :Gwrite<CR>"
 endif
 
+if exists("g:loaded_fzf")
+    " FZF
+    nnoremap ’h :Commits!
+endif
+
 if exists("g:loaded_gitgutter")
     nmap ’a <Plug>GitGutterStageHunk
     nmap ’u <Plug>GitGutterUndoHunk
