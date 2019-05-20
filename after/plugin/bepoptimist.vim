@@ -19,6 +19,7 @@ if exists("g:loaded_fugitive") && exists("g:bim_map_fugitive") && g:bim_map_fugi
     nnoremap ’o :Gpush<CR>"
     nnoremap ’r :Grebase"
     nnoremap ’s :Gstatus<CR>"
+    nnoremap ’w :Gwrite<CR>"
 endif
 
 if exists("g:loaded_gitgutter")
