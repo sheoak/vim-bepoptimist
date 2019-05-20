@@ -7,19 +7,19 @@
 
 " Fugitive mappings
 if exists("g:loaded_fugitive") && exists("g:bim_map_fugitive") && g:bim_map_fugitive
-    nnoremap ’b :Gblame<CR>"
-    nnoremap ’c :Gcommit<CR>"
-    nnoremap ’d :Gdiff<CR>"
-    nnoremap ’e :Gedit<CR>"
-    nnoremap ’fd :Gremove<CR>"
-    nnoremap ’fm :Gmove<CR>"
-    nnoremap ’i :Gpull<CR>"
-    nnoremap ’l :Glog --oneline<CR>"
-    nnoremap ’m :Ghove "
-    nnoremap ’o :Gpush<CR>"
-    nnoremap ’r :Grebase"
-    nnoremap ’s :Gstatus<CR>"
-    nnoremap ’w :Gwrite<CR>"
+    nnoremap ’b :Gblame<CR>
+    nnoremap ’c :Gcommit<CR>
+    nnoremap ’d :Gdiff<CR>
+    nnoremap ’e :Gedit<CR>
+    nnoremap ’fd :Gremove<CR>
+    nnoremap ’fm :Gmove<CR>
+    nnoremap ’i :Gpull<CR>
+    nnoremap ’l :Glog --oneline<CR>
+    nnoremap ’m :Ghove<CR>
+    nnoremap ’o :Gpush<CR>
+    nnoremap ’r :Grebase<CR>
+    nnoremap ’s :Gstatus<CR>
+    nnoremap ’w :Gwrite<CR>
 endif
 
 if exists("g:loaded_fzf")
