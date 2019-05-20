@@ -16,7 +16,7 @@ if exists("g:loaded_fugitive") && exists("g:bim_map_fugitive") && g:bim_map_fugi
     nnoremap ’i :Gpull<CR>
     nnoremap ’l :Glog --oneline<CR>
     nnoremap ’m :Ghove<CR>
-    nnoremap ’o :Gpush<CR>
+    nnoremap ’p :Gpush<CR>
     nnoremap ’r :Grebase<CR>
     nnoremap ’s :Gstatus<CR>
     nnoremap ’w :Gwrite<CR>
