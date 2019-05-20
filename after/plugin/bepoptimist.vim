@@ -24,8 +24,8 @@ endif
 
 if exists("g:loaded_fzf")
     " FZF
-    nnoremap ’h :Commits!
-    nnoremap ’H :CBommits!
+    nnoremap ’h :Commits!<CR>
+    nnoremap ’H :CBommits!<CR>
 endif
 
 if exists("g:loaded_gitgutter")
