@@ -273,4 +273,3 @@ endif
 "    "let &selection = sel_save
 "    "let @@ = reg_save
 "endfunction
-
