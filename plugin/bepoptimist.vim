@@ -219,13 +219,8 @@ nnoremap ¤ :<C-U>blast<CR>
 nnoremap \| :<C-U>tabp<CR>
 nnoremap œ :<C-U>tabn<CR>
 
+" relocate | to `
 noremap ` \|
-
-" likely for CTRL-p: we move it to CTRL-t
-inoremap <C-t> <C-p>
-inoremap <C-p> <C-t>
-cnoremap <C-t> <C-p>
-cnoremap <C-p> <C-t>
 
 " Plugin Surround
 " We need to remap everything to avoid conflict
