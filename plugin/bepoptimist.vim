@@ -201,17 +201,3 @@ nnoremap œ :<C-U>tabn<CR>
 
 " relocate | to `
 noremap ` \|
-
-" Plugin Surround
-" We need to remap everything to avoid conflict
-if exists('g:surround_no_mappings') && g:surround_no_mappings
-    nmap dk  <Plug>Dsurround
-    nmap ck  <Plug>Csurround
-    nmap cK  <Plug>CSurround
-    nmap yk  <Plug>Ysurround
-    nmap yK  <Plug>YSurround
-    nmap ykk <Plug>Yssurround
-    nmap yKk <Plug>YSsurround
-    xmap k   <Plug>VSurround
-    xmap K   <Plug>VgSurround
-endif
