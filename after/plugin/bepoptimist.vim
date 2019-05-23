@@ -1,50 +1,12 @@
 " after/plugin/bim.vim - vim keymaps for bépo keyboard layout
 " Author:       sheoak <dev@sheoak.fr>
-" Version:      0.1
+" Version:      0.3
 "
 " These maps are loaded after because the plugins must have been loaded, so we
 " can make our test.
 
-" Fugitive mappings
-if exists("g:loaded_fugitive") && exists("g:bim_map_fugitive") && g:bim_map_fugitive
-    nnoremap ’b :Gblame<CR>
-    nnoremap ’c :Gcommit<CR>
-    nnoremap ’d :Gdiff<CR>
-    nnoremap ’e :Gedit<CR>
-    nnoremap ’fd :Gremove<CR>
-    nnoremap ’fm :Gmove<CR>
-    nnoremap ’i :Gpull<CR>
-    nnoremap ’l :Glog --oneline<CR>
-    nnoremap ’m :Ghove<CR>
-    nnoremap ’p :Gpush<CR>
-    nnoremap ’r :Grebase<CR>
-    nnoremap ’s :Gstatus<CR>
-    nnoremap ’w :Gwrite<CR>
-endif
-
-if exists("g:loaded_fzf")
-    " FZF
-    nnoremap ’’ :GFiles<CR>
-    nnoremap ’h :Commits!<CR>
-    nnoremap ’H :CBommits!<CR>
-endif
-
-if exists("g:loaded_gitgutter")
-    nmap ’a <Plug>GitGutterStageHunk
-    nmap ’u <Plug>GitGutterUndoHunk
-    nmap ’z <Plug>GitGutterPreviewHunk
-endif
-
 " Remap Sneak "s/S" to "é/É" (default)
 if exists("g:loaded_sneak_plugin") && Vimbim_is_homerow()
-
-    nmap é <Plug>Sneak_s
-    xmap é <Plug>Sneak_s
-    omap é <Plug>Sneak_s
-    nmap É <Plug>Sneak_S
-    xmap É <Plug>Sneak_S
-    omap É <Plug>Sneak_S
-
     nmap j <Plug>Sneak_t
     xmap j <Plug>Sneak_t
     omap j <Plug>Sneak_t
@@ -75,10 +37,6 @@ if exists("g:loaded_sneak_plugin") && Vimbim_is_homerow()
     " operator-pending-mode
     omap j <Plug>Sneak_t
     omap J <Plug>Sneak_T
-
-    " label-mode
-    nmap gé <Plug>SneakLabel_s
-    nmap gÉ <Plug>SneakLabel_S
 endif
 
 " Gundo fix and mapping

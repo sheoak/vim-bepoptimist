@@ -116,9 +116,6 @@ onoremap » >
 onoremap < «
 onoremap > »
 
-nmap \ <Plug>(EasyAlign)
-xmap \ <Plug>(EasyAlign)
-
 " À keys is reseved for jumps:
 " previous / next jump (replace C-o and C-i)
 nnoremap à <C-o>
@@ -171,11 +168,10 @@ if Vimbim_is_homerow()
     nnoremap èL <C-w>R
 endif
 
-" ----------------------------------------------------------------------------
-" Setting options
-" ----------------------------------------------------------------------------
-
 " Formatting
+
+" Forgotten unbreakable spaces… for French only
+nnoremap ;  :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
 
 " New operator "é" = full buffer
 onoremap è :<c-u>normal! mzggVG<cr>`z
