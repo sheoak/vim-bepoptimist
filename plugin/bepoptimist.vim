@@ -171,26 +171,6 @@ if Vimbim_is_homerow()
     nnoremap èL <C-w>R
 endif
 
-" executing
-nmap ;p <Nop>
-nmap ;s <Nop>
-vmap ;x :call bexec#Visual()<CR>
-nmap ;x :call bexec#Normal()<CR>
-nmap ;l :call bexec#Live()<CR>
-nmap ;sv :source ~/.config/nvim/init.vim<CR>
-nmap ;ss :source %<CR>
-nmap ;pi :PlugInstall<CR>
-nmap ;pu :PlugUpdate<CR>
-nmap ;pU :PlugUpgrade<CR>
-nmap ;pc :PlugClean<CR>
-nmap ;ps :PlugStatus<CR>
-nmap ;pd :PlugDiff<CR>
-" reinstall plugins quickly
-nmap ;pI :w<CR>:source ~/.config/nvim/init.vim<CR>:PlugInstall<CR>
-nmap ;m :make<CR>
-nmap ;tt :!tox<CR>
-nmap ;tp :!pytest<CR>
-
 " ----------------------------------------------------------------------------
 " Setting options
 " ----------------------------------------------------------------------------
