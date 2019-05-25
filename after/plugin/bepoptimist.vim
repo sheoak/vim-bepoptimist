@@ -1,9 +1,12 @@
-" after/plugin/bim.vim - vim keymaps for bépo keyboard layout
-" Author:       sheoak <dev@sheoak.fr>
-" Version:      0.3
+"=============================================================================
+" FILE: after/plugin/bepoptimist.vim
+" AUTHOR:  Sheoak <contact at lightn.es>
+" VERSION: 0.3
+" LICENSE: MIT license
 "
 " These maps are loaded after because the plugins must have been loaded, so we
 " can make our test.
+"=============================================================================
 
 " Remap Sneak "s/S" to "é/É" (default)
 if exists("g:loaded_sneak_plugin") && Vimbim_is_homerow()
@@ -37,6 +40,7 @@ if exists("g:loaded_sneak_plugin") && Vimbim_is_homerow()
     " operator-pending-mode
     omap j <Plug>Sneak_t
     omap J <Plug>Sneak_T
+
 endif
 
 " Gundo fix and mapping

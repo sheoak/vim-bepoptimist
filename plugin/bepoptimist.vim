@@ -1,12 +1,15 @@
 "=============================================================================
 " FILE: bepoptimist.vim
 " AUTHOR:  Sheoak <contact at lightn.es>
-" VERSION: 0.2
+" VERSION: 0.3
 " LICENSE: MIT license
 "
 " Vim keymaps for bépo keyboard layout
+"
+" TODO: last close window
+" TODO: close last open
+" TODO: cycle buffers
 "=============================================================================
-
 if exists('g:loaded_bepoptimist') || &compatible || v:version < 700
     finish
 endif
@@ -74,8 +77,8 @@ if Vimbim_is_homerow()
     noremap <nowait> h r
     noremap <nowait> H R
     " S move to K
-    noremap <nowait> k s
-    noremap <nowait> K S
+    " noremap <nowait> k s
+    " noremap <nowait> K S
 
     nnoremap <nowait> <down> gj
     nnoremap <nowait> <up>   gk
@@ -103,18 +106,12 @@ endif
 
 " <> direct access
 " TODO: remap system wise to have < > direct access everywhere
-nnoremap « <
-nnoremap » >
-nnoremap < «
-nnoremap > »
-vnoremap « <
-vnoremap » >
-vnoremap < «
-vnoremap > »
-onoremap « <
-onoremap » >
-onoremap < «
-onoremap > »
+noremap « <
+noremap » >
+" noremap { [
+" noremap } ]
+" noremap ] }
+" noremap [ {
 
 " À keys is reseved for jumps:
 " previous / next jump (replace C-o and C-i)
@@ -133,48 +130,50 @@ nnoremap … @:
 " ----------------------------------------------------------------------------
 
 " Quick window access
-nnoremap è <C-w>
+nnoremap é <C-w>
 " Cycle 2 last windows
-nnoremap èè <C-w><C-p>
+nnoremap éé <C-w><C-p>
 " <> direct access
-nnoremap è« <C-w><
-nnoremap è» <C-w>>
+nnoremap é« <C-w><
+nnoremap é» <C-w>>
 " close quickfix/location list
-nnoremap è<space> :cclose<CR>
-nnoremap è<cr> :lclose<CR>
-nnoremap èà <C-w>]
-nnoremap ègà <C-w>g]
+nnoremap é<space> :cclose<CR>
+nnoremap é<cr> :lclose<CR>
+nnoremap éà <C-w>]
+nnoremap égà <C-w>g]
 
 " remap to new homerow
 if Vimbim_is_homerow()
     " Remap window + home row
-    nnoremap èt <C-w>h
-    nnoremap ès <C-w>j
-    nnoremap èr <C-w>k
-    nnoremap èn <C-w>l
+    nnoremap ét <C-w>h
+    nnoremap és <C-w>j
+    nnoremap ér <C-w>k
+    nnoremap én <C-w>l
     " Move to the left/right/top/bottom
-    nnoremap èT <C-w>H
-    nnoremap èS <C-w>J
-    nnoremap èR <C-w>K
-    nnoremap èN <C-w>L
+    nnoremap éT <C-w>H
+    nnoremap éS <C-w>J
+    nnoremap éR <C-w>K
+    nnoremap éN <C-w>L
     " Remap moved keys ([n]ew k, [t]ab -> j, [s]plit -> h, [r]otate -> l
-    nnoremap èh <C-w>s
-    nnoremap èH <C-w>S
-    nnoremap èj <C-w>t
-    nnoremap èJ <C-w>T
-    nnoremap èk <C-w>n
-    nnoremap èK <C-w>N
-    nnoremap èl <C-w>r
-    nnoremap èL <C-w>R
+    " also change h/v to open empty buffers
+    nnoremap éh :new<CR>
+    nnoremap év :vnew<CR>
+    nnoremap éj <C-w>t
+    nnoremap éJ <C-w>T
+    nnoremap ék <C-w>n
+    nnoremap éK <C-w>N
+    nnoremap él <C-w>r
+    nnoremap éL <C-w>R
 endif
 
 " Formatting
 
 " Forgotten unbreakable spaces… for French only
+" TODO: move me with execute ;
 nnoremap ;  :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
 
 " New operator "é" = full buffer
-onoremap è :<c-u>normal! mzggVG<cr>`z
+onoremap é :<c-u>normal! mzggVG<cr>`z
 
 " last/first chars of line
 " dê removes last char of line
@@ -192,8 +191,12 @@ nnoremap æ :<C-U>bprev<CR>
 nnoremap Æ :<C-U>bfirst<CR>
 nnoremap € :<C-U>bnext<CR>
 nnoremap ¤ :<C-U>blast<CR>
-nnoremap \| :<C-U>tabp<CR>
-nnoremap œ :<C-U>tabn<CR>
+nnoremap \| :<C-U>tabprev<CR>
+nnoremap ¦ :<C-U>tabfirst<CR>
+nnoremap g\| :<C-U>-tabmove<CR>
+nnoremap œ :<C-U>tabnext<CR>
+nnoremap gœ :<C-U>+tabmove<CR>
+nnoremap Œ :<C-U>tablast<CR>
 
 " relocate | to `
 noremap ` \|
