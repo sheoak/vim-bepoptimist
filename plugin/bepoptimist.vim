@@ -51,34 +51,43 @@ if Vimbim_is_homerow()
     let g:bim_top_key    = 'r'
     let g:bim_bottom_key = 's'
 
-    " noremap <nowait> c h
+    " - We do not remap s, it has an alias (cn)
+    " - We keep J as Join
+    " - We keep S as Line substitute
     noremap <nowait> t h
     noremap <nowait> s j
     noremap <nowait> r k
     noremap <nowait> n l
-    " Top/Bottom of the screen
-    noremap <nowait> R L
-    " Join line / help
-    noremap <nowait> T J
-    noremap <nowait> S K
+    noremap <nowait> gs gj
+    noremap <nowait> gr gk
+
     " Previous / next fold
     noremap zs zj
     noremap zr zk
     noremap zR zr
 
     " Remap home row keys somewhere else
-    " T move to J
-    noremap <nowait> j t
-    noremap <nowait> J T
-    " N move to L
-    noremap <nowait> l n
-    noremap <nowait> L N
-    " R move to H
-    noremap <nowait> h r
-    noremap <nowait> H R
-    " S move to K
-    " noremap <nowait> k s
-    " noremap <nowait> K S
+    " we do not remap gs, it's quite useless
+    noremap <nowait> gS gr
+    " Search N/n move to T/N
+    noremap <nowait> T N
+    noremap <nowait> N n
+    " r move to S but we keep R
+    noremap <nowait> S r
+    " t/T move to l/L ([l]eap [t]o),
+    noremap <nowait> l t
+    noremap <nowait> L T
+    " h/H becomes ,; and free , for leader
+    noremap <nowait> h ;
+    noremap <nowait> H ,
+    noremap <nowait> gh g;
+    noremap <nowait> gH g,
+    " L/H move to É/gÉ
+    noremap <nowait> É H
+    noremap <nowait> gÉ L
+    " we have a free j key to remap the annoying CTRL-] for jumps
+    noremap <nowait> j <C-]>
+    noremap <nowait> gj g<C-]>
 
     nnoremap <nowait> <down> gj
     nnoremap <nowait> <up>   gk
@@ -86,6 +95,8 @@ if Vimbim_is_homerow()
     nnoremap <nowait> gr gk
     nnoremap <nowait> gj gs
     nnoremap <nowait> gk gr
+
+    " TODO: remap uppercases with g, check for conflicts
 
 else
     " default vim home row
@@ -108,10 +119,6 @@ endif
 " TODO: remap system wise to have < > direct access everywhere
 noremap « <
 noremap » >
-" noremap { [
-" noremap } ]
-" noremap ] }
-" noremap [ {
 
 " À keys is reseved for jumps:
 " previous / next jump (replace C-o and C-i)
@@ -131,14 +138,15 @@ nnoremap … @:
 
 " Quick window access
 nnoremap é <C-w>
-" Cycle 2 last windows
-nnoremap éé <C-w><C-p>
+" Cycle 2 last buffers/windows
+nnoremap éé :b#<CR>
+nnoremap gé <C-w><C-p>
 " <> direct access
 nnoremap é« <C-w><
 nnoremap é» <C-w>>
 " close quickfix/location list
 nnoremap é<space> :cclose<CR>
-nnoremap é<cr> :lclose<CR>
+nnoremap é<bs> :lclose<CR>
 nnoremap éà <C-w>]
 nnoremap égà <C-w>g]
 
@@ -198,5 +206,7 @@ nnoremap œ :<C-U>tabnext<CR>
 nnoremap gœ :<C-U>+tabmove<CR>
 nnoremap Œ :<C-U>tablast<CR>
 
-" relocate | to `
-noremap ` \|
+" shortcut for vim-unimpaired
+" mnemonic is è accent looks like a switch
+nmap è ]
+nmap È [

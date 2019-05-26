@@ -10,16 +10,16 @@
 
 " Remap Sneak "s/S" to "é/É" (default)
 if exists("g:loaded_sneak_plugin") && Vimbim_is_homerow()
-    nmap j <Plug>Sneak_t
-    xmap j <Plug>Sneak_t
-    omap j <Plug>Sneak_t
-    nmap J <Plug>Sneak_T
-    xmap J <Plug>Sneak_T
-    omap J <Plug>Sneak_T
+    nmap l <Plug>Sneak_l
+    xmap l <Plug>Sneak_l
+    omap l <Plug>Sneak_l
+    nmap L <Plug>Sneak_L
+    xmap L <Plug>Sneak_L
+    omap L <Plug>Sneak_L
 
     " repeat motion
-    map > <Plug>Sneak_;
-    map < <Plug>Sneak_,
+    map h <Plug>Sneak_;
+    map H <Plug>Sneak_,
 
     " 1-character enhanced 'f'
     nmap f <Plug>Sneak_f
@@ -32,14 +32,14 @@ if exists("g:loaded_sneak_plugin") && Vimbim_is_homerow()
     omap F <Plug>Sneak_F
 
     " 1-character enhanced 't'
-    nmap j <Plug>Sneak_t
-    nmap J <Plug>Sneak_T
+    nmap l <Plug>Sneak_t
+    nmap L <Plug>Sneak_T
     " visual-mode
-    xmap j <Plug>Sneak_t
-    xmap J <Plug>Sneak_T
+    xmap l <Plug>Sneak_t
+    xmap L <Plug>Sneak_T
     " operator-pending-mode
-    omap j <Plug>Sneak_t
-    omap J <Plug>Sneak_T
+    omap l <Plug>Sneak_t
+    omap L <Plug>Sneak_T
 
 endif
 
