@@ -21,12 +21,12 @@ omap f <Plug>Sneak_f
 omap F <Plug>Sneak_F
 
 " 1-character enhanced 't'
-nmap h <Plug>Sneak_t
-nmap H <Plug>Sneak_T
+nmap à <Plug>Sneak_t
+nmap À <Plug>Sneak_T
 " visual-mode
-xmap h <Plug>Sneak_t
-xmap H <Plug>Sneak_T
+xmap à <Plug>Sneak_t
+xmap À <Plug>Sneak_T
 " operator-pending-mode
-omap h <Plug>Sneak_t
-omap H <Plug>Sneak_T
+omap à <Plug>Sneak_t
+omap À <Plug>Sneak_T
 

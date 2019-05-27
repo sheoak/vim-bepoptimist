@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: bepoptimist.vim
 " AUTHOR:  Sheoak <contact at lightn.es>
-" VERSION: 0.3
+" VERSION: 0.4
 " LICENSE: MIT license
 "
 " Vim keymaps for bépo keyboard layout
@@ -27,7 +27,7 @@ fun! Bepoptimist_is_homerow()
     endif
 endfunction
 
-" Filetype detection
+" Dirty fix for fugitive status window
 autocmd FileType fugitive call bepoptimist#fugitive#fixStatus()
 
 " ----------------------------------------------------------------------------
@@ -46,11 +46,11 @@ if Bepoptimist_is_homerow()
     noremap <nowait> gr gk
 
     " Remap home row keys somewhere else
-    " Search n/N move to S/R (down/up)
-    noremap <nowait> R n
-    noremap <nowait> S N
-    noremap <nowait> gR gn
-    noremap <nowait> gS gN
+    " Search n/N move to h/H
+    noremap <nowait> h n
+    noremap <nowait> H N
+    noremap <nowait> gh gn
+    noremap <nowait> gH gN
     " Replace move to l/L
     noremap <nowait> l r
     noremap <nowait> L R
@@ -58,13 +58,8 @@ if Bepoptimist_is_homerow()
     noremap <nowait> gl gr
     noremap <nowait> gL gR
     " t/T move to h/H ([h]op), we leave gh/gH
-    noremap <nowait> h t
-    noremap <nowait> H T
-    " è/È becomes ,; and free ,
-    noremap <nowait> è ;
-    noremap <nowait> È ,
-    noremap <nowait> gè g;
-    noremap <nowait> gÈ g,
+    noremap <nowait> à t
+    noremap <nowait> À T
     " L/H move to É/gÉ (Screen key)
     " Thoses maps are not so useful with sneak plugin
     noremap <nowait> É H
@@ -78,14 +73,29 @@ if Bepoptimist_is_homerow()
     noremap <nowait> <up>   gk
     noremap <nowait> gs gj
     noremap <nowait> gr gk
-    " gk, gK, gt, gT are free
+    " Help key go to gh
+    noremap <nowait> gh K
 
     " We have to free key (T/N) to navigate into tabs:
     nnoremap T :<C-U>tabprev<CR>
     nnoremap N :<C-U>tabnext<CR>
     nnoremap gT :<C-U>tabfirst<CR>
     nnoremap gN :<C-U>tablast<CR>
+
+    " S and R are free, we make an alias for [] (vim-unimpaired + built-in)
+    nmap S [
+    nmap R ]
+
+    " ranger style open tab
+    nnoremap gn :tabe <CR>
+
 endif
+
+" è/È becomes ,; and free ,
+noremap <nowait> è ;
+noremap <nowait> È ,
+noremap <nowait> gè g;
+noremap <nowait> gÈ g,
 
 " Even if we remap the homerow, previous / next fold are not remapped because
 " they are awful on the bepo instead we use unimpaired style, this way we keep
@@ -158,11 +168,6 @@ endif
 
 " Formatting
 
-" Forgotten unbreakable spaces… for French only
-" TODO: move me with execute ;
-" TODO: operator cleaner?
-nnoremap ;  :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
-
 " New operator "é" = full buffer
 " TODO: visual mode
 " TODO: remember position of the screen?
@@ -186,8 +191,3 @@ nnoremap € :<C-U>bnext<CR>
 " first/last buffer
 nnoremap gæ :<C-U>bfirst<CR>
 nnoremap g€ :<C-U>blast<CR>
-
-" shortcut for vim-unimpaired
-" mnemonic is è accent looks like a switch
-nmap à ]
-nmap À [
