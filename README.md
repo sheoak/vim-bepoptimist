@@ -1,5 +1,9 @@
 # vim-bepoptimist
 
+*Warning*: This repository is under refactoring and is unstable at the moment. A
+stable version should be ready soon. I will then follow a standard git workflow
+with a stable master branch.
+
 A vim plugin that remaps and adds vim keymaps for Bépo keyboard
 (previously "bepo-vim")
 
