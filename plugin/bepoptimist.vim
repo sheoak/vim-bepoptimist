@@ -21,35 +21,19 @@ if exists("g:bepo_enable") && ! g:bepo_enable
 endif
 
 " Check if the setting to remap homerow is on
-fun! Vimbim_is_homerow()
-    if !exists("g:bim_remap_homerow") || g:bim_remap_homerow
+fun! Bepoptimist_is_homerow()
+    if !exists("g:bepoptimist_remap_homerow") || g:bepoptimist_remap_homerow
         return 1
     endif
 endfunction
 
-" Remove mapping starting by r in Gstatus
-fun! s:FixFugitive()
-    let l:arr = map(range(char2nr('a'),char2nr('z')),'nr2char(v:val)')
-    for l:key in l:arr
-        if !empty(maparg('r' . l:key))
-            execute "nunmap <buffer>r" . l:key
-        endif
-    endfor
-endfunction
-
 " Filetype detection
-autocmd FileType fugitive call s:FixFugitive()
+autocmd FileType fugitive call bepoptimist#fugitive#fixStatus()
 
 " ----------------------------------------------------------------------------
-" Home row HJKL -> CTSR
+" Home row HJKL -> TSRN
 " ----------------------------------------------------------------------------
-if Vimbim_is_homerow()
-
-    " Bepo home row keys
-    let g:bim_left_key   = 't'
-    let g:bim_right_key  = 'n'
-    let g:bim_top_key    = 'r'
-    let g:bim_bottom_key = 's'
+if Bepoptimist_is_homerow()
 
     " - We do not remap s, it has an alias (cn)
     " - We keep J as Join
@@ -61,73 +45,71 @@ if Vimbim_is_homerow()
     noremap <nowait> gs gj
     noremap <nowait> gr gk
 
-    " Previous / next fold
-    noremap zs zj
-    noremap zr zk
-    noremap zR zr
-
     " Remap home row keys somewhere else
-    " we do not remap gs, it's quite useless
-    noremap <nowait> gS gr
-    " Search N/n move to T/N
-    noremap <nowait> T N
-    noremap <nowait> N n
-    " r move to S but we keep R
-    noremap <nowait> S r
-    " t/T move to l/L ([l]eap [t]o),
-    noremap <nowait> l t
-    noremap <nowait> L T
-    " h/H becomes ,; and free , for leader
-    noremap <nowait> h ;
-    noremap <nowait> H ,
-    noremap <nowait> gh g;
-    noremap <nowait> gH g,
-    " L/H move to É/gÉ
+    " Search n/N move to S/R (down/up)
+    noremap <nowait> R n
+    noremap <nowait> S N
+    noremap <nowait> gR gn
+    noremap <nowait> gS gN
+    " Replace move to l/L
+    noremap <nowait> l r
+    noremap <nowait> L R
+    " gl has built-in, no remap needed
+    noremap <nowait> gl gr
+    noremap <nowait> gL gR
+    " t/T move to h/H ([h]op), we leave gh/gH
+    noremap <nowait> h t
+    noremap <nowait> H T
+    " è/È becomes ,; and free ,
+    noremap <nowait> è ;
+    noremap <nowait> È ,
+    noremap <nowait> gè g;
+    noremap <nowait> gÈ g,
+    " L/H move to É/gÉ (Screen key)
+    " Thoses maps are not so useful with sneak plugin
     noremap <nowait> É H
     noremap <nowait> gÉ L
     " we have a free j key to remap the annoying CTRL-] for jumps
-    noremap <nowait> j <C-]>
-    noremap <nowait> gj g<C-]>
+    nnoremap j <C-]>
+    nnoremap gj g<C-]>
 
-    nnoremap <nowait> <down> gj
-    nnoremap <nowait> <up>   gk
-    nnoremap <nowait> gs gj
-    nnoremap <nowait> gr gk
-    nnoremap <nowait> gj gs
-    nnoremap <nowait> gk gr
+    " moves in wrapped text with arrow keys
+    noremap <nowait> <down> gj
+    noremap <nowait> <up>   gk
+    noremap <nowait> gs gj
+    noremap <nowait> gr gk
+    " gk, gK, gt, gT are free
 
-    " TODO: remap uppercases with g, check for conflicts
-
-else
-    " default vim home row
-    let g:bim_left_key     = 'h'
-    let g:bim_right_key    = 'l'
-    let g:bim_top_key      = 'k'
-    let g:bim_bottom_key   = 'j'
+    " We have to free key (T/N) to navigate into tabs:
+    nnoremap T :<C-U>tabprev<CR>
+    nnoremap N :<C-U>tabnext<CR>
+    nnoremap gT :<C-U>tabfirst<CR>
+    nnoremap gN :<C-U>tablast<CR>
 endif
+
+" Even if we remap the homerow, previous / next fold are not remapped because
+" they are awful on the bepo instead we use unimpaired style, this way we keep
+" zr (reduce fold), zR (open all fold) and zs (scroll text horizontally)
+nnoremap [z zk
+nnoremap ]z zj
 
 " Not compatible with vim-repeat for now
 " direct access to command by switching . and :
-if exists("g:bim_switch_command") && g:bim_switch_command
+if exists("g:bepoptimist_switch_command") && g:bepeptimist_switch_command
     nnoremap . :
     nnoremap : .
     vnoremap . :
     vnoremap : .
 endif
 
+" ----------------------------------------------------------------------------
+" Taking advantage of bepo keys
+" ----------------------------------------------------------------------------
+
 " <> direct access
 " TODO: remap system wise to have < > direct access everywhere
 noremap « <
 noremap » >
-
-" À keys is reseved for jumps:
-" previous / next jump (replace C-o and C-i)
-nnoremap à <C-o>
-nnoremap À <C-i>
-
-" quick jump with à
-nnoremap gà <C-]>
-nnoremap gÀ g<C-]><C-w>T
 
 " repeat last command
 nnoremap … @:
@@ -151,7 +133,7 @@ nnoremap éà <C-w>]
 nnoremap égà <C-w>g]
 
 " remap to new homerow
-if Vimbim_is_homerow()
+if Bepoptimist_is_homerow()
     " Remap window + home row
     nnoremap ét <C-w>h
     nnoremap és <C-w>j
@@ -178,14 +160,18 @@ endif
 
 " Forgotten unbreakable spaces… for French only
 " TODO: move me with execute ;
+" TODO: operator cleaner?
 nnoremap ;  :%s/\(\S\) \([:;?!]\)/\1 \2/g<CR>
 
 " New operator "é" = full buffer
+" TODO: visual mode
+" TODO: remember position of the screen?
 onoremap é :<c-u>normal! mzggVG<cr>`z
 
 " last/first chars of line
 " dê removes last char of line
-" todo: remember position
+" TODO: keep the cursor position
+" TODO: vim-repeat
 onoremap ê :<c-u>execute "normal! $v" . v:count1 . "hl"<CR>
 onoremap Ê :<c-u>execute "normal! ^v" . v:count1 . "lh"<CR>
 
@@ -193,20 +179,15 @@ onoremap Ê :<c-u>execute "normal! ^v" . v:count1 . "lh"<CR>
 nnoremap ô :let b:s=&formatoptions<CR>:set formatoptions-=o<CR>o<Esc>:let &formatoptions=b:s<CR>i
 nnoremap Ô :let b:s=&formatoptions<CR>:set formatoptions-=o<CR>O<Esc>:let &formatoptions=b:s<CR>i
 
-" buffer and window navigation
-" in the same style than the homerow but for left hand
+" buffer navigation
 nnoremap æ :<C-U>bprev<CR>
-nnoremap Æ :<C-U>bfirst<CR>
 nnoremap € :<C-U>bnext<CR>
-nnoremap ¤ :<C-U>blast<CR>
-nnoremap \| :<C-U>tabprev<CR>
-nnoremap ¦ :<C-U>tabfirst<CR>
-nnoremap g\| :<C-U>-tabmove<CR>
-nnoremap œ :<C-U>tabnext<CR>
-nnoremap gœ :<C-U>+tabmove<CR>
-nnoremap Œ :<C-U>tablast<CR>
+
+" first/last buffer
+nnoremap gæ :<C-U>bfirst<CR>
+nnoremap g€ :<C-U>blast<CR>
 
 " shortcut for vim-unimpaired
 " mnemonic is è accent looks like a switch
-nmap è ]
-nmap È [
+nmap à ]
+nmap À [
