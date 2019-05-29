@@ -53,7 +53,7 @@ endif
 if exists('g:loaded_fzf')
     nnoremap ’’ :GFiles<CR>
     nnoremap ’h :Commits!<CR>
-    nnoremap ’H :CBommits!<CR>
+    nnoremap ’H :BCommits!<CR>
 endif
 
 " GitGutter mappings
