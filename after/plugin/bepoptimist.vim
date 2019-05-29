@@ -223,7 +223,7 @@ nmap ,.D :bufdo bdelete!<CR>
 
 " FZF, it's faster than denite to open, no delay
 if exists('g:loaded_fzf')
-    nnoremap <Tab> :Buffers<CR>
+    " nnoremap <Tab> :Buffers<CR>
     nnoremap ,/ :Ag
     nnoremap ,, :FZF<CR>
     nnoremap ,’ :GFiles<CR>
@@ -240,7 +240,8 @@ endif
 " Recent and favorites
 " Alternative to fzf when action is needed:
 if exists("g:loaded_denite")
-    nnoremap ,<Tab> :<C-u>Denite -auto-resize buffer<CR>
+    nnoremap <Tab> :<C-u>Denite -auto-resize buffer<CR>
+    nnoremap ,<Tab> :<C-u>Denite -auto-resize buffer:!<CR>
     nnoremap ,<CR> :<C-u>Denite -resume<CR>
 
     " [R]ecent
