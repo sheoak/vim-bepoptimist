@@ -65,7 +65,7 @@ endif
 
 " Table-mode
 " Memo: þ is AltGr+T ([T]able)
-if exists('g:loaded_easyalign')
+if exists('g:loaded_table_mode')
     nnoremap þþ :TableModeToggle<CR>
     nnoremap þs :TableModeSort<CR>
     nnoremap þf :TableModeAddFormula<CR>
@@ -76,7 +76,7 @@ if exists('g:loaded_easyalign')
 endif
 
 " EeasyAlign (, is leader)
-if exists('g:loaded_easyalign')
+if exists('g:loaded_easy_align_plugin')
     nmap \ <Plug>(EasyAlign)
     xmap \ <Plug>(EasyAlign)
 endif
@@ -114,7 +114,7 @@ endif
 
 " Snea[k]
 " Some mappings are in vim-bepoptimist plugin (homerow remap and <>)
-if exists('g:loaded_sneak')
+if exists('g:loaded_sneak_plugin')
     nmap k <Plug>Sneak_s
     xmap k <Plug>Sneak_s
     omap k <Plug>Sneak_s
@@ -174,7 +174,7 @@ endif
 "
 " This mainly use Denite and FZF or basic actions like saving file
 "
-" - FZF is faster and better for easy actions (open file, complete line…)
+" - FZF is faster and better for easy actions (open file, c
 " - Denite has more option and is better for custom action (tab open, append…)
 "
 " Case:
@@ -299,11 +299,12 @@ if exists("g:loaded_denite")
 
 endif
 
-if exists('g:loaded_ranger')
+" Ranger does not set the usual loaded variable at the moment
+" if exists('g:ranger_command')
     nnoremap ,e :RangerWorkingDirectory<CR>
     nnoremap ,ce :RangerCurrentFile<CR>
     nnoremap ,he :Ranger ~<CR>
-endif
+" endif
 
 " -----------------------------------------------------------------------------
 " Language related plugins (ß)
@@ -333,7 +334,7 @@ if exists('g:loaded_grammarous')
 endif
 
 " Thesaurus
-if exists('g_loaded_thesaurus')
+if exists('g:loaded_thesaurus_query')
     nnoremap ßt :ThesaurusQueryReplaceCurrentWord<CR>
     nnoremap ßT :Thesaurus<space>
     nnoremap ßq :ThesaurusQueryReplace<space>
