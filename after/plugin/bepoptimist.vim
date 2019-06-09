@@ -213,6 +213,10 @@ nmap ,.q :qa<CR>
 nmap ,.Q :qa!<CR>
 nmap ,x :x<CR>
 nmap ,X :x!<CR>
+nmap ,u :bunload<CR>
+nmap ,U :bunload!<CR>
+nmap ,.u :bufdo bunload<CR>
+nmap ,.U :bufdo bunload!<CR>
 " for logic, but built-in ZZ is quicker
 nmap ,.x :xa<CR>
 nmap ,.X :xa!<CR>
@@ -220,6 +224,9 @@ nmap ,d :bdelete<CR>
 nmap ,D :bdelete!<CR>
 nmap ,.d :bufdo bdelete<CR>
 nmap ,.D :bufdo bdelete!<CR>
+" TODO: denite source command?
+nmap ,iv :source ~/.config/nvim/init.vim<CR>
+nmap ,is :source %<CR>
 
 " FZF, it's faster than denite to open, no delay
 if exists('g:loaded_fzf')
