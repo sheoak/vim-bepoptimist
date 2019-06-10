@@ -1,71 +1,39 @@
 # vim-bepoptimist
 
-A vim plugin that remaps and adds vim keymaps for Bépo keyboard
-(previously "bepo-vim")
+A vim plugin that remaps and adds vim keymaps for Bépo keyboard.
 
-*Warning*: This repository is under refactoring and is unstable at the moment. A
-stable version should be ready soon. I will then follow a standard git workflow
-with a stable master branch.
+*Warning*: The documentation is outdated, I will work on it as soon as possible
+but I'm currently refactoring all my dotfiles and mapping system.
 
 It does more than just remapping *jklm* and suggest a lot of keymaps that
 have been designed to be easy to access in bépo layout. It also take advantage
 of keys not available in qwerty or azerty layouts, like œ, æ, …
 
-The documentation is currently not up to date due to a refactoring.
-
 # Features
 
-- Remapping *jklm* to *ctsr*
+- Remapping *jklm* to *tsrn* (not *ctsr*)
 - Improving access to some keys like w or leader key
 - Adding new easy keymaps using additional bepo keys
 - Fugitive, sneak, tabular mappings for bépo
 
-**Under development.**
-
-# Abandonned features
-
-- Detecting keyboard layout: it was too much trouble…
 
 # Installation
 
 vim-bepoptimist works better with "," as leader (better suggestions are 
-welcome). To let the plugin remap leader:
+welcome). You should remap it in your vim/neovim main configuration file.
 
-    let g:bim_remap_leader = 1
-
-This way you can save your file by hitting `,,` in normal mode (map defined in
-the plugin).
-
-
-To add [fugitive](https://github.com/tpope/vim-fugitive) shortcuts:
-
-    let g:bim_map_fugitive = 1
-    " change the default fugitive prefix (gy)
-    let g:bim_fugitive_prefix = 'ç'
-
-Then you can use fugitive like this:
-
-    gys : :Gstatus (çs if you remaped)
-    gyb : :Gblame  (çb if you remaped)
-    …
 
 # Installation
 
 If you don't have any favorite installation method I recommand vim-plug.
 Just put this line in your .vimrc or init.vim
 
-    Plug 'sheoak/vim-bim'
+    Plug 'sheoak/vim-bepoptimist'
 
-And install:
+Restart vim and install:
 
     :PlugInstall
 
-# Faq
-
-    Where is the help file?
-
-I'm on it but i'm still working on the mapping for now so I don't want to spent 
-too much time changing the help file all the time.
 
 # License
 
