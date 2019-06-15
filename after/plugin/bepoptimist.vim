@@ -276,7 +276,7 @@ if exists("g:loaded_denite")
     nnoremap ,hg :<C-u>Denite -path=~ file/rec/git-dotfiles<CR>
 
     " Searching
-    nnoremap ,# :<C-u>DeniteCursorWord grep:. -mode=normal<CR>
+    nnoremap ,# :<C-u>DeniteCursorWord grep:. <CR>
     nnoremap ,a :DeniteProjectDir -buffer-name=grep -default-action=quickfix grep:::!<CR>
     nnoremap ,ca :DeniteBufferDir -buffer-name=grep -default-action=quickfix grep:::!<CR>
     nnoremap ,ha :Denite -path=~ -buffer-name=grep -default-action=quickfix grep:::!<CR>
