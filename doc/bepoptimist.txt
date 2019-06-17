@@ -1,6 +1,6 @@
 *Bepoptimist.txt* Plugin to handle bépo layout better
 
-Author:  sheoak <yannick@sheoak.fr>
+Author:  sheoak <yannick [at] sheoak.fr>
 licence: Same terms as Vim itself (see |licence|)
 
 Bepoptimist is a vim plugin that remaps and adds vim keymaps for Bépo keyboard.
@@ -14,24 +14,45 @@ This plugin is under development — no backward compatibility guaranteed — 
 now. I am still looking for ways to take advantage of the bepo layout as much
 as possible. Suggestions are very welcome.
 
-====================================================================
+==========================================================================
 CONTENTS                                            *bepoptimist-contents*
 
-    1. Usage ................ |bepoptimist-usage|
-    2. Mappings ............. |bepoptimist-mappings|
-        2.1 Prefix .......... |bepoptimist-prefix|
-        2.2 Operators ....... |bepoptimist-operators|
-        2.3 Motions ......... |bepoptimist-motions|
-        2.4 Plugins ......... |bepoptimist-plugins|
-    2. Configuration ........ |bepoptimist-configuration|
-    3. FAQ .................. |bepoptimist-faq|
-    4. Licence .............. |bepoptimist-licence|
-    5. Contributing ......... |bepoptimist-contribute|
-    6. Changelog ............ |bepoptimist-changelog|
-    7. Credits .............. |bepoptimist-credits|
+    1. Usage ............................. |bepoptimist-usage|
+        1.1 Installation ................. |bepoptimist-install|
+        1.2 Getting started .............. |bepoptimist-getting-started|
+    2. Mappings .......................... |bepoptimist-mappings|
+        2.1 Prefix ....................... |bepoptimist-prefix|
+        2.2 Text-obejcts ................. |bepoptimist-text-objects|
+        2.3 Layout modifications ......... |bepoptimist-layout|
+        2.4 Plugins ...................... |bepoptimist-plugins|
+    2. Configuration ..................... |bepoptimist-configuration|
+    3. FAQ ............................... |bepoptimist-faq|
+    4. Licence ........................... |bepoptimist-licence|
+    5. Contributing ...................... |bepoptimist-contribute|
+    6. Changelog ......................... |bepoptimist-changelog|
+    7. Credits ........................... |bepoptimist-credits|
 
 ====================================================================
 Section 1: Usage                                       *bepoptimist-usage*
+
+2.1 Installation                                     *bepoptimist-install*
+
+See README.md for install instructions.
+
+
+2.2 Getting started                          *bepoptimist-getting-started*
+
+It is important to note that the remapped homerow is on the right of the
+standard vim homerow (tsrn), so it will take some time to adjust. Once you
+will get used to it you will never want to go back as it feels way more
+natural than moving to c constantly! See |bepoptimist-layout| for details on
+the homerow replacement. There is no plan to make this configurable, as it
+impact the whole layout.
+
+The other goal of bepoptimist is to give a quick and clean access to famous
+plugins. It regroups mapping under prefixes like "’" or ",". See
+|bepoptimist-plugins| for details.
+
 
 ====================================================================
 Section 2: Mappings                                    *bepoptimist-mappings*
@@ -45,128 +66,96 @@ French letters have french mnemonics.
 ------------------------------------------------------------------------------
 2.1 Prefix mappings                                     *bepoptimist-prefix*
 
-                                                    *é*
-é               buffer prefix ([é]cran in French)
-                                                    *è*
-è               window prefix
-                                                    *œ*
-œ               option prefix ([O]ption [E]dit)
+The following keys are reserved for group of mappings.
+
+*é*   buffer prefix ([é]cran in French)
+      it acts as built-in "CTRL-w" with some additional mappings
+*’*   fugitive
+*ß*   spell, language, translations (on the key "s" like "spell")
+*þ*   table mode (on the key t, like "table")
+
+Exemples:
+
+    " buffer prefix "é"
+    éé      Previous buffer (toggle)
+    ét      Move to window on the left
+    ér      Move to window on top
+    év      Vertical split
+    éh      Horizontal split
+
 
 ------------------------------------------------------------------------------
-2.2 Operators                                           *bepoptimist-operators*
+2.2 Text-objects                                   *bepoptimist-text-objects*
 
                                                     *v_é* *o_é*
-é               select all content
-                                                    *v_â* *o_â*
-â               select [count] last char(s) of the line (same mnemonic as vim key "a")
-                                                    *v_Â* *o_Â*
-Â               select [count] first char(s) of the line
-                                                    *v_ô* *o_ô*
-ô               select [count] next line(s) (same mnemonic as vim key "o")
-                                                    *v_Ô* *o_Ô*
-Ô               select [count] previous line(s) (same mnemonic as vim key "o")
+é               the whole buffer
+
+Exemples:
+
+    dé      Delete the whole buffer
+    yé      Yank all buffer content
+    =é      Retab all buffer content
+    gqé     Reformat all buffer content
+
+                                                    *v_ê* *o_ê*
+ê               select [count] last char(s) of the line
+                d2ê: delete 2 last char of the line
+                                                    *v_Ê* *o_Ê*
+Ê               select [count] first char(s) of the line
 
 ------------------------------------------------------------------------------
-2.3 Motions                                             *bepoptimist-motions*
+2.3 Layout modifications                                 *bepoptimist-layout*
 
-                                                    *â*
-â               delete last char(s) of the line (same mnemonic as vim key "a")
-                                                    *Â*
-Â               delete firt char(s) of the line
-                                                    *ô*
-ô               insert n line(s) below
-                                                    *Ô*
-Ô               insert n line(s) above
+Because of the homerow remapping you will lose t, s, r and n mappings and
+their uppercase versions. S key is not remapped as you can use cn and cc to
+replace s and S.
+
+    t is moved to à (symmetrical to f, French mnemonic "aller [à]")
+    r is moved to l (no mnemonic, sorry!)
+    n is moved to h (mnemonic: [h]op hop hop…)
+    , is moved to è
+    ; is moved to È
+    < is moved to « for direct access
+    > is moved to » for direct access
+
+Additionnal:
+
+    è is an alias to CTRL-w
 
 ------------------------------------------------------------------------------
-2.4 Plugins                                             *bepoptimist-plugins*
+2.4 Plugins prefixes                                    *bepoptimist-plugins*
 
 Bepoptimist includes mapping for famous plugins so that they work better with
 bepo layout. Bepoptimist try to preserve as many original mappings as possible
 and mainly remaps the home row keys when there is a conflict.
 
-Plugins recognized by vim are:
+Some plugins recognized and affected to reserved keys:
 
-- vim-sneak by Justin M. Keyes : replace s by à by default and fixes mappings.
-- vim-commentary by Tim Pope : fix cg* mapping (c is take in home row)
-- vim-surround by Tim Pope : fix cs mapping (c is taken in home row)
-- vim-fugitive by Tim Pope : optional mapping for easy access to git features
-- Gundo by Steve Losh : mapping of the toggle feature
-
-                                                    *æ*
-æ               easyalign ([A]lign [E]asy)
-                                                    *à*
-à               sneak next (French: aller [à])
-                                                    *À*
-À               sneak previous (French: aller [à])
-                                                    *ù*
-ù               Gundo toggle ([U]ndo)
-                                                    *gy*
-gy              Fugitive prefix
-
-Exemples:
-
-    " new buffer operator (é is for [é]cran)
-    yé      Yank all buffer content
-    =é      Retab all buffer content
-    gqé     Reformat all buffer content
-
-    " buffer prefix "é"
-    éé      Previous buffer
-    éc      Move to previous buffer
-    ér      Move to next buffer
-    év      Vertical split
-    éh      Horizontal split
-
-    " Window prefix "è"
-    èè      Previous window
-    èc      Move to left window
-    èt      Move to bottom window
-
-    " Option prefix "œ"
-    œp      Toggle paste
-    œr      Toggle relative number
-    œf      Toggle folding
-    œev     Edit vimrc
-    œsv     Source vimrc
-
-    " Align paragraph with =
-    æap=
-
+cu             vim-surround by Tim Pope (s was conflicting)
+’              vim-fugitive by Tim Pope (typographic apostrophe)
+’              vim-gitgutter, by Andy Stewart
+\              vim-easy-align, by Junegunn Choi
+k              vim-sneak, by Justin M. Keyes (s was conflicting)
+gk             vim-sneak, label mode
+,              denite, by Shougo
+,              FZF, by Junegunn Choi
+ß              vim-grammarous, by Linda_pp (on key s, like "spell")
+þ              vim-table-mode, by Dhruva Sagar (on key t, like "table")
 
 ==============================================================================
 3. Configuration                                *bepoptimist-configuration*
 
-Enable the plugin:
+Disable the plugin:
 
-    let g:bepo_enable = 1
+    let g:bepoptimist_enable = 0
 
 If you do not wish to remap the home row and are using the keyboard arrows:
 
     let g:bepoptimist_remap_homerow = 0
 
-Enable fugitive mappings:
-
-    let g:bepoptimist_map_fugitive
-
-
-You can change the prefix keys by settings them in your vimrc. This is the
-default settings:
-
-    let g:bepoptimist_option_prefix   = 'à'
-    let g:bepoptimist_buffer_prefix   = 'k'
-    let g:bepoptimist_window_prefix   = 'É'
-    let g:bepoptimist_buffer_operator = 'ç'
-
 
 ==============================================================================
 3. FAQ                                          *bepoptimist-faq*
-
-- Why not using vim-impaired by Tim Pope for options?
-
-Vim-impaired is great, but I find it more intuitive to toggle options rather
-that setting it on or off. It also avoid to many dependencies and regrouping
-everything under brackets shortcuts.
 
 - "w" is terrible on bepo, why not remapping it to "è"?
 
@@ -178,13 +167,9 @@ system wide.
 - Why mixing French an English Mnemonics
 
 You cannot find English Mnemonics for French letters like "é" or "è". I used
-French words for these cases. Digraphs like "œ" or "æ" are however using
-English mnemonics.
+French words for these cases, when I can. Digraphs like "œ" or "æ" are however
+using English mnemonics.
 
-- I want to reconfigure some mappings, not just prefix
-
-Bepoptimist has not been designed for that, but you can remap anything to a
-bepoptimist mapping if you wish to.
 
 ==============================================================================
 4. Licence                                      *bepoptimist-licence*
@@ -205,6 +190,8 @@ Fork the project on GitHub and send a pull request:
 ==============================================================================
 6. Changelog                                    *bepoptimist-changelog*
 
+v0.4
+    * Complete refactoring
 v0.0.2
     * Experimental version, use at your own risk!
     * No backward compatibility guaranteed
