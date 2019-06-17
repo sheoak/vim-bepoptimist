@@ -70,19 +70,27 @@ The following keys are reserved for group of mappings.
 
 *é*   buffer prefix ([é]cran in French)
       it acts as built-in "CTRL-w" with some additional mappings
-*’*   fugitive
-*ß*   spell, language, translations (on the key "s" like "spell")
-*þ*   table mode (on the key t, like "table")
 
-Exemples:
+*,*   file manipulation prefix. Include built-in functions as well as plugins
+    actions.
 
-    " buffer prefix "é"
-    éé      Previous buffer (toggle)
-    ét      Move to window on the left
-    ér      Move to window on top
-    év      Vertical split
-    éh      Horizontal split
+See |bepoptimist-plugins| for additionnal prefixes.
 
+
+2.1.1 Buffer and window mappings (é)                    *bepotimist-buffers*
+
+Mapping starting by CTRL-w have been alias to "é" with the exception of the
+homerow that has been remapped. It also provides additionnal mappings:
+
+*ét*      move to left window
+*én*      move to right window
+*és*      move to bottom window
+*ér*      move to top window
+*éh*      horizontal split
+*ét*      *CTRL-w_h* replacement
+*é<space> close quickfix buffer
+*é<bs>    close location buffer
+*éé*      Previous buffer (toggle)
 
 ------------------------------------------------------------------------------
 2.2 Text-objects                                   *bepoptimist-text-objects*
@@ -131,16 +139,105 @@ and mainly remaps the home row keys when there is a conflict.
 
 Some plugins recognized and affected to reserved keys:
 
-cu             vim-surround by Tim Pope (s was conflicting)
+u              vim-surround by Tim Pope (s was conflicting)
 ’              vim-fugitive by Tim Pope (typographic apostrophe)
 ’              vim-gitgutter, by Andy Stewart
 \              vim-easy-align, by Junegunn Choi
 k              vim-sneak, by Justin M. Keyes (s was conflicting)
-gk             vim-sneak, label mode
 ,              denite, by Shougo
 ,              FZF, by Junegunn Choi
 ß              vim-grammarous, by Linda_pp (on key s, like "spell")
 þ              vim-table-mode, by Dhruva Sagar (on key t, like "table")
+
+
+2.4.1 Fugitive and git-gutter
+
+All fugitive mapping start by "’":
+
+*’b*  :Gblame
+*’c*  :Gcommit
+*’d*  :Gdiff
+*’e*  :Gedit
+*’fd* :Gremove
+*’fm* :Gmove
+*’i*  :Gpull
+*’l*  :Glog --oneline
+*’m*  :Gmerge
+*’p*  :Gpush
+*’r*  :Grebase
+*’s*  :Gstatus
+*’w*  :Gwrite
+
+vim-gitgutter mappings also start by "’":
+
+*’a* Stage hunk
+*’u* Undo stage hunk
+*’v* Preview hunk diff
+
+Git gutter also provides text-objects, that are moved due to conflicts with
+vim-targets. See plugin documentation for details.
+
+omap ih inner git gutter hunk
+omap ah ambient git gutter hunk
+
+2.4.2 Sneak
+
+Sneak is mapped to key "k" and "gk" for label mode.
+
+*k*     sneak forward
+*K*     sneak backward
+*gk*     sneak forward, label mode
+*gK*     sneak backward, label mode
+
+
+2.4.3 Surround
+
+Surround is moved to u and works as in surround documentation. Just replace
+s by u and S by U. So you get cu, du, yu…
+
+
+2.4.4 Denite and FZF
+
+Denite and FZF mappings start by ",".
+
+Section is subject to change. You can see source file to check mappings for
+now.
+
+
+2.4.5 Grammarous
+
+Section is subject to change. You can see source file to check mappings for
+now.
+
+
+2.4.6 Vim-table-mode
+
+*þþ* Toggle table mode
+*þs* Sort table
+*þf* Add formula
+*þe* Eval formula
+*þt* Tableize (visual and normal mode)
+*þd* <Plug>(table-mode-tableize-delimiter)
+
+
+2.4.7 Camel case motions
+
+The key ç is reserved for camel case motions via CamelCaseMotion plugin.
+It works similar to w/W but with camelCase words. See plugin documentation for
+details.
+
+Motions:
+
+*ç* camel case motion formard, like W
+*Ç* camel case motion backward, like B
+*gç* camel case motion formard, like e
+*gÇ* camel case motion formard, like ge
+
+Text-objects:
+
+*aç* inner camel case word
+*iç* ambient camel case word
+
 
 ==============================================================================
 3. Configuration                                *bepoptimist-configuration*
