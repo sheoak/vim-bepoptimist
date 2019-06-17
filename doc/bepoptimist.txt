@@ -125,10 +125,21 @@ replace s and S.
     ; is moved to È
     < is moved to « for direct access
     > is moved to » for direct access
+    k is moved to gh
+    gt is moved to N (next tab)
+    gT is moved to T (previous tab)
+
 
 Additionnal:
 
     è is an alias to CTRL-w
+    æ for previous buffer
+    € for next buffer
+    S is an alias for [
+    R is an alias for ]
+
+Note: S/R make vim-unimpaired access a bit easier.
+
 
 ------------------------------------------------------------------------------
 2.4 Plugins prefixes                                    *bepoptimist-plugins*
