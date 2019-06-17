@@ -88,15 +88,23 @@ endif
 if exists('g:loaded_camelcasemotion')
     " CamelCase motions (ç)
     nmap <silent> ç <Plug>CamelCaseMotion_w
-    nmap <silent> Ç <Plug>CamelCaseMotion_b
-    nmap <silent> gç <Plug>CamelCaseMotion_e
-    nmap <silent> gÇ <Plug>CamelCaseMotion_ge
+    nmap <silent> Ç <Plug>CamelCaseMotion_e
+    nmap <silent> gç <Plug>CamelCaseMotion_ge
+    nmap <silent> gÇ <Plug>CamelCaseMotion_b
     vmap <silent> ç <Plug>CamelCaseMotion_w
-    vmap <silent> Ç <Plug>CamelCaseMotion_b
-    vmap <silent> gç <Plug>CamelCaseMotion_e
-    vmap <silent> gÇ <Plug>CamelCaseMotion_ge
+    vmap <silent> Ç <Plug>CamelCaseMotion_e
+    vmap <silent> gç <Plug>CamelCaseMotion_ge
+    vmap <silent> gÇ <Plug>CamelCaseMotion_b
 
     " CamelCase text-objects (ç)
+    omap <silent> ç <Plug>CamelCaseMotion_w
+    xmap <silent> ç <Plug>CamelCaseMotion_w
+    omap <silent> Ç <Plug>CamelCaseMotion_e
+    xmap <silent> Ç <Plug>CamelCaseMotion_e
+    omap <silent> gç <Plug>CamelCaseMotion_ge
+    xmap <silent> gç <Plug>CamelCaseMotion_ge
+    omap <silent> gÇ <Plug>CamelCaseMotion_b
+    xmap <silent> gÇ <Plug>CamelCaseMotion_b
     omap <silent> aç <Plug>CamelCaseMotion_iw
     xmap <silent> aç <Plug>CamelCaseMotion_iw
     omap <silent> iç <Plug>CamelCaseMotion_ib
