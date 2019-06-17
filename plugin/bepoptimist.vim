@@ -16,7 +16,7 @@ endif
 let g:loaded_bepoptimist = 1
 
 " bepo configuration, only if it’s current layout
-if exists("g:bepo_enable") && ! g:bepo_enable
+if exists("g:bepoptimist_enable") && ! g:bepoptimist_enable
     finish
 endif
 
@@ -26,9 +26,6 @@ fun! Bepoptimist_is_homerow()
         return 1
     endif
 endfunction
-
-" Dirty fix for fugitive status window
-autocmd FileType fugitive call bepoptimist#fugitive#fixStatus()
 
 " ----------------------------------------------------------------------------
 " Home row HJKL -> TSRN
