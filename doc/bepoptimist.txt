@@ -239,9 +239,9 @@ details.
 
 Motions:
 
-*ç* camel case motion formard, like W
-*Ç* camel case motion backward, like B
-*gç* camel case motion formard, like e
+*ç* camel case motion formard, like w
+*Ç* camel case motion backward, like W
+*gç* camel case motion formard, like b
 *gÇ* camel case motion formard, like ge
 
 Text-objects:
