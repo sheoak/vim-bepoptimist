@@ -58,9 +58,9 @@ endif
 
 " GitGutter mappings
 if exists('g:loaded_gitgutter')
-    nmap ’a <Plug>GitGutterStageHunk
-    nmap ’u <Plug>GitGutterUndoHunk
-    nmap ’v <Plug>GitGutterPreviewHunk
+    nmap ’a <Plug>(GitGutterStageHunk)
+    nmap ’u <Plug>(GitGutterUndoHunk)
+    nmap ’v <Plug>(GitGutterPreviewHunk)
 endif
 
 " Table-mode
@@ -114,10 +114,10 @@ endif
 " Git gutter text-objects (conflict with targets)
 " [h]unks
 if exists('g:loaded_gitgutter')
-    omap ih <Plug>GitGutterTextObjectInnerPending
-    omap ah <Plug>GitGutterTextObjectOuterPending
-    xmap ih <Plug>GitGutterTextObjectInnerVisual
-    xmap ah <Plug>GitGutterTextObjectOuterVisual
+    omap ih <Plug>(GitGutterTextObjectInnerPending)
+    omap ah <Plug>(GitGutterTextObjectOuterPending)
+    xmap ih <Plug>(GitGutterTextObjectInnerVisual)
+    xmap ah <Plug>(GitGutterTextObjectOuterVisual)
 endif
 
 " Snea[k]
