@@ -70,8 +70,8 @@ if Bepoptimist_is_homerow()
     noremap <nowait> <up>   gk
     noremap <nowait> gs gj
     noremap <nowait> gr gk
-    " Help key go to gh
-    noremap <nowait> gh K
+    " Help key go to J
+    noremap <nowait> J K
 
     " We have to free key (T/N) to navigate into tabs:
     nnoremap T :<C-U>tabprev<CR>
