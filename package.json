@@ -1,0 +1,41 @@
+{
+  "name": "vim-bepoptimist",
+  "version": "0.0.0-development",
+  "scripts": {
+    "precise-commits": "precise-commits",
+    "semantic-release": "semantic-release"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "git-precommit-checks": "^3.0.0",
+    "husky": "^3.1.0",
+    "precise-commits": "^1.0.2",
+    "semantic-release": "^15.13.31"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "subject-case": [
+        2,
+        "always",
+        "sentence-case"
+      ]
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sheoak/vim-bepoptimist.git"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}
