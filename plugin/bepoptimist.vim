@@ -1,7 +1,6 @@
 "=============================================================================
 " FILE: bepoptimist.vim
 " AUTHOR:  Sheoak <contact at lightn.es>
-" VERSION: 0.4
 " LICENSE: MIT license
 "
 " Vim keymaps for bépo keyboard layout
@@ -46,8 +45,11 @@ if Bepoptimist_is_homerow()
     " Search n/N move to h/H
     noremap <nowait> h n
     noremap <nowait> H N
+    " gn move to gh to keep search mapping logical
     noremap <nowait> gh gn
     noremap <nowait> gH gN
+    noremap <nowait> gà gh
+    noremap <nowait> gÀ gH
     " Replace move to l/L
     noremap <nowait> l r
     noremap <nowait> L R
@@ -70,8 +72,8 @@ if Bepoptimist_is_homerow()
     noremap <nowait> <up>   gk
     noremap <nowait> gs gj
     noremap <nowait> gr gk
-    " Help key go to J
-    noremap <nowait> J K
+    " Help key go to °
+    noremap <nowait> ° K
 
     " We have to free key (T/N) to navigate into tabs:
     nnoremap T :<C-U>tabprev<CR>
@@ -80,12 +82,13 @@ if Bepoptimist_is_homerow()
     nnoremap gN :<C-U>tablast<CR>
 
     " S and R are free, we make an alias for [] (vim-unimpaired + built-in)
-    nmap S [
-    nmap R ]
+    " Switch down is on (S) or up is off (R) to stay consistent with directons
+    " Sm goes to next method, Rm to previous
+    nmap S ]
+    nmap R [
 
     " ranger style open tab
     nnoremap gn :tabe <CR>
-
 endif
 
 " è/È becomes ,; and free ,
