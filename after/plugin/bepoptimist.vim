@@ -237,15 +237,28 @@ nmap ,iv :source ~/.config/nvim/init.vim<CR>
 nmap ,is :source %<CR>
 
 " FZF, it's faster than denite to open, no delay
-if exists('g:loaded_fzf')
-    " FIXME: conflict C-i
-    " nnoremap <Tab> :Buffers<CR>
-    nnoremap ,/ :Ag
-    nnoremap ,, :FZF<CR>
-    nnoremap ,’ :GFiles<CR>
-    nnoremap ,~ :FZF ~<CR>
-    nnoremap ,<space> :History<CR>
-    nnoremap ,: :History:<CR>
+if exists('g:loaded_fzf') && !exists('g:fzf_preview_use_floating_window')
+    nnoremap ,/ :<C-u>Rg
+    nnoremap ,, :<C-u>FZF<CR>
+    nnoremap ,’ :<C-u>GFiles<CR>
+    nnoremap ,~ :<C-u>FZF ~<CR>
+    nnoremap ,<Tab> :<C-u>Buffers<CR>
+    nnoremap ,<space> :<C-u>History<CR>
+    nnoremap ,: :<C-u>History:<CR>
+endif
+
+" FZF, it's faster than denite to open, no delay
+if exists('g:fzf_preview_use_floating_window')
+    nnoremap ,/ :<C-u>FzfPreviewProjectGrep<Space>
+    nnoremap ,, :<C-u>FzfPreviewGitFiles<CR>
+    nnoremap ,’ :<C-u>FzfPreviewGitFiles<CR>
+    nnoremap <Tab> :<C-u>FzfPreviewBuffers<CR>
+    " too slow with preview, why?
+    nnoremap ,~ :<C-u>FZF ~<CR>
+    nnoremap ,h :<C-u>FzfPreviewMruFiles<CR>
+    nnoremap ,p :<C-u>FzfPreviewProjectFiles<CR>
+    nnoremap ,<space> :<C-u>FzfPreviewDirectoryFiles<CR>
+    nnoremap ,: :<C-u>History:<CR>
 endif
 
 " Startify
@@ -256,38 +269,6 @@ endif
 " Recent and favorites
 " Alternative to fzf when action is needed:
 if exists("g:loaded_denite")
-    nnoremap ,<Tab> :<C-u>Denite -auto-resize buffer:!<CR>
-    nnoremap ,<CR> :<C-u>Denite -resume<CR>
-
-    " [R]ecent
-    nnoremap ,r :<C-u>Denite file_mru<CR>
-    nnoremap ,R :<C-u>Denite directory_mru<CR>
-
-    " Recursive ([T]ree) files/folders
-    nnoremap ,t :<C-u>DeniteProjectDir file/rec<CR>
-    nnoremap ,ct :<C-u>DeniteBufferDir file/rec<CR>
-    nnoremap ,ht :<C-u>Denite -path=~ file/rec<CR>
-    nnoremap ,T :<C-u>DeniteProjectDir directory_rec<CR>
-    nnoremap ,cT :<C-u>DeniteBufferDir directory_rec<CR>
-    nnoremap ,hT :<C-u>Denite -path=~ directory_rec<CR>
-
-    " [b]rowse (file/directory non recursive)
-    nnoremap ,b :<C-u>DeniteProjectDir file<CR>
-    nnoremap ,cb :<C-u>DeniteBufferDir file<CR>
-    nnoremap ,hb :<C-u>Denite -path=~ file<CR>
-
-    " [G]it
-    nnoremap ,g :<C-u>DeniteProjectDir
-        \ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`<CR>
-    nnoremap ,cg :<C-u>DeniteBufferDir
-        \ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`<CR>
-    nnoremap ,hg :<C-u>Denite -path=~ file/rec/git-dotfiles<CR>
-
-    " Searching
-    nnoremap ,# :<C-u>DeniteCursorWord grep:. <CR>
-    nnoremap ,a :DeniteProjectDir -buffer-name=grep -default-action=quickfix grep:::!<CR>
-    nnoremap ,ca :DeniteBufferDir -buffer-name=grep -default-action=quickfix grep:::!<CR>
-    nnoremap ,ha :Denite -path=~ -buffer-name=grep -default-action=quickfix grep:::!<CR>
 
     " Others
     nnoremap ,à :<C-u>Denite jump<CR>
@@ -300,7 +281,6 @@ if exists("g:loaded_denite")
     nnoremap ,L :<C-u>Denite line:buffers<CR>
     nnoremap ,n :<C-u>Denite outline<CR>
     nnoremap ,m :<C-u>Denite mark<CR>
-    nnoremap ,p :<C-u>Denite neosnippet<CR>
     nnoremap ,o :<C-u>Denite output:!
     nnoremap ,y :<C-u>Denite register<CR>
     nnoremap ,z :<C-u>Denite spell<CR>

@@ -97,6 +97,12 @@ noremap <nowait> È ,
 noremap <nowait> gè g;
 noremap <nowait> gÈ g,
 
+" remap CTRL-i to CTRL-n, because we want to free "tab" key
+" easy to remember because it uses existing mnemonics, so we also use 
+" the free "C-p" keys as a "C-o" alias
+nnoremap <C-n> <C-i>
+nnoremap <C-p> <C-o>
+
 " Even if we remap the homerow, previous / next fold are not remapped because
 " they are awful on the bepo instead we use unimpaired style, this way we keep
 " zr (reduce fold), zR (open all fold) and zs (scroll text horizontally)
