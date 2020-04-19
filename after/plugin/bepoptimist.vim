@@ -49,13 +49,6 @@ if exists('g:loaded_fugitive')
     nnoremap ’w :Gwrite<CR>
 endif
 
-" FZF
-if exists('g:loaded_fzf')
-    nnoremap ’’ :GFiles<CR>
-    nnoremap ’h :Commits!<CR>
-    nnoremap ’H :BCommits!<CR>
-endif
-
 " GitGutter mappings
 if exists('g:loaded_gitgutter')
     nmap ’a <Plug>(GitGutterStageHunk)
@@ -237,21 +230,31 @@ nmap ,iv :source ~/.config/nvim/init.vim<CR>
 nmap ,is :source %<CR>
 
 " FZF, it's faster than denite to open, no delay
+" Will be deprecated once fzf-preview is fully tested
 if exists('g:loaded_fzf') && !exists('g:fzf_preview_use_floating_window')
+    " git
+    nnoremap ’h :Commits!<CR>
+    nnoremap ’H :BCommits!<CR>
+    " files
     nnoremap ,/ :<C-u>Rg
     nnoremap ,, :<C-u>FZF<CR>
     nnoremap ,’ :<C-u>GFiles<CR>
     nnoremap ,~ :<C-u>FZF ~<CR>
     nnoremap ,<Tab> :<C-u>Buffers<CR>
-    nnoremap ,<space> :<C-u>History<CR>
+    nnoremap ,h :<C-u>History<CR>
+    nnoremap ,<space> :<C-u>FZF<CR>
     nnoremap ,: :<C-u>History:<CR>
+    nnoremap ,l :<C-u>Lines<CR>
 endif
 
 " FZF, it's faster than denite to open, no delay
 if exists('g:fzf_preview_use_floating_window')
+    " git
+    nnoremap ’h :Commits!<CR>
+    nnoremap ’H :BCommits!<CR>
+    " files
     nnoremap ,/ :<C-u>FzfPreviewProjectGrep<Space>
     nnoremap ,, :<C-u>FzfPreviewGitFiles<CR>
-    nnoremap ,’ :<C-u>FzfPreviewGitFiles<CR>
     nnoremap <Tab> :<C-u>FzfPreviewBuffers<CR>
     " too slow with preview, why?
     nnoremap ,~ :<C-u>FZF ~<CR>
@@ -259,6 +262,7 @@ if exists('g:fzf_preview_use_floating_window')
     nnoremap ,p :<C-u>FzfPreviewProjectFiles<CR>
     nnoremap ,<space> :<C-u>FzfPreviewDirectoryFiles<CR>
     nnoremap ,: :<C-u>History:<CR>
+    nnoremap ,l :<C-u>FzfPreviewLines<CR>
 endif
 
 " Startify
@@ -271,19 +275,17 @@ endif
 if exists("g:loaded_denite")
 
     " Others
-    nnoremap ,à :<C-u>Denite jump<CR>
-    nnoremap ,À :<C-u>Denite tag<CR>
+    " nnoremap ,à :<C-u>Denite jump<CR>
+    " nnoremap ,À :<C-u>Denite tag<CR>
     nnoremap ,ç :<C-u>Denite colorscheme<CR>
     nnoremap ,C :<C-u>Denite change<CR>
     nnoremap ,j :<C-u>Denite emoji<CR>
     nnoremap ,k :<C-u>Denite help<CR>
-    nnoremap ,l :<C-u>Denite line<CR>
     nnoremap ,L :<C-u>Denite line:buffers<CR>
     nnoremap ,n :<C-u>Denite outline<CR>
     nnoremap ,m :<C-u>Denite mark<CR>
     nnoremap ,o :<C-u>Denite output:!
     nnoremap ,y :<C-u>Denite register<CR>
-    nnoremap ,z :<C-u>Denite spell<CR>
     nnoremap ,Z :<C-u>Denite grammarous<CR>
     nnoremap ,… :<C-u>Denite command_history<CR>
     nnoremap ,@ :<C-u>Denite command<CR>
