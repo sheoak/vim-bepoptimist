@@ -253,7 +253,7 @@ if exists('g:fzf_preview_use_floating_window')
     nnoremap ’h :Commits!<CR>
     nnoremap ’H :BCommits!<CR>
     " files
-    nnoremap ,/ :<C-u>FzfPreviewProjectGrep<Space>
+    nnoremap ,/ :<C-u>Rg<CR>
     nnoremap ,, :<C-u>FzfPreviewGitFiles<CR>
     nnoremap <Tab> :<C-u>FzfPreviewBuffers<CR>
     " too slow with preview, why?
