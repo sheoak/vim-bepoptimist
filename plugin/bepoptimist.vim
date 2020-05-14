@@ -76,10 +76,12 @@ if Bepoptimist_is_homerow()
     noremap <nowait> ° K
 
     " We have to free key (T/N) to navigate into tabs:
-    nnoremap T :<C-U>tabprev<CR>
-    nnoremap N :<C-U>tabnext<CR>
-    nnoremap gT :<C-U>tabfirst<CR>
-    nnoremap gN :<C-U>tablast<CR>
+    nnoremap æ :<C-U>tabprev<CR>
+    nnoremap € :<C-U>tabnext<CR>
+    nnoremap gæ :<C-U>tabfirst<CR>
+    nnoremap g€ :<C-U>tablast<CR>
+    nnoremap mæ :<C-U>-tabmove<CR>
+    nnoremap m€ :<C-U>+tabmove<CR>
 
     " S and R are free, we make an alias for [] (vim-unimpaired + built-in)
     " Switch down is on (S) or up is off (R) to stay consistent with directons
@@ -191,9 +193,9 @@ nnoremap ô :let b:s=&formatoptions<CR>:set formatoptions-=o<CR>o<Esc>:let &form
 nnoremap Ô :let b:s=&formatoptions<CR>:set formatoptions-=o<CR>O<Esc>:let &formatoptions=b:s<CR>i
 
 " buffer navigation
-nnoremap æ :<C-U>bprev<CR>
-nnoremap € :<C-U>bnext<CR>
+nnoremap T :<C-U>bprev<CR>
+nnoremap N :<C-U>bnext<CR>
 
 " first/last buffer
-nnoremap gæ :<C-U>bfirst<CR>
-nnoremap g€ :<C-U>blast<CR>
+nnoremap gT :<C-U>bfirst<CR>
+nnoremap gN :<C-U>blast<CR>
