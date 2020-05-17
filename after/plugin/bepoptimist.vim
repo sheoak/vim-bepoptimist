@@ -1,7 +1,6 @@
 "=============================================================================
 " FILE: after/plugin/bepoptimist.vim
 " AUTHOR:  Sheoak <contact at lightn.es>
-" VERSION: 0.4
 " LICENSE: MIT license
 "
 " These maps are loaded after because the plugins must have been loaded, so we
@@ -12,10 +11,6 @@ if Bepoptimist_is_homerow()
 
     if exists(':GundoToggle')
         runtime patch/gundo.vim
-    endif
-
-    if exists('g:loaded_denite')
-        runtime patch/denite.vim
     endif
 
 endif
@@ -30,7 +25,7 @@ if exists("g:mkdp_auto_start")
 endif
 
 " -----------------------------------------------------------------------------
-" GIT mappings (’)
+" GIT mappings = ’
 " -----------------------------------------------------------------------------
 
 if exists('g:loaded_fugitive')
@@ -45,8 +40,12 @@ if exists('g:loaded_fugitive')
     nnoremap ’m :Gmerge<CR>
     nnoremap ’p :Gpush<CR>
     nnoremap ’r :Grebase<CR>
-    nnoremap ’s :Gstatus<CR>
+    nnoremap ’s :40split\|:0Gstatus<CR>
     nnoremap ’w :Gwrite<CR>
+endif
+
+if exists('g:loaded_git_messenger')
+    nmap ’o <Plug>(git-messenger)
 endif
 
 " GitGutter mappings
@@ -54,6 +53,13 @@ if exists('g:loaded_gitgutter')
     nmap ’a <Plug>(GitGutterStageHunk)
     nmap ’u <Plug>(GitGutterUndoHunk)
     nmap ’v <Plug>(GitGutterPreviewHunk)
+
+    " Git gutter text-objects (conflict with targets)
+    " [h]unks
+    omap ih <Plug>(GitGutterTextObjectInnerPending)
+    omap ah <Plug>(GitGutterTextObjectOuterPending)
+    xmap ih <Plug>(GitGutterTextObjectInnerVisual)
+    xmap ah <Plug>(GitGutterTextObjectOuterVisual)
 endif
 
 " Table-mode
@@ -102,15 +108,6 @@ if exists('g:loaded_camelcasemotion')
     xmap <silent> aç <Plug>CamelCaseMotion_iw
     omap <silent> iç <Plug>CamelCaseMotion_ib
     xmap <silent> iç <Plug>CamelCaseMotion_ib
-endif
-
-" Git gutter text-objects (conflict with targets)
-" [h]unks
-if exists('g:loaded_gitgutter')
-    omap ih <Plug>(GitGutterTextObjectInnerPending)
-    omap ah <Plug>(GitGutterTextObjectOuterPending)
-    xmap ih <Plug>(GitGutterTextObjectInnerVisual)
-    xmap ah <Plug>(GitGutterTextObjectOuterVisual)
 endif
 
 " Snea[k]
@@ -167,142 +164,29 @@ if exists('g:loaded_surround')
     xmap u   <Plug>VgSurround
 endif
 
-" -----------------------------------------------------------------------------
-" Coma (,) mappings:
-" -----------------------------------------------------------------------------
-"
-" All coma mappings are use for file managment: actions on file, buffers…
-"
-" This mainly use Denite and FZF or basic actions like saving file
-"
-" - FZF is faster and better for easy actions (open file, c
-" - Denite has more option and is better for custom action (tab open, append…)
-"
-" Case:
-" For file browsing, lowercase means files and directory in most cases
-" but it sometimes doesn't make sense as sources can be mixed
-"
-" Suffix:
-" if leader is follow by of these keys, it will modify the next command:
-"
-" c     apply on [c]urrent buffer directory
-" h     apply on [h]ome directory
-" !     force next action (force save readonly…) or important action
-" .     repeat for all files
-"
-" ,ct search in current directory (t=recursive)
-" ,hb browser the home directory (not recursive)
-"
-" Combination:
-" - ,.S force (S) save all (.) files
-"
-" For file saving/exiting, uppercase mean 'for all files'
-"
-" TODO: hidden buffers (denite buffers:!)
-" -----------------------------------------------------------------------------
-
-" Common actions (no plugin)
-nmap ,s :w<CR>
-nmap ,S :w!<CR>
-nmap ,.s :wa<CR>
-nmap ,.S :wa!<CR>
-nmap ,w :saveas<space>
-nmap ,W :saveas!<space>
-nmap ,q :q<CR>
-nmap ,Q :q!<CR>
-nmap ,.q :qa<CR>
-nmap ,.Q :qa!<CR>
-nmap ,x :x<CR>
-nmap ,X :x!<CR>
-nmap ,u :bunload<CR>
-nmap ,U :bunload!<CR>
-nmap ,.u :bufdo bunload<CR>
-nmap ,.U :bufdo bunload!<CR>
-" for logic, but built-in ZZ is quicker
-nmap ,.x :xa<CR>
-nmap ,.X :xa!<CR>
-nmap ,d :bdelete<CR>
-nmap ,D :bdelete!<CR>
-nmap ,.d :bufdo bdelete<CR>
-nmap ,.D :bufdo bdelete!<CR>
-" TODO: denite source command?
-nmap ,iv :source ~/.config/nvim/init.vim<CR>
-nmap ,is :source %<CR>
-
-" FZF, it's faster than denite to open, no delay
-" Will be deprecated once fzf-preview is fully tested
-if exists('g:loaded_fzf') && !exists('g:fzf_preview_use_floating_window')
-    " git
-    nnoremap ’h :Commits!<CR>
-    nnoremap ’H :BCommits!<CR>
-    " files
-    nnoremap ,/ :<C-u>Rg
-    nnoremap ,, :<C-u>FZF<CR>
-    nnoremap ,’ :<C-u>GFiles<CR>
-    nnoremap ,~ :<C-u>FZF ~<CR>
-    nnoremap ,<Tab> :<C-u>Buffers<CR>
-    nnoremap ,h :<C-u>History<CR>
-    nnoremap ,<space> :<C-u>FZF<CR>
-    nnoremap ,: :<C-u>History:<CR>
-    nnoremap ,l :<C-u>Lines<CR>
-endif
-
 " FZF, it's faster than denite to open, no delay
 if exists('g:fzf_preview_use_floating_window')
     " git
     nnoremap ’h :Commits!<CR>
     nnoremap ’H :BCommits!<CR>
     " files
-    nnoremap ,/ :<C-u>Rg<CR>
-    nnoremap ,, :<C-u>FzfPreviewGitFiles<CR>
+    " nnoremap ,/ :<C-u>Rg<CR>
+    nnoremap ,/ :<C-u>FzfPreviewProjectCommandGrep<CR>
+    nnoremap ,\ :<C-u>FzfPreviewProjectCommandGrep -resume<CR>
+    nnoremap ,, :<C-u>FzfPreviewDirectoryFiles<CR>
+    nnoremap ’’ :<C-u>FzfPreviewGitFiles<CR>
     nnoremap <Tab> :<C-u>FzfPreviewBuffers<CR>
-    " too slow with preview, why?
-    nnoremap ,~ :<C-u>FZF ~<CR>
+    nnoremap ,<Tab> :<C-u>Windows<CR>
+    nnoremap ,~ :<C-u>FzfPreviewDirectoryFiles ~<CR>
     nnoremap ,h :<C-u>FzfPreviewMruFiles<CR>
-    nnoremap ,p :<C-u>FzfPreviewProjectFiles<CR>
-    nnoremap ,<space> :<C-u>FzfPreviewDirectoryFiles<CR>
+    nnoremap ,H :<C-u>FzfPreviewMrwFiles<CR>
+    nnoremap ,<space> :<C-u>FzfPreviewProjectMruFiles<CR>
     nnoremap ,: :<C-u>History:<CR>
     nnoremap ,l :<C-u>FzfPreviewLines<CR>
+    nnoremap <silent> ,f     :<C-u>FzfPreviewQuickFix<CR>
+    nnoremap <silent> ,F     :<C-u>FzfPreviewLocationList<CR>
+    nnoremap <silent> ,m     :<C-u>Maps<CR>
 endif
-
-" Startify
-if exists("g:loaded_startify")
-    nnoremap ,v :Startify<CR>
-endif
-
-" Recent and favorites
-" Alternative to fzf when action is needed:
-if exists("g:loaded_denite")
-
-    " Others
-    " nnoremap ,à :<C-u>Denite jump<CR>
-    " nnoremap ,À :<C-u>Denite tag<CR>
-    nnoremap ,ç :<C-u>Denite colorscheme<CR>
-    nnoremap ,C :<C-u>Denite change<CR>
-    nnoremap ,j :<C-u>Denite emoji<CR>
-    nnoremap ,k :<C-u>Denite help<CR>
-    nnoremap ,L :<C-u>Denite line:buffers<CR>
-    nnoremap ,n :<C-u>Denite outline<CR>
-    nnoremap ,m :<C-u>Denite mark<CR>
-    nnoremap ,o :<C-u>Denite output:!
-    nnoremap ,y :<C-u>Denite register<CR>
-    nnoremap ,Z :<C-u>Denite grammarous<CR>
-    nnoremap ,… :<C-u>Denite command_history<CR>
-    nnoremap ,@ :<C-u>Denite command<CR>
-    nnoremap ,?a :<C-u>Denite output:map<CR>
-    nnoremap ,?n :<C-u>Denite output:nmap<CR>
-    nnoremap ,?i :<C-u>Denite output:imap<CR>
-    nnoremap ,?x :<C-u>Denite output:xmap<CR>
-    nnoremap ,?o :<C-u>Denite output:omap<CR>
-
-endif
-
-" Ranger does not set the usual loaded variable at the moment
-" if exists('g:ranger_command')
-    nnoremap ,e :RangerWorkingDirectory<CR>
-    nnoremap ,ce :RangerCurrentFile<CR>
-    nnoremap ,he :Ranger ~<CR>
-" endif
 
 " -----------------------------------------------------------------------------
 " Language related plugins (ß)
@@ -336,31 +220,4 @@ if exists('g:loaded_thesaurus_query')
     nnoremap ßt :ThesaurusQueryReplaceCurrentWord<CR>
     nnoremap ßT :Thesaurus<space>
     nnoremap ßq :ThesaurusQueryReplace<space>
-endif
-
-" -----------------------------------------------------------------------------
-"  Other mappings
-" -----------------------------------------------------------------------------
-
-" nvim-gdb
-" Memo: ð is AltGr+d ([d]ebug)
-" -----------------------------------------------------------------------------
-if exists('g:loaded_nvimgdb')
-    nnoremap ðð <C-w><C-p>
-    nnoremap ðg :GdbStart gdb -q ./a.out
-    nnoremap ðl :GdbStartLLDB lldb ./a.out
-    nnoremap ðp :GdbStartPDB python -m pdb main.py
-    nnoremap ð<Return> :GdbContinue<CR>
-    nnoremap ð<Space> :GdbStep<CR>
-    nnoremap ðu :GdbUntil<CR>
-    nnoremap ðn :GdbNext<CR>
-    nnoremap ðh :GdbFinish<CR>
-    nnoremap ðt :GdbBreakpointToggle<CR>
-    nnoremap ð< :GdbFrameUp<CR>
-    nnoremap ð> :GdbFrameDown<CR>
-    nnoremap ðe :GdbEvalWord<CR>
-    vnoremap ðe :GdbEvalRange<CR>
-    nnoremap ðd :GdbBreakpointClearAll<CR>
-    nnoremap ði :GdbInterrupt<CR>
-    nnoremap ðq :GdbDebugStop<CR>
 endif
