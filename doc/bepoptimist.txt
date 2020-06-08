@@ -87,7 +87,6 @@ homerow that has been remapped. It also provides additionnal mappings:
 *és*      move to bottom window
 *ér*      move to top window
 *éh*      horizontal split
-*ét*      *CTRL-w_h* replacement
 *é<space> close quickfix buffer
 *é<bs>    close location buffer
 *éé*      Previous buffer (toggle)
