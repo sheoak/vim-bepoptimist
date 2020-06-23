@@ -113,7 +113,7 @@ nnoremap ]z zj
 
 " Not compatible with vim-repeat for now
 " direct access to command by switching . and :
-if exists("g:bepoptimist_switch_command") && g:bepeptimist_switch_command
+if exists("g:bepoptimist_switch_command") && g:bepoptimist_switch_command
     nnoremap . :
     nnoremap : .
     vnoremap . :
