@@ -29,19 +29,28 @@ endif
 " -----------------------------------------------------------------------------
 
 if exists('g:loaded_fugitive')
-    nnoremap ’b :Gblame<CR>
-    nnoremap ’c :Gcommit<CR>
-    nnoremap ’d :Gdiff<CR>
+    nnoremap ’bl :Git_blame<CR>
+    nnoremap ’<CR> :Git commit<CR>
     nnoremap ’e :Gedit<CR>
-    nnoremap ’fd :Gremove<CR>
-    nnoremap ’fm :Gmove<CR>
-    nnoremap ’i :Gpull<CR>
-    nnoremap ’l :Glog --oneline<CR>
+    nnoremap ’E :Gedit :0<CR>
+    nnoremap ’fd :GDelete<CR>
+    nnoremap ’fm :GMove<CR>
+    nnoremap ’l :Git pull<CR>
+    nnoremap ’h :0Git log --oneline<CR>
+    nnoremap ’H :0Git log<CR>
     nnoremap ’m :Gmerge<CR>
-    nnoremap ’p :Gpush<CR>
-    nnoremap ’r :Grebase<CR>
-    nnoremap ’s :40split\|:0Gstatus<CR>
+    nnoremap ’p :Git push<CR>
+    nnoremap ’r :Git rebase<CR>
+    nnoremap ’R :Git rebase master<CR>
+    nnoremap ’s :Git<CR>
     nnoremap ’w :Gwrite<CR>
+    " conflict solving
+    nnoremap ’d :Gvdiffsplit!<CR>
+    nnoremap ’t :diffget //2<CR>
+    nnoremap ’n :diffget //3<CR>
+    nnoremap ’cb :CocCommand fzf-preview.GitBranches
+    nnoremap ’cs :CocCommand fzf-preview.GitStashes
+    nnoremap ’cr :CocCommand fzf-preview.GitReflogs
 endif
 
 if exists('g:loaded_git_messenger')
@@ -164,29 +173,26 @@ if exists('g:loaded_surround')
     xmap u   <Plug>VgSurround
 endif
 
-" FZF, it's faster than denite to open, no delay
-if exists('g:fzf_preview_use_floating_window')
-    " git
-    nnoremap ’h :Commits!<CR>
-    nnoremap ’H :BCommits!<CR>
-    " files
-    " nnoremap ,/ :<C-u>Rg<CR>
-    nnoremap ,/ :<C-u>FzfPreviewProjectCommandGrep<CR>
-    nnoremap ,\ :<C-u>FzfPreviewProjectCommandGrep -resume<CR>
-    nnoremap ,, :<C-u>FzfPreviewDirectoryFiles<CR>
-    nnoremap ’’ :<C-u>FzfPreviewGitFiles<CR>
-    nnoremap <Tab> :<C-u>FzfPreviewBuffers<CR>
-    nnoremap ,<Tab> :<C-u>Windows<CR>
-    nnoremap ,~ :<C-u>FzfPreviewDirectoryFiles ~<CR>
-    nnoremap ,h :<C-u>FzfPreviewMruFiles<CR>
-    nnoremap ,H :<C-u>FzfPreviewMrwFiles<CR>
-    nnoremap ,<space> :<C-u>FzfPreviewProjectMruFiles<CR>
-    nnoremap ,: :<C-u>History:<CR>
-    nnoremap ,l :<C-u>FzfPreviewLines<CR>
-    nnoremap <silent> ,f     :<C-u>FzfPreviewQuickFix<CR>
-    nnoremap <silent> ,F     :<C-u>FzfPreviewLocationList<CR>
-    nnoremap <silent> ,m     :<C-u>Maps<CR>
-endif
+" FIXME: check if it's loaded via either coc extension or vim
+nnoremap ’h :Commits!<CR>
+nnoremap ’H :BCommits!<CR>
+" files
+" nnoremap ,/ :<C-u>Rg<CR>
+nnoremap ,/ :<C-u>FzfPreviewProjectGrep 
+nnoremap <silent> ,\ :<C-u>FzfPreviewProjectGrep -resume<CR>
+nnoremap <silent> ,, :<C-u>FzfPreviewDirectoryFiles<CR>
+nnoremap <silent> ’’ :<C-u>FzfPreviewGitFiles<CR>
+nnoremap <silent> <Tab> :<C-u>FzfPreviewBuffers<CR>
+nnoremap <silent> ,<Tab> :<C-u>Windows<CR>
+nnoremap <silent> ,~ :<C-u>FzfPreviewDirectoryFiles ~<CR>
+nnoremap <silent> ,h :<C-u>FzfPreviewMruFiles<CR>
+nnoremap <silent> ,H :<C-u>FzfPreviewMrwFiles<CR>
+nnoremap <silent> ,<space> :<C-u>FzfPreviewProjectMruFiles<CR>
+nnoremap <silent> ,: :<C-u>History:<CR>
+nnoremap <silent> ,l :<C-u>FzfPreviewLines<CR>
+nnoremap <silent> ,f     :<C-u>FzfPreviewQuickFix<CR>
+nnoremap <silent> ,F     :<C-u>FzfPreviewLocationList<CR>
+nnoremap <silent> ,m     :<C-u>Maps<CR>
 
 " -----------------------------------------------------------------------------
 " Language related plugins (ß)
