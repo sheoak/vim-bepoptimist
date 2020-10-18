@@ -154,7 +154,6 @@ u              vim-surround by Tim Pope (s was conflicting)
 ’              vim-gitgutter, by Andy Stewart
 \              vim-easy-align, by Junegunn Choi
 k              vim-sneak, by Justin M. Keyes (s was conflicting)
-,              denite, by Shougo
 ,              FZF, by Junegunn Choi
 ß              vim-grammarous, by Linda_pp (on key s, like "spell")
 þ              vim-table-mode, by Dhruva Sagar (on key t, like "table")
@@ -165,16 +164,16 @@ k              vim-sneak, by Justin M. Keyes (s was conflicting)
 All fugitive mapping start by "’":
 
 *’b*  :Gblame
-*’c*  :Gcommit
-*’d*  :Gdiff
+*’<CR>*  :Gcommit
+*’d*  :Gvdiffsplit
 *’e*  :Gedit
 *’fd* :Gremove
 *’fm* :Gmove
-*’i*  :Gpull
-*’l*  :Glog --oneline
+*’l*  :G pull
+*’h*  :Git log
 *’m*  :Gmerge
-*’p*  :Gpush
-*’r*  :Grebase
+*’p*  :G push
+*’r*  :G rebase
 *’s*  :Gstatus
 *’w*  :Gwrite
 
@@ -206,9 +205,9 @@ Surround is moved to u and works as in surround documentation. Just replace
 s by u and S by U. So you get cu, du, yu…
 
 
-2.4.4 Denite and FZF
+2.4.4 FZF
 
-Denite and FZF mappings start by ",".
+FZF mappings start by ",".
 
 Section is subject to change. You can see source file to check mappings for
 now.

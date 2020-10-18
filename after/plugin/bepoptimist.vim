@@ -48,9 +48,6 @@ if exists('g:loaded_fugitive')
     nnoremap ’d :Gvdiffsplit!<CR>
     nnoremap ’t :diffget //2<CR>
     nnoremap ’n :diffget //3<CR>
-    nnoremap ’cb :CocCommand fzf-preview.GitBranches
-    nnoremap ’cs :CocCommand fzf-preview.GitStashes
-    nnoremap ’cr :CocCommand fzf-preview.GitReflogs
 endif
 
 if exists('g:loaded_git_messenger')
@@ -173,27 +170,35 @@ if exists('g:loaded_surround')
     xmap u   <Plug>VgSurround
 endif
 
-" fzf-preview + git
-nnoremap <silent> ’h :<C-u>:CocCommand fzf-preview.GitLogs<CR>
-nnoremap <silent> ’H :<C-u>:CocCommand fzf-preview.GitCurrentLogs<CR>
-nnoremap <silent> ’’ :<C-u>:CocCommand fzf-preview.GitFiles<CR>
+if exists('g:did_coc_loaded')
+    " fzf-preview, git
+    nnoremap <silent> ’h :<C-u>:CocCommand fzf-preview.GitLogs<CR>
+    nnoremap <silent> ’H :<C-u>:CocCommand fzf-preview.GitCurrentLogs<CR>
+    nnoremap <silent> ’’ :<C-u>:CocCommand fzf-preview.GitFiles<CR>
+    nnoremap <silent>’cb :CocCommand fzf-preview.GitBranches<CR>
+    nnoremap <silent>’cs :CocCommand fzf-preview.GitStashes<CR>
+    nnoremap <silent>’cr :CocCommand fzf-preview.GitReflogs<CR>
+    nnoremap <silent>’S :CocCommand fzf-preview.GitStatus<CR>
+    " fzf-preview, files
+    nnoremap <silent> ,/ :<C-u>:CocCommand fzf-preview.ProjectGrep .<CR>
+    nnoremap ,\ :<C-u>:CocCommand fzf-preview.ProjectGrep 
+    nnoremap <silent> ,, :<C-u>:CocCommand fzf-preview.DirectoryFiles<CR>
+    nnoremap <silent> <Tab> :<C-u>:CocCommand fzf-preview.Buffers<CR>
+    nnoremap <silent> ,~ :<C-u>:CocCommand fzf-preview.DirectoryFiles ~<CR>
+    nnoremap <silent> ,h :<C-u>:CocCommand fzf-preview.MruFiles<CR>
+    nnoremap <silent> ,H :<C-u>:CocCommand fzf-preview.MrwFiles<CR>
+    nnoremap <silent> ,<space> :<C-u>:CocCommand fzf-preview.ProjectMruFiles<CR>
+    nnoremap <silent> ,l :<C-u>:CocCommand fzf-preview.Lines<CR>
+    nnoremap <silent> ,f :<C-u>:CocCommand fzf-preview.QuickFix<CR>
+    nnoremap <silent> ,F :<C-u>:CocCommand fzf-preview.Locationlist<CR>
+endif
 
-" files
-nnoremap <silent> ,/ :<C-u>:CocCommand fzf-preview.ProjectGrep .<CR>
-nnoremap ,\ :<C-u>:CocCommand fzf-preview.ProjectGrep 
-nnoremap <silent> ,, :<C-u>:CocCommand fzf-preview.DirectoryFiles<CR>
-nnoremap <silent> <Tab> :<C-u>:CocCommand fzf-preview.Buffers<CR>
-nnoremap <silent> ,<Tab> :<C-u>Windows<CR>
-nnoremap <silent> ,~ :<C-u>:CocCommand fzf-preview.DirectoryFiles ~<CR>
-nnoremap <silent> ,<Tab> :<C-u>Windows<CR>
-nnoremap <silent> ,h :<C-u>:CocCommand fzf-preview.MruFiles<CR>
-nnoremap <silent> ,H :<C-u>:CocCommand fzf-preview.MrwFiles<CR>
-nnoremap <silent> ,<space> :<C-u>:CocCommand fzf-preview.ProjectMruFiles<CR>
-nnoremap <silent> ,: :<C-u>History:<CR>
-nnoremap <silent> ,l :<C-u>:CocCommand fzf-preview.Lines<CR>
-nnoremap <silent> ,f :<C-u>:CocCommand fzf-preview.QuickFix<CR>
-nnoremap <silent> ,F :<C-u>:CocCommand fzf-preview.Locationlist<CR>
-nnoremap <silent> ,m :<C-u>Maps<CR>
+" fzf (missing in fzf-preview)
+if exists('g:fzf#vim#buffers')
+    nnoremap <silent> ,<Tab> :<C-u>Windows<CR>
+    nnoremap <silent> ,: :<C-u>History:<CR>
+    nnoremap <silent> ,m :<C-u>Maps<CR>
+endif
 
 " -----------------------------------------------------------------------------
 " Language related plugins (ß)
