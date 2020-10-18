@@ -173,26 +173,27 @@ if exists('g:loaded_surround')
     xmap u   <Plug>VgSurround
 endif
 
-" FIXME: check if it's loaded via either coc extension or vim
-nnoremap ’h :Commits!<CR>
-nnoremap ’H :BCommits!<CR>
+" fzf-preview + git
+nnoremap <silent> ’h :<C-u>:CocCommand fzf-preview.GitLogs<CR>
+nnoremap <silent> ’H :<C-u>:CocCommand fzf-preview.GitCurrentLogs<CR>
+nnoremap <silent> ’’ :<C-u>:CocCommand fzf-preview.GitFiles<CR>
+
 " files
-" nnoremap ,/ :<C-u>Rg<CR>
-nnoremap ,/ :<C-u>FzfPreviewProjectGrep 
-nnoremap <silent> ,\ :<C-u>FzfPreviewProjectGrep -resume<CR>
-nnoremap <silent> ,, :<C-u>FzfPreviewDirectoryFiles<CR>
-nnoremap <silent> ’’ :<C-u>FzfPreviewGitFiles<CR>
-nnoremap <silent> <Tab> :<C-u>FzfPreviewBuffers<CR>
+nnoremap <silent> ,/ :<C-u>:CocCommand fzf-preview.ProjectGrep .<CR>
+nnoremap ,\ :<C-u>:CocCommand fzf-preview.ProjectGrep 
+nnoremap <silent> ,, :<C-u>:CocCommand fzf-preview.DirectoryFiles<CR>
+nnoremap <silent> <Tab> :<C-u>:CocCommand fzf-preview.Buffers<CR>
 nnoremap <silent> ,<Tab> :<C-u>Windows<CR>
-nnoremap <silent> ,~ :<C-u>FzfPreviewDirectoryFiles ~<CR>
-nnoremap <silent> ,h :<C-u>FzfPreviewMruFiles<CR>
-nnoremap <silent> ,H :<C-u>FzfPreviewMrwFiles<CR>
-nnoremap <silent> ,<space> :<C-u>FzfPreviewProjectMruFiles<CR>
+nnoremap <silent> ,~ :<C-u>:CocCommand fzf-preview.DirectoryFiles ~<CR>
+nnoremap <silent> ,<Tab> :<C-u>Windows<CR>
+nnoremap <silent> ,h :<C-u>:CocCommand fzf-preview.MruFiles<CR>
+nnoremap <silent> ,H :<C-u>:CocCommand fzf-preview.MrwFiles<CR>
+nnoremap <silent> ,<space> :<C-u>:CocCommand fzf-preview.ProjectMruFiles<CR>
 nnoremap <silent> ,: :<C-u>History:<CR>
-nnoremap <silent> ,l :<C-u>FzfPreviewLines<CR>
-nnoremap <silent> ,f     :<C-u>FzfPreviewQuickFix<CR>
-nnoremap <silent> ,F     :<C-u>FzfPreviewLocationList<CR>
-nnoremap <silent> ,m     :<C-u>Maps<CR>
+nnoremap <silent> ,l :<C-u>:CocCommand fzf-preview.Lines<CR>
+nnoremap <silent> ,f :<C-u>:CocCommand fzf-preview.QuickFix<CR>
+nnoremap <silent> ,F :<C-u>:CocCommand fzf-preview.Locationlist<CR>
+nnoremap <silent> ,m :<C-u>Maps<CR>
 
 " -----------------------------------------------------------------------------
 " Language related plugins (ß)
