@@ -29,19 +29,25 @@ endif
 " -----------------------------------------------------------------------------
 
 if exists('g:loaded_fugitive')
-    nnoremap ’b :Gblame<CR>
-    nnoremap ’c :Gcommit<CR>
-    nnoremap ’d :Gdiff<CR>
+    nnoremap ’bl :Git_blame<CR>
+    nnoremap ’<CR> :Git commit<CR>
     nnoremap ’e :Gedit<CR>
-    nnoremap ’fd :Gremove<CR>
-    nnoremap ’fm :Gmove<CR>
-    nnoremap ’i :Gpull<CR>
-    nnoremap ’l :Glog --oneline<CR>
+    nnoremap ’E :Gedit :0<CR>
+    nnoremap ’fd :GDelete<CR>
+    nnoremap ’fm :GMove<CR>
+    nnoremap ’l :Git pull<CR>
+    nnoremap ’h :0Git log --oneline<CR>
+    nnoremap ’H :0Git log<CR>
     nnoremap ’m :Gmerge<CR>
-    nnoremap ’p :Gpush<CR>
-    nnoremap ’r :Grebase<CR>
-    nnoremap ’s :40split\|:0Gstatus<CR>
+    nnoremap ’p :Git push<CR>
+    nnoremap ’r :Git rebase<CR>
+    nnoremap ’R :Git rebase master<CR>
+    nnoremap ’s :Git<CR>
     nnoremap ’w :Gwrite<CR>
+    " conflict solving
+    nnoremap ’d :Gvdiffsplit!<CR>
+    nnoremap ’t :diffget //2<CR>
+    nnoremap ’n :diffget //3<CR>
 endif
 
 if exists('g:loaded_git_messenger')
@@ -164,28 +170,34 @@ if exists('g:loaded_surround')
     xmap u   <Plug>VgSurround
 endif
 
-" FZF, it's faster than denite to open, no delay
-if exists('g:fzf_preview_use_floating_window')
-    " git
-    nnoremap ’h :Commits!<CR>
-    nnoremap ’H :BCommits!<CR>
-    " files
-    " nnoremap ,/ :<C-u>Rg<CR>
-    nnoremap ,/ :<C-u>FzfPreviewProjectCommandGrep<CR>
-    nnoremap ,\ :<C-u>FzfPreviewProjectCommandGrep -resume<CR>
-    nnoremap ,, :<C-u>FzfPreviewDirectoryFiles<CR>
-    nnoremap ’’ :<C-u>FzfPreviewGitFiles<CR>
-    nnoremap <Tab> :<C-u>FzfPreviewBuffers<CR>
-    nnoremap ,<Tab> :<C-u>Windows<CR>
-    nnoremap ,~ :<C-u>FzfPreviewDirectoryFiles ~<CR>
-    nnoremap ,h :<C-u>FzfPreviewMruFiles<CR>
-    nnoremap ,H :<C-u>FzfPreviewMrwFiles<CR>
-    nnoremap ,<space> :<C-u>FzfPreviewProjectMruFiles<CR>
-    nnoremap ,: :<C-u>History:<CR>
-    nnoremap ,l :<C-u>FzfPreviewLines<CR>
-    nnoremap <silent> ,f     :<C-u>FzfPreviewQuickFix<CR>
-    nnoremap <silent> ,F     :<C-u>FzfPreviewLocationList<CR>
-    nnoremap <silent> ,m     :<C-u>Maps<CR>
+if exists('g:did_coc_loaded')
+    " fzf-preview, git
+    nnoremap <silent> ’h :<C-u>:CocCommand fzf-preview.GitLogs<CR>
+    nnoremap <silent> ’H :<C-u>:CocCommand fzf-preview.GitCurrentLogs<CR>
+    nnoremap <silent> ’’ :<C-u>:CocCommand fzf-preview.GitFiles<CR>
+    nnoremap <silent>’cb :CocCommand fzf-preview.GitBranches<CR>
+    nnoremap <silent>’cs :CocCommand fzf-preview.GitStashes<CR>
+    nnoremap <silent>’cr :CocCommand fzf-preview.GitReflogs<CR>
+    nnoremap <silent>’S :CocCommand fzf-preview.GitStatus<CR>
+    " fzf-preview, files
+    nnoremap <silent> ,/ :<C-u>:CocCommand fzf-preview.ProjectGrep .<CR>
+    nnoremap ,\ :<C-u>:CocCommand fzf-preview.ProjectGrep 
+    nnoremap <silent> ,, :<C-u>:CocCommand fzf-preview.DirectoryFiles<CR>
+    nnoremap <silent> <Tab> :<C-u>:CocCommand fzf-preview.Buffers<CR>
+    nnoremap <silent> ,~ :<C-u>:CocCommand fzf-preview.DirectoryFiles ~<CR>
+    nnoremap <silent> ,h :<C-u>:CocCommand fzf-preview.MruFiles<CR>
+    nnoremap <silent> ,H :<C-u>:CocCommand fzf-preview.MrwFiles<CR>
+    nnoremap <silent> ,<space> :<C-u>:CocCommand fzf-preview.ProjectMruFiles<CR>
+    nnoremap <silent> ,l :<C-u>:CocCommand fzf-preview.Lines<CR>
+    nnoremap <silent> ,f :<C-u>:CocCommand fzf-preview.QuickFix<CR>
+    nnoremap <silent> ,F :<C-u>:CocCommand fzf-preview.Locationlist<CR>
+endif
+
+" fzf (missing in fzf-preview)
+if exists('g:fzf#vim#buffers')
+    nnoremap <silent> ,<Tab> :<C-u>Windows<CR>
+    nnoremap <silent> ,: :<C-u>History:<CR>
+    nnoremap <silent> ,m :<C-u>Maps<CR>
 endif
 
 " -----------------------------------------------------------------------------
