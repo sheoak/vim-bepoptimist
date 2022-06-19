@@ -48,6 +48,7 @@ if exists('g:loaded_fugitive')
     nnoremap ’d :Gvdiffsplit!<CR>
     nnoremap ’t :diffget //2<CR>
     nnoremap ’n :diffget //3<CR>
+    nnoremap ’g :GBrowse<CR>
 endif
 
 if exists('g:loaded_git_messenger')
@@ -172,25 +173,25 @@ endif
 
 if exists('g:did_coc_loaded')
     " fzf-preview, git
-    nnoremap <silent> ’h :<C-u>:CocCommand fzf-preview.GitLogs<CR>
-    nnoremap <silent> ’H :<C-u>:CocCommand fzf-preview.GitCurrentLogs<CR>
-    nnoremap <silent> ’’ :<C-u>:CocCommand fzf-preview.GitFiles<CR>
-    nnoremap <silent>’cb :CocCommand fzf-preview.GitBranches<CR>
-    nnoremap <silent>’cs :CocCommand fzf-preview.GitStashes<CR>
-    nnoremap <silent>’cr :CocCommand fzf-preview.GitReflogs<CR>
-    nnoremap <silent>’S :CocCommand fzf-preview.GitStatus<CR>
+    nnoremap <silent> ’h :<C-u>:FzfPreviewGitLogsRpc<CR>
+    nnoremap <silent> ’H :<C-u>:FzfPreviewGitCurrentLogsRpc<CR>
+    nnoremap <silent> ’’ :<C-u>:FzfPreviewGitFilesRpc<CR>
+    nnoremap <silent>’cb :FzfPreviewGitBranchesRpc<CR>
+    nnoremap <silent>’cs :FzfPreviewGitStashesRpc<CR>
+    nnoremap <silent>’cr :FzfPreviewGitReflogsRpc<CR>
+    nnoremap <silent>’S :FzfPreviewGitStatusRpc<CR>
     " fzf-preview, files
-    nnoremap <silent> ,/ :<C-u>:CocCommand fzf-preview.ProjectGrep .<CR>
-    nnoremap ,\ :<C-u>:CocCommand fzf-preview.ProjectGrep 
-    nnoremap <silent> ,, :<C-u>:CocCommand fzf-preview.DirectoryFiles<CR>
-    nnoremap <silent> <Tab> :<C-u>:CocCommand fzf-preview.Buffers<CR>
-    nnoremap <silent> ,~ :<C-u>:CocCommand fzf-preview.DirectoryFiles ~<CR>
-    nnoremap <silent> ,h :<C-u>:CocCommand fzf-preview.MruFiles<CR>
-    nnoremap <silent> ,H :<C-u>:CocCommand fzf-preview.MrwFiles<CR>
-    nnoremap <silent> ,<space> :<C-u>:CocCommand fzf-preview.ProjectMruFiles<CR>
-    nnoremap <silent> ,l :<C-u>:CocCommand fzf-preview.Lines<CR>
-    nnoremap <silent> ,f :<C-u>:CocCommand fzf-preview.QuickFix<CR>
-    nnoremap <silent> ,F :<C-u>:CocCommand fzf-preview.Locationlist<CR>
+    nnoremap <silent> ,/ :<C-u>:FzfPreviewProjectGrepRpc .<CR>
+    nnoremap ,\ :<C-u>:FzfPreviewProjectGrepRpc 
+    nnoremap <silent> ,, :<C-u>:FzfPreviewDirectoryFilesRpc<CR>
+    nnoremap <silent> <Tab> :<C-u>:FzfPreviewBuffersRpc<CR>
+    nnoremap <silent> ,~ :<C-u>:FzfPreviewDirectoryFilesRpc ~<CR>
+    nnoremap <silent> ,h :<C-u>:FzfPreviewMruFilesRpc<CR>
+    nnoremap <silent> ,H :<C-u>:FzfPreviewMrwFilesRpc<CR>
+    nnoremap <silent> ,<space> :<C-u>:FzfPreviewProjectMruFilesRpc<CR>
+    nnoremap <silent> ,l :<C-u>:FzfPreviewLinesRpc<CR>
+    nnoremap <silent> ,f :<C-u>:FzfPreviewQuickFixRpc<CR>
+    nnoremap <silent> ,F :<C-u>:FzfPreviewLocationListRpc<CR>
 endif
 
 " fzf (missing in fzf-preview)
