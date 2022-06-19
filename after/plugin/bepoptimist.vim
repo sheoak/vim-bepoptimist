@@ -35,7 +35,7 @@ if exists('g:loaded_fugitive')
     let g:fugitive_defer_to_existing_maps=1
 
     " new bepo mappings with ’
-    nnoremap ’bl :Git_blame<CR>
+    nnoremap ’? :Git_blame<CR>
     nnoremap ’<CR> :Git commit<CR>
     nnoremap ’e :Gedit<CR>
     nnoremap ’E :Gedit :0<CR>
@@ -59,20 +59,6 @@ endif
 
 if exists('g:loaded_git_messenger')
     nmap ’o <Plug>(git-messenger)
-endif
-
-" GitGutter mappings
-if exists('g:loaded_gitgutter')
-    nmap ’a <Plug>(GitGutterStageHunk)
-    nmap ’u <Plug>(GitGutterUndoHunk)
-    nmap ’v <Plug>(GitGutterPreviewHunk)
-
-    " Git gutter text-objects (conflict with targets)
-    " [h]unks
-    omap ih <Plug>(GitGutterTextObjectInnerPending)
-    omap ah <Plug>(GitGutterTextObjectOuterPending)
-    xmap ih <Plug>(GitGutterTextObjectInnerVisual)
-    xmap ah <Plug>(GitGutterTextObjectOuterVisual)
 endif
 
 " Table-mode
@@ -177,34 +163,43 @@ if exists('g:loaded_surround')
     xmap u   <Plug>VgSurround
 endif
 
-if exists('g:did_coc_loaded')
-    " fzf-preview, git
-    nnoremap <silent> ’h :<C-u>:FzfPreviewGitLogsRpc<CR>
-    nnoremap <silent> ’H :<C-u>:FzfPreviewGitCurrentLogsRpc<CR>
-    nnoremap <silent> ’’ :<C-u>:FzfPreviewGitFilesRpc<CR>
-    nnoremap <silent>’cb :FzfPreviewGitBranchesRpc<CR>
-    nnoremap <silent>’cs :FzfPreviewGitStashesRpc<CR>
-    nnoremap <silent>’cr :FzfPreviewGitReflogsRpc<CR>
-    nnoremap <silent>’S :FzfPreviewGitStatusRpc<CR>
-    " fzf-preview, files
-    nnoremap <silent> ,/ :<C-u>:FzfPreviewProjectGrepRpc .<CR>
-    nnoremap ,\ :<C-u>:FzfPreviewProjectGrepRpc 
-    nnoremap <silent> ,, :<C-u>:FzfPreviewDirectoryFilesRpc<CR>
-    nnoremap <silent> <Tab> :<C-u>:FzfPreviewBuffersRpc<CR>
-    nnoremap <silent> ,~ :<C-u>:FzfPreviewDirectoryFilesRpc ~<CR>
-    nnoremap <silent> ,h :<C-u>:FzfPreviewMruFilesRpc<CR>
-    nnoremap <silent> ,H :<C-u>:FzfPreviewMrwFilesRpc<CR>
-    nnoremap <silent> ,<space> :<C-u>:FzfPreviewProjectMruFilesRpc<CR>
-    nnoremap <silent> ,l :<C-u>:FzfPreviewLinesRpc<CR>
-    nnoremap <silent> ,f :<C-u>:FzfPreviewQuickFixRpc<CR>
-    nnoremap <silent> ,F :<C-u>:FzfPreviewLocationListRpc<CR>
-endif
-
-" fzf (missing in fzf-preview)
-if exists('g:fzf#vim#buffers')
-    nnoremap <silent> ,<Tab> :<C-u>Windows<CR>
-    nnoremap <silent> ,: :<C-u>History:<CR>
-    nnoremap <silent> ,m :<C-u>Maps<CR>
+" fzf-lua
+if exists('g:loaded_fzf_lua')
+    " git
+    nnoremap <silent> ’’ <cmd>lua require('fzf-lua').git_files()<CR>
+    nnoremap <silent> ’S <cmd>lua require('fzf-lua').git_status()<CR>
+    nnoremap <silent> ’h <cmd>lua require('fzf-lua').git_commits()<CR>
+    nnoremap <silent> ’H <cmd>lua require('fzf-lua').git_bcommits()<CR>
+    nnoremap <silent> ’b <cmd>lua require('fzf-lua').git_branches()<CR>
+    nnoremap <silent> ’z <cmd>lua require('fzf-lua').git_stash()<CR>
+    " fzf-lua
+    nnoremap <silent> ,a <cmd>lua require('fzf-lua').builtin()<CR>
+    nnoremap <silent> ,r <cmd>lua require('fzf-lua').resume()<CR>
+    " files
+    nnoremap <silent> ,, <cmd>lua require('fzf-lua').files()<CR>
+    nnoremap <silent> ,~ <cmd>lua require('fzf-lua').files({ cwd = '~/' })<CR>
+    nnoremap <silent> ,b <cmd>lua require('fzf-lua').buffers()<CR>
+    " history
+    nnoremap <silent> ,/ <cmd>lua require('fzf-lua').search_history()<CR>
+    nnoremap <silent> ,: <cmd>lua require('fzf-lua').command_history()<CR>
+    nnoremap <silent> ,h <cmd>lua require('fzf-lua').oldfiles()<CR>
+    nnoremap <silent> ,<space>u <cmd>lua require('fzf-lua').changes()<CR>
+    " search
+    nnoremap <silent> ," <cmd>lua require('fzf-lua').registers()<CR>
+    nnoremap <silent> ,g <cmd>lua require('fzf-lua').live_grep_resume()<CR>
+    nnoremap <silent> ,G <cmd>lua require('fzf-lua').live_grep()<CR>
+    nnoremap <silent> ,j <cmd>lua require('fzf-lua').jumps()<CR>
+    nnoremap <silent> ,l <cmd>lua require('fzf-lua').lines()<CR>
+    nnoremap <silent> ,<space>b <cmd>lua require('fzf-lua').grep_curbuf()<CR>
+    nnoremap <silent> ,<space>c <cmd>lua require('fzf-lua').grep_cword()<CR>
+    nnoremap <silent> ,<space>C <cmd>lua require('fzf-lua').grep_cWORD()<CR>
+    " nvim
+    nnoremap <silent> ,@ <cmd>lua require('fzf-lua').commands()<CR>
+    nnoremap <silent> ,m <cmd>lua require('fzf-lua').keymaps()<CR>
+    nnoremap <silent> ,M <cmd>lua require('fzf-lua').marks()<CR>
+    nnoremap <silent> ,<space>l <cmd>lua require('fzf-lua').loclist()<CR>
+    nnoremap <silent> ,<space>q <cmd>FzfLua quickfix<CR>
+    nnoremap <silent> ,c <cmd>lua require('fzf-lua').colorschemes()<CR>
 endif
 
 " -----------------------------------------------------------------------------
