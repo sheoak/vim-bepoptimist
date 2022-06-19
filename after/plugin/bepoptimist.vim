@@ -177,34 +177,35 @@ if exists('g:loaded_surround')
     xmap u   <Plug>VgSurround
 endif
 
-if exists('g:did_coc_loaded')
-    " fzf-preview, git
-    nnoremap <silent> ’h :<C-u>:FzfPreviewGitLogsRpc<CR>
-    nnoremap <silent> ’H :<C-u>:FzfPreviewGitCurrentLogsRpc<CR>
-    nnoremap <silent> ’’ :<C-u>:FzfPreviewGitFilesRpc<CR>
-    nnoremap <silent>’cb :FzfPreviewGitBranchesRpc<CR>
-    nnoremap <silent>’cs :FzfPreviewGitStashesRpc<CR>
-    nnoremap <silent>’cr :FzfPreviewGitReflogsRpc<CR>
-    nnoremap <silent>’S :FzfPreviewGitStatusRpc<CR>
-    " fzf-preview, files
-    nnoremap <silent> ,/ :<C-u>:FzfPreviewProjectGrepRpc .<CR>
-    nnoremap ,\ :<C-u>:FzfPreviewProjectGrepRpc 
-    nnoremap <silent> ,, :<C-u>:FzfPreviewDirectoryFilesRpc<CR>
-    nnoremap <silent> <Tab> :<C-u>:FzfPreviewBuffersRpc<CR>
-    nnoremap <silent> ,~ :<C-u>:FzfPreviewDirectoryFilesRpc ~<CR>
-    nnoremap <silent> ,h :<C-u>:FzfPreviewMruFilesRpc<CR>
-    nnoremap <silent> ,H :<C-u>:FzfPreviewMrwFilesRpc<CR>
-    nnoremap <silent> ,<space> :<C-u>:FzfPreviewProjectMruFilesRpc<CR>
-    nnoremap <silent> ,l :<C-u>:FzfPreviewLinesRpc<CR>
-    nnoremap <silent> ,f :<C-u>:FzfPreviewQuickFixRpc<CR>
-    nnoremap <silent> ,F :<C-u>:FzfPreviewLocationListRpc<CR>
-endif
+" fzf-lua
+if exists('g:loaded_fzf_lua')
+    nnoremap <silent> ’’ <cmd>lua require('fzf-lua').git_files()<CR>
 
-" fzf (missing in fzf-preview)
-if exists('g:fzf#vim#buffers')
-    nnoremap <silent> ,<Tab> :<C-u>Windows<CR>
-    nnoremap <silent> ,: :<C-u>History:<CR>
-    nnoremap <silent> ,m :<C-u>Maps<CR>
+    nnoremap <silent> ,, <cmd>lua require('fzf-lua').files()<CR>
+    nnoremap <silent> ,b <cmd>lua require('fzf-lua').buffers()<CR>
+    nnoremap <silent> ’S <cmd>lua require('fzf-lua').git_status()<CR>
+    nnoremap <silent> ’cc <cmd>lua require('fzf-lua').git_commits()<CR>
+    nnoremap <silent> ’h <cmd>lua require('fzf-lua').git_commits()<CR>
+    nnoremap <silent> ’H <cmd>lua require('fzf-lua').git_bcommits()<CR>
+    nnoremap <silent> ’cb <cmd>lua require('fzf-lua').git_branches()<CR>
+    nnoremap <silent> ’cs <cmd>lua require('fzf-lua').git_stash()<CR>
+    nnoremap <silent> ,/ <cmd>lua require('fzf-lua').live_grep_resume()<CR>
+    nnoremap <silent> ,\ <cmd>lua require('fzf-lua').live_grep()<CR>
+    nnoremap <silent> ,\b <cmd>lua require('fzf-lua').grep_curbuf()<CR>
+    nnoremap <silent> ,\c <cmd>lua require('fzf-lua').grep_cword()<CR>
+    nnoremap <silent> ,\C <cmd>lua require('fzf-lua').grep_cWORD()<CR>
+    nnoremap <silent> ," <cmd>lua require('fzf-lua').registers()<CR>
+    nnoremap <silent> ,: <cmd>lua require('fzf-lua').command_history()<CR>
+    nnoremap <silent> ,@ <cmd>lua require('fzf-lua').commands()<CR>
+    nnoremap <silent> ,<Backspace> <cmd>lua require('fzf-lua').changes()<CR>
+    nnoremap <silent> ,j <cmd>lua require('fzf-lua').jumps()<CR>
+    nnoremap <silent> ,l <cmd>lua require('fzf-lua').loclist()<CR>
+    nnoremap <silent> ,m <cmd>lua require('fzf-lua').keymaps()<CR>
+
+    " TODO: ,~
+    " ,l for lines
+    " quickfix
+    " location
 endif
 
 " -----------------------------------------------------------------------------
