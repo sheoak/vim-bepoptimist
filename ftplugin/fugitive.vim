@@ -1,10 +1,8 @@
 
+nmap - <Plug>fugitive:s
+
 " Remove mapping starting by r in Gstatus
-let s:arr = map(range(char2nr('a'),char2nr('z')),'nr2char(v:val)')
+let s:arr = ['r', 'i', 'f', 'u', 'p', 's', 'a', 'e', 'w', 'm', 'd', '<Space>', '?']
 for s:key in s:arr
-    if !empty(maparg('r' . s:key))
-        execute "nunmap <buffer>r" . s:key
-    endif
+    execute "nmap <buffer>b" . s:key . " <Plug>fugitive:r" . s:key
 endfor
-xunmap <buffer>s
-nunmap <buffer>s

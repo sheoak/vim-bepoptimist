@@ -29,6 +29,12 @@ endif
 " -----------------------------------------------------------------------------
 
 if exists('g:loaded_fugitive')
+
+    " remap problematic mappings with bepo
+    " see ftplugin
+    let g:fugitive_defer_to_existing_maps=1
+
+    " new bepo mappings with ’
     nnoremap ’bl :Git_blame<CR>
     nnoremap ’<CR> :Git commit<CR>
     nnoremap ’e :Gedit<CR>
