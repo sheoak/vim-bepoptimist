@@ -19,6 +19,14 @@ if exists("g:bepoptimist_enable") && ! g:bepoptimist_enable
     finish
 endif
 
+" vim.g.nremap = {r = 'b'}
+" vim.g.nremap = {s = 'a'}
+" fugitive/generic colemak/bepo remapping for homerow
+let g:nremap = {'r': 'b'}
+let g:nremap = {'s': 'a'}
+let g:nremap = {'t': 'h'}
+let g:nremap = {'n': 'l'}
+
 " Check if the setting to remap homerow is on
 fun! Bepoptimist_is_homerow()
     if !exists("g:bepoptimist_remap_homerow") || g:bepoptimist_remap_homerow
