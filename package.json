@@ -10,9 +10,9 @@
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
     "git-precommit-checks": "^3.0.3",
-    "husky": "^4.2.5",
+    "husky": "^8.0.3",
     "precise-commits": "^1.0.2",
-    "semantic-release": "^17.0.6"
+    "semantic-release": "^21.0.1"
   },
   "commitlint": {
     "extends": [
